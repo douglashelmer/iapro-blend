@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IAPRO.BLEND — Douglas Helmer</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #F5F1EA;
+  --cream2: #EDE9E1;
+  --cream3: #E4DFD5;
+  --ink: #111111;
+  --ink2: #3A3A3A;
+  --ink3: #888880;
+  --orange: #E8480F;
+  --orange-light: #FF6B35;
+  --white: #FAFAF7;
+  --border: rgba(17,17,17,0.1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 64px;
+  transition: background .3s;
+}
+nav.scrolled {
+  background: rgba(245,241,234,0.96);
+  border-bottom-color: var(--border);
+}
+
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px; letter-spacing: 3px;
+}
+.logo .ia   { color: #fff; }
+.logo .pro  { color: var(--orange); }
+.logo .dot  { color: var(--orange); }
+.logo .blend{ color: rgba(255,255,255,0.3); }
+nav.scrolled .logo .ia    { color: var(--ink); }
+nav.scrolled .logo .blend { color: rgba(17,17,17,0.28); }
+
+.nav-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--orange); color: white;
+  padding: 10px 22px; border-radius: 100px;
+  font-size: 13px; font-weight: 600;
+  text-decoration: none; letter-spacing: 0.3px;
+  transition: background .2s, transform .15s;
+}
+.nav-pill:hover { background: #c93d0a; transform: translateY(-1px); }
+
+/* ─── HERO SHADER ─── */
+.hero {
+  position: relative;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+}
+
+.hero-canvas-wrap {
+  position: relative;
+  width: 100%; height: 100vh;
+  overflow: hidden;
+}
+
+#hero-canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  display: block; touch-action: none;
+  background: black;
+}
+
+/* dark gradient overlay so text is always readable */
+.hero-canvas-wrap::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.45) 0%,
+    rgba(0,0,0,0.2) 40%,
+    rgba(0,0,0,0.55) 100%
+  );
+  pointer-events: none;
+}
+
+.hero-overlay {
+  position: absolute; inset: 0; z-index: 10;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 80px 48px 40px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 100px;
+  padding: 8px 18px 8px 10px;
+  font-size: 12px; font-weight: 500;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 32px;
+  pointer-events: auto;
+  animation: fadeUp .7s .1s ease both;
+}
+.hero-badge-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--orange); flex-shrink: 0;
+  position: relative;
+}
+.hero-badge-dot::after {
+  content: '';
+  position: absolute; inset: -3px; border-radius: 50%;
+  border: 1px solid var(--orange); opacity: .5;
+  animation: pulse 1.6s ease-out infinite;
+}
+
+h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(80px, 11vw, 160px);
+  line-height: .85; letter-spacing: 2px;
+  margin-bottom: 24px;
+  animation: fadeUp .7s .25s ease both;
+}
+h1 .h-ia  { color: #ffffff; }
+h1 .h-pro { color: var(--orange); }
+h1 .h-dot { color: var(--orange); }
+h1 .h-blend {
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(255,255,255,0.25);
+  display: block;
+}
+
+.hero-sub {
+  font-size: 20px; line-height: 1.6;
+  color: rgba(255,255,255,.8);
+  max-width: 520px; margin-bottom: 10px;
+  animation: fadeUp .7s .4s ease both;
+}
+.hero-sub2 {
+  font-size: 14px; line-height: 1.7;
+  color: rgba(255,255,255,.45);
+  max-width: 460px; margin-bottom: 40px;
+  animation: fadeUp .7s .5s ease both;
+}
+
+.hero-btns {
+  display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  justify-content: center;
+  pointer-events: auto;
+  animation: fadeUp .7s .6s ease both;
+}
+
+.btn-solid {
+  background: var(--orange); color: white;
+  padding: 14px 32px; border-radius: 100px;
+  font-size: 14px; font-weight: 700;
+  text-decoration: none; letter-spacing: 0.3px;
+  transition: transform .15s, box-shadow .2s;
+  display: inline-block;
+}
+.btn-solid:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(232,72,15,.4); }
+
+.btn-ghost {
+  padding: 14px 24px; border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.25);
+  font-size: 14px; font-weight: 500;
+  color: rgba(255,255,255,.75); text-decoration: none;
+  backdrop-filter: blur(8px);
+  background: rgba(255,255,255,0.08);
+  transition: border-color .2s, background .2s;
+}
+.btn-ghost:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.14); }
+
+/* stats row inside hero */
+.hero-stats {
+  position: absolute; bottom: 0; left: 0; right: 0; z-index: 10;
+  display: grid; grid-template-columns: repeat(4,1fr);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(16px);
+}
+.hero-stat {
+  padding: 20px 28px;
+  border-right: 1px solid rgba(255,255,255,0.08);
+}
+.hero-stat:last-child { border-right: none; }
+.hero-stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px; line-height: 1; color: var(--orange);
+}
+.hero-stat-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase; color: rgba(255,255,255,.3);
+  margin-top: 2px;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── CAROUSEL ─── */
+.carousel-wrap {
+  border-top: 1px solid var(--border);
+  overflow: hidden; padding: 20px 0;
+  background: var(--cream2);
+  position: relative;
+}
+.carousel-wrap::before,
+.carousel-wrap::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 100px;
+  z-index: 2; pointer-events: none;
+}
+.carousel-wrap::before { left: 0; background: linear-gradient(90deg, var(--cream2), transparent); }
+.carousel-wrap::after  { right: 0; background: linear-gradient(-90deg, var(--cream2), transparent); }
+
+.carousel-row { margin-bottom: 10px; }
+.carousel-row:last-child { margin-bottom: 0; }
+
+.c-track {
+  display: flex; gap: 10px; width: max-content;
+  animation: cScroll 38s linear infinite;
+}
+.c-track.rev { animation: cScrollRev 38s linear infinite; }
+.c-track:hover, .c-track.rev:hover { animation-play-state: paused; }
+
+.c-img {
+  width: 240px; height: 160px; border-radius: 12px;
+  object-fit: cover; flex-shrink: 0;
+  filter: saturate(.85);
+  transition: filter .3s, transform .3s, box-shadow .3s;
+}
+.c-img:hover {
+  filter: saturate(1.1);
+  transform: scale(1.04);
+  box-shadow: 0 12px 32px rgba(0,0,0,.12);
+  z-index: 1; position: relative;
+}
+
+@keyframes cScroll    { from { transform: translateX(0); }    to { transform: translateX(-50%); } }
+@keyframes cScrollRev { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+
+/* ─── TICKER ─── */
+.ticker {
+  background: var(--ink);
+  overflow: hidden; padding: 14px 0;
+  display: flex;
+}
+.t-track {
+  display: flex; gap: 40px; white-space: nowrap;
+  flex-shrink: 0;
+  animation: tScroll 24s linear infinite;
+}
+.t-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(245,241,234,.35);
+  display: flex; align-items: center; gap: 12px;
+}
+.t-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--orange); flex-shrink: 0; }
+@keyframes tScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ─── SECTION COMMONS ─── */
+.sec { padding: 96px 48px; }
+.sec-alt { background: var(--cream2); }
+.sec-dark { background: var(--ink); color: var(--cream); }
+
+.sec-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--ink3); margin-bottom: 20px;
+  display: flex; align-items: center; gap: 12px;
+}
+.sec-dark .sec-eyebrow { color: rgba(245,241,234,.35); }
+.sec-eyebrow::before { content: ''; width: 24px; height: 1px; background: currentColor; }
+
+.sec-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(44px, 5.5vw, 72px);
+  line-height: .92; margin-bottom: 56px;
+  max-width: 700px;
+}
+
+/* ─── FLUXO ─── */
+.steps {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 20px; overflow: hidden;
+}
+
+.step-card {
+  background: var(--white); padding: 36px 28px;
+  position: relative; overflow: hidden;
+  transition: background .25s;
+}
+.step-card:hover { background: var(--cream); }
+
+.step-n {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 2px;
+  color: var(--orange); margin-bottom: 24px;
+}
+
+.step-icon { font-size: 28px; margin-bottom: 16px; display: block; }
+
+.step-card h3 {
+  font-size: 17px; font-weight: 700;
+  margin-bottom: 10px; line-height: 1.2;
+}
+.step-card p { font-size: 13px; line-height: 1.7; color: var(--ink3); }
+
+.step-tag {
+  display: inline-block; margin-top: 20px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 1px;
+  padding: 4px 10px; border-radius: 100px;
+  background: var(--cream2); color: var(--ink3);
+}
+
+/* ─── COMPARE ─── */
+.compare-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;
+}
+
+.compare-card {
+  border: 1px solid var(--border);
+  border-radius: 20px; padding: 36px 32px;
+  background: var(--white);
+  position: relative; overflow: hidden;
+  transition: transform .25s, box-shadow .25s;
+}
+.compare-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,.07); }
+
+.compare-card.winner {
+  background: var(--ink); color: var(--cream);
+  border-color: transparent;
+}
+
+.compare-chip {
+  display: inline-block; margin-bottom: 20px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 100px;
+  background: var(--cream2); color: var(--ink3);
+}
+.compare-card.winner .compare-chip {
+  background: rgba(245,241,234,.12); color: rgba(245,241,234,.5);
+}
+
+.compare-card h3 {
+  font-size: 20px; font-weight: 700; margin-bottom: 12px;
+}
+.compare-card p { font-size: 14px; line-height: 1.7; color: var(--ink3); }
+.compare-card.winner p { color: rgba(245,241,234,.55); }
+
+.winner-badge {
+  position: absolute; top: 20px; right: 20px;
+  background: var(--orange); color: white;
+  font-size: 11px; font-weight: 700;
+  padding: 4px 10px; border-radius: 100px;
+  letter-spacing: 1px;
+}
+
+/* ─── MÓDULOS ─── */
+.modules-list {
+  display: flex; flex-direction: column; gap: 1px;
+  border: 1px solid var(--border); border-radius: 20px; overflow: hidden;
+}
+
+.mod-row {
+  background: var(--white);
+  display: grid; grid-template-columns: 56px 1fr auto;
+  align-items: center; gap: 24px;
+  padding: 24px 32px;
+  transition: background .2s;
+  cursor: default;
+}
+.mod-row:hover { background: var(--cream); }
+
+.mod-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px; color: rgba(17,17,17,.12);
+  line-height: 1;
+}
+
+.mod-title { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+.mod-desc { font-size: 13px; color: var(--ink3); line-height: 1.5; }
+
+.mod-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 5px 12px; border-radius: 100px;
+  border: 1px solid var(--border); color: var(--ink3);
+  white-space: nowrap;
+}
+
+/* ─── ANTES VS DEPOIS ─── */
+.avd-cards { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+
+.avd-card {
+  border: 1px solid var(--border); border-radius: 20px;
+  padding: 28px 24px; background: var(--white);
+  transition: transform .25s;
+}
+.avd-card:hover { transform: translateY(-4px); }
+
+.avd-cat {
+  font-size: 13px; font-weight: 700; margin-bottom: 20px;
+  text-transform: uppercase; letter-spacing: 1px; color: var(--ink3);
+}
+
+.avd-row-item { margin-bottom: 16px; }
+.avd-row-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--ink3); margin-bottom: 4px;
+}
+.avd-before { font-size: 14px; color: var(--ink3); text-decoration: line-through; }
+.avd-after  { font-size: 18px; font-weight: 700; color: var(--orange); }
+
+.avd-economy {
+  margin-top: 20px; padding-top: 16px;
+  border-top: 1px solid var(--border);
+  font-size: 12px; font-weight: 600; color: #1A9B56;
+  font-family: 'DM Mono', monospace;
+}
+
+/* ─── BENEFÍCIOS ─── */
+.benefits-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+
+.benefit-card {
+  border: 1px solid var(--border); border-radius: 20px;
+  padding: 32px 28px; background: var(--white);
+  transition: transform .25s, box-shadow .25s;
+}
+.benefit-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,.07); }
+
+.benefit-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 48px; line-height: 1;
+  color: var(--orange); margin-bottom: 8px;
+}
+.benefit-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.benefit-card p { font-size: 13px; line-height: 1.65; color: var(--ink3); }
+
+/* ─── DEPOIMENTOS ─── */
+.test-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+
+.test-card {
+  border: 1px solid var(--border); border-radius: 20px;
+  padding: 32px 28px; background: var(--white);
+  display: flex; flex-direction: column; justify-content: space-between;
+  gap: 20px;
+  transition: transform .25s;
+}
+.test-card:hover { transform: translateY(-4px); }
+
+.test-quote {
+  font-size: 15px; line-height: 1.7;
+  color: var(--ink2); font-style: italic;
+  flex: 1;
+}
+
+.test-footer { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+
+.test-name { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+.test-role {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 1px; color: var(--orange);
+  text-transform: uppercase;
+}
+
+.test-result {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 1px;
+  color: #1A9B56; text-transform: uppercase;
+  text-align: right; line-height: 1.5;
+}
+
+/* ─── BÔNUS ─── */
+.bonus-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+
+.bonus-card {
+  border: 1px solid var(--border); border-radius: 20px;
+  padding: 28px; background: var(--white);
+  display: flex; flex-direction: column; justify-content: space-between; gap: 16px;
+  transition: transform .25s;
+}
+.bonus-card:hover { transform: translateY(-3px); }
+
+.bonus-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.bonus-desc { font-size: 13px; line-height: 1.65; color: var(--ink3); }
+.bonus-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px; color: var(--orange);
+}
+
+/* ─── PREÇO ─── */
+.price-wrap {
+  max-width: 520px; margin: 0 auto; text-align: center;
+}
+
+.price-tag {
+  display: inline-block; margin-bottom: 24px;
+  background: var(--orange); color: white;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  padding: 7px 18px; border-radius: 100px;
+}
+
+.price-de {
+  font-size: 14px; color: var(--ink3);
+  text-decoration: line-through; margin-bottom: 4px;
+}
+.price-main {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(64px, 8vw, 96px); line-height: .9;
+  margin-bottom: 8px;
+}
+.price-main sup { font-size: 32%; vertical-align: top; margin-top: 14px; display: inline-block; }
+.price-or { font-size: 14px; color: var(--ink3); margin-bottom: 6px; }
+.price-pix {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px; color: var(--orange); margin-bottom: 36px;
+}
+
+.price-list {
+  list-style: none; text-align: left;
+  display: flex; flex-direction: column; gap: 12px;
+  margin-bottom: 36px;
+  border: 1px solid var(--border); border-radius: 16px;
+  padding: 24px 28px; background: var(--white);
+}
+.price-list li {
+  font-size: 14px; color: var(--ink2);
+  display: flex; align-items: center; gap: 12px;
+}
+.price-list li::before {
+  content: '✓';
+  width: 22px; height: 22px; border-radius: 50%;
+  background: #E8F5EE; color: #1A9B56;
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.btn-cta-big {
+  width: 100%; padding: 18px;
+  background: var(--ink); color: var(--cream);
+  border-radius: 100px; border: none; cursor: pointer;
+  font-size: 16px; font-weight: 700; letter-spacing: 0.3px;
+  text-decoration: none; display: block; text-align: center;
+  transition: background .2s, transform .15s;
+  margin-bottom: 16px;
+}
+.btn-cta-big:hover { background: var(--orange); transform: translateY(-2px); }
+
+.price-secure {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 1px; color: var(--ink3);
+}
+
+/* ─── INSTRUTOR ─── */
+.inst-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
+}
+
+.inst-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--orange); margin-bottom: 16px;
+}
+.inst-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(56px, 5vw, 80px); line-height: .88;
+  margin-bottom: 24px;
+}
+.inst-bio { font-size: 16px; line-height: 1.75; color: var(--ink2); margin-bottom: 32px; }
+
+.inst-stats {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+  border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+}
+.inst-stat {
+  background: var(--white); padding: 20px 24px;
+}
+.inst-stat-n { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--orange); line-height: 1; }
+.inst-stat-l { font-size: 12px; color: var(--ink3); margin-top: 4px; }
+
+.inst-quote {
+  font-size: 18px; line-height: 1.75; font-style: italic;
+  color: var(--ink2); margin-bottom: 32px;
+  padding-left: 20px;
+  border-left: 3px solid var(--orange);
+}
+
+/* ─── FAQ ─── */
+.faq-list {
+  display: flex; flex-direction: column;
+  border: 1px solid var(--border); border-radius: 20px; overflow: hidden;
+  max-width: 760px; margin: 0 auto;
+}
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+.faq-item:last-child { border-bottom: none; }
+
+.faq-q {
+  width: 100%; padding: 22px 28px;
+  background: none; border: none; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px; font-weight: 600; color: var(--ink);
+  text-align: left; gap: 16px;
+  transition: background .2s;
+}
+.faq-q:hover { background: var(--cream); }
+
+.faq-icon {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: var(--ink3); flex-shrink: 0;
+  transition: background .2s, color .2s;
+}
+.faq-item.open .faq-icon { background: var(--ink); color: var(--cream); }
+
+.faq-a {
+  display: none; padding: 0 28px 22px;
+  font-size: 14px; line-height: 1.75; color: var(--ink3);
+}
+.faq-item.open .faq-a { display: block; }
+
+/* ─── FINAL CTA ─── */
+.final-cta {
+  padding: 120px 48px;
+  background: var(--ink);
+  color: var(--cream);
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.final-cta::before {
+  content: 'IAPRO';
+  position: absolute;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(200px, 28vw, 400px);
+  color: rgba(255,255,255,.03);
+  top: 50%; left: 50%; transform: translate(-50%,-50%);
+  white-space: nowrap; pointer-events: none; letter-spacing: 20px;
+}
+
+.final-cta .sec-eyebrow { color: rgba(245,241,234,.3); justify-content: center; }
+.final-cta .sec-eyebrow::before { background: rgba(245,241,234,.2); }
+
+.final-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(56px, 7vw, 96px);
+  line-height: .9; margin-bottom: 24px; position: relative;
+}
+.final-title .hl { color: var(--orange); }
+
+.final-sub {
+  font-size: 16px; line-height: 1.7; color: rgba(245,241,234,.45);
+  max-width: 420px; margin: 0 auto 40px; position: relative;
+}
+
+.btn-final {
+  background: var(--orange); color: white;
+  padding: 18px 48px; border-radius: 100px;
+  font-size: 16px; font-weight: 700;
+  text-decoration: none; display: inline-block;
+  transition: transform .15s, box-shadow .2s;
+  position: relative;
+}
+.btn-final:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(232,72,15,.35); }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--ink); border-top: 1px solid rgba(245,241,234,.08);
+  padding: 28px 48px;
+  display: flex; justify-content: space-between; align-items: center;
+  color: rgba(245,241,234,.25);
+}
+.footer-copy { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1px; }
+
+/* ─── REVEAL ─── */
+.reveal {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ─── ANIMATIONS ─── */
+@keyframes pulse {
+  0%   { transform: scale(1); opacity: .5; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 960px) {
+  nav { padding: 0 24px; }
+  .hero-top { grid-template-columns: 1fr; padding: 48px 24px 32px; }
+  .hero-right { display: none; }
+  .sec { padding: 72px 24px; }
+  .steps, .compare-grid, .avd-cards, .benefits-grid { grid-template-columns: 1fr; }
+  .test-grid, .bonus-grid { grid-template-columns: 1fr; }
+  .inst-grid { grid-template-columns: 1fr; }
+  .modules-list .mod-row { grid-template-columns: 40px 1fr; }
+  .mod-badge { display: none; }
+  footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <span class="ia">IA</span><span class="pro">PRO</span><span class="dot">.</span><span class="blend">BLEND</span>
+  </div>
+  <a href="#preco" class="nav-pill">Garantir vaga →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-canvas-wrap">
+    <canvas id="hero-canvas"></canvas>
+
+    <!-- overlay content -->
+    <div class="hero-overlay">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        O futuro da criação já começou
+      </div>
+      <h1>
+        <span class="h-ia">IA</span><span class="h-pro">PRO</span><span class="h-dot">.</span><br>
+        <span class="h-blend">BLEND</span>
+      </h1>
+      <p class="hero-sub">Crie imagens incríveis de qualquer produto em menos de 5 minutos.</p>
+      <p class="hero-sub2">Um processo à prova de falhas, onde você tem controle total de cada etapa e não fica refém de inconsistências da IA pura.</p>
+      <div class="hero-btns">
+        <a href="#preco" class="btn-solid">Garantir minha vaga</a>
+        <a href="#fluxo" class="btn-ghost">Ver o fluxo</a>
+      </div>
+    </div>
+
+    <!-- stats bar -->
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">90%</div>
+        <div class="hero-stat-label">Menos tempo</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">10x</div>
+        <div class="hero-stat-label">Mais produtivo</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">100%</div>
+        <div class="hero-stat-label">Consistente</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">1.500+</div>
+        <div class="hero-stat-label">Alunos formados</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAROUSEL -->
+  <div class="carousel-wrap">
+    <div class="carousel-row">
+      <div class="c-track">
+        <img class="c-img" src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1567721913486-6585f069b695?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1612817288484-6f916006741a?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=600&h=400&fit=crop" alt="">
+        <!-- dup -->
+        <img class="c-img" src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1567721913486-6585f069b695?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1612817288484-6f916006741a?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=600&h=400&fit=crop" alt="">
+      </div>
+    </div>
+    <div class="carousel-row">
+      <div class="c-track rev">
+        <img class="c-img" src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1541643600914-78b084683702?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1590736969955-71cc94901144?w=600&h=400&fit=crop" alt="">
+        <!-- dup -->
+        <img class="c-img" src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1541643600914-78b084683702?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=600&h=400&fit=crop" alt="">
+        <img class="c-img" src="https://images.unsplash.com/photo-1590736969955-71cc94901144?w=600&h=400&fit=crop" alt="">
+      </div>
+    </div>
+  </div>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="t-track">
+      <span class="t-item"><span class="t-dot"></span>BLENDER 3D</span>
+      <span class="t-item"><span class="t-dot"></span>NANO BANANA</span>
+      <span class="t-item"><span class="t-dot"></span>GOOGLE VEO</span>
+      <span class="t-item"><span class="t-dot"></span>CLAUDE IA</span>
+      <span class="t-item"><span class="t-dot"></span>PRODUCT RENDERING</span>
+      <span class="t-item"><span class="t-dot"></span>AI VIDEO</span>
+      <span class="t-item"><span class="t-dot"></span>PACKSHOTS HIPER-REALISTAS</span>
+      <span class="t-item"><span class="t-dot"></span>3D + INTELIGÊNCIA ARTIFICIAL</span>
+      <span class="t-item"><span class="t-dot"></span>BLENDER 3D</span>
+      <span class="t-item"><span class="t-dot"></span>NANO BANANA</span>
+      <span class="t-item"><span class="t-dot"></span>GOOGLE VEO</span>
+      <span class="t-item"><span class="t-dot"></span>CLAUDE IA</span>
+      <span class="t-item"><span class="t-dot"></span>PRODUCT RENDERING</span>
+      <span class="t-item"><span class="t-dot"></span>AI VIDEO</span>
+      <span class="t-item"><span class="t-dot"></span>PACKSHOTS HIPER-REALISTAS</span>
+      <span class="t-item"><span class="t-dot"></span>3D + INTELIGÊNCIA ARTIFICIAL</span>
+    </div>
+  </div>
+</section>
+
+<!-- FLUXO -->
+<section class="sec sec-alt" id="fluxo">
+  <div class="sec-eyebrow reveal">O Fluxo 3D + IA</div>
+  <h2 class="sec-title reveal">Nenhum outro<br>curso ensina isso.</h2>
+  <div class="steps reveal">
+    <div class="step-card">
+      <div class="step-n">ETAPA 01</div>
+      <span class="step-icon">🧠</span>
+      <h3>Conceito com IA</h3>
+      <p>Agentes de IA criam o conceito completo do produto — nome, ideia, direcionamento criativo — automaticamente.</p>
+      <span class="step-tag">Claude + IA</span>
+    </div>
+    <div class="step-card">
+      <div class="step-n">ETAPA 02</div>
+      <span class="step-icon">🎨</span>
+      <h3>Desenvolvimento Visual</h3>
+      <p>Criação de embalagens e rótulos com prompts especializados e ferramentas de IA generativa.</p>
+      <span class="step-tag">Nano Banana</span>
+    </div>
+    <div class="step-card">
+      <div class="step-n">ETAPA 03</div>
+      <span class="step-icon">⬡</span>
+      <h3>Modelagem 3D</h3>
+      <p>Produto 100% manipulável com precisão absoluta no Blender, garantindo consistência em toda a campanha.</p>
+      <span class="step-tag">Blender 3D</span>
+    </div>
+    <div class="step-card">
+      <div class="step-n">ETAPA 04</div>
+      <span class="step-icon">▷</span>
+      <h3>Multiplicação com IA</h3>
+      <p>Packshots, animações e vídeos para campanhas completas gerados em fração do tempo tradicional.</p>
+      <span class="step-tag">Google Veo</span>
+    </div>
+  </div>
+</section>
+
+<!-- POR QUE 3D + IA -->
+<section class="sec">
+  <div class="sec-eyebrow reveal">Por que 3D + IA?</div>
+  <h2 class="sec-title reveal">O mercado está<br>mudando agora.</h2>
+  <div class="compare-grid reveal">
+    <div class="compare-card">
+      <div class="compare-chip">Só IA</div>
+      <h3>Resultados inconsistentes</h3>
+      <p>Falta de controle preciso, sem manipulação 3D real. Você fica refém da aleatoriedade e não consegue repetir resultados.</p>
+    </div>
+    <div class="compare-card">
+      <div class="compare-chip">Só 3D</div>
+      <h3>Processo lento demais</h3>
+      <p>Dias de trabalho manual, variações limitadas. A velocidade do mercado exige mais do que o 3D sozinho consegue entregar.</p>
+    </div>
+    <div class="compare-card winner">
+      <div class="winner-badge">✓ Melhor</div>
+      <div class="compare-chip">3D + IA</div>
+      <h3>Velocidade com precisão</h3>
+      <p>A velocidade da IA com o controle do 3D. Resultados profissionais em horas, não semanas. O único caminho que escala.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MÓDULOS -->
+<section class="sec sec-alt">
+  <div class="sec-eyebrow reveal">O caminho completo</div>
+  <h2 class="sec-title reveal">Módulos que<br>transformam carreiras.</h2>
+  <div class="modules-list reveal">
+    <div class="mod-row">
+      <div class="mod-num">01</div>
+      <div>
+        <div class="mod-title">IA para o Conceito</div>
+        <div class="mod-desc">Aceleração criativa e geração de ativos mestres — rótulos, visuais e direção de arte em horas.</div>
+      </div>
+      <div class="mod-badge">→ Etapa 1</div>
+    </div>
+    <div class="mod-row">
+      <div class="mod-num">02</div>
+      <div>
+        <div class="mod-title">Blender PRO</div>
+        <div class="mod-desc">Modelagem do produto, aplicação de rótulos vetorizados e criação do Produto 3D Mestre para toda a campanha.</div>
+      </div>
+      <div class="mod-badge">→ Etapa 2</div>
+    </div>
+    <div class="mod-row">
+      <div class="mod-num">03</div>
+      <div>
+        <div class="mod-title">A Ponte 3D–IA</div>
+        <div class="mod-desc">O módulo exclusivo: como usar o render do Blender como base para a IA amplificar com fotorrealismo.</div>
+      </div>
+      <div class="mod-badge">→ Exclusivo</div>
+    </div>
+    <div class="mod-row">
+      <div class="mod-num">04</div>
+      <div>
+        <div class="mod-title">10x Mais Resultados</div>
+        <div class="mod-desc">Packshots, cenários e animações em 1/10 do tempo — com o produto 3D consistente como base.</div>
+      </div>
+      <div class="mod-badge">→ Etapa 3</div>
+    </div>
+    <div class="mod-row">
+      <div class="mod-num">05</div>
+      <div>
+        <div class="mod-title">Profissional do Futuro</div>
+        <div class="mod-desc">Finalização, monetização e entrega de campanha. Freela, precificação e posicionamento com o novo workflow.</div>
+      </div>
+      <div class="mod-badge">→ Carreira</div>
+    </div>
+  </div>
+</section>
+
+<!-- ANTES VS DEPOIS -->
+<section class="sec">
+  <div class="sec-eyebrow reveal">Comparação real</div>
+  <h2 class="sec-title reveal">A diferença<br>é inegável.</h2>
+  <div class="avd-cards reveal">
+    <div class="avd-card">
+      <div class="avd-cat">Cosméticos</div>
+      <div class="avd-row-item">
+        <div class="avd-row-label">Tempo</div>
+        <div class="avd-before">3 dias</div>
+        <div class="avd-after">15 min</div>
+      </div>
+      <div class="avd-row-item">
+        <div class="avd-row-label">Custo</div>
+        <div class="avd-before">R$ 2.500</div>
+        <div class="avd-after">R$ 175</div>
+      </div>
+      <div class="avd-economy">↓ 75% de economia</div>
+    </div>
+    <div class="avd-card">
+      <div class="avd-cat">Bebidas</div>
+      <div class="avd-row-item">
+        <div class="avd-row-label">Tempo</div>
+        <div class="avd-before">2 dias</div>
+        <div class="avd-after">12 min</div>
+      </div>
+      <div class="avd-row-item">
+        <div class="avd-row-label">Custo</div>
+        <div class="avd-before">R$ 1.500</div>
+        <div class="avd-after">R$ 178</div>
+      </div>
+      <div class="avd-economy">↓ 75% de economia</div>
+    </div>
+    <div class="avd-card">
+      <div class="avd-cat">Suplementos</div>
+      <div class="avd-row-item">
+        <div class="avd-row-label">Tempo</div>
+        <div class="avd-before">3 dias</div>
+        <div class="avd-after">13 min</div>
+      </div>
+      <div class="avd-row-item">
+        <div class="avd-row-label">Custo</div>
+        <div class="avd-before">R$ 3.000</div>
+        <div class="avd-after">R$ 137</div>
+      </div>
+      <div class="avd-economy">↓ 75% de economia</div>
+    </div>
+    <div class="avd-card">
+      <div class="avd-cat">Perfumes</div>
+      <div class="avd-row-item">
+        <div class="avd-row-label">Tempo</div>
+        <div class="avd-before">4 dias</div>
+        <div class="avd-after">23 min</div>
+      </div>
+      <div class="avd-row-item">
+        <div class="avd-row-label">Custo</div>
+        <div class="avd-before">R$ 3.500</div>
+        <div class="avd-after">R$ 210</div>
+      </div>
+      <div class="avd-economy">↓ 75% de economia</div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFÍCIOS -->
+<section class="sec sec-alt">
+  <div class="sec-eyebrow reveal">O que você ganha</div>
+  <h2 class="sec-title reveal">Resultados reais,<br>mensuráveis.</h2>
+  <div class="benefits-grid reveal">
+    <div class="benefit-card">
+      <div class="benefit-num">Dias → Horas</div>
+      <h3>Velocidade extrema</h3>
+      <p>Do conceito à campanha completa em 1–2 dias, não em semanas de trabalho manual.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-num">100%</div>
+      <h3>Controle total</h3>
+      <p>Cada etapa sob seu controle, sem depender da aleatoriedade da IA pura.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-num">Premium</div>
+      <h3>Qualidade profissional</h3>
+      <p>Resultados que só a união de 3D + IA consegue entregar — impossíveis com uma ferramenta só.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-num">10x</div>
+      <h3>Multiplicação</h3>
+      <p>Gere dezenas de variações e assets em fração do tempo do processo tradicional.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="sec">
+  <div class="sec-eyebrow reveal">Depoimentos reais</div>
+  <h2 class="sec-title reveal">O que os alunos<br>estão dizendo.</h2>
+  <div class="test-grid reveal">
+    <div class="test-card">
+      <p class="test-quote">"Se você não adotar a IA nos seus projetos e na sua direção criativa, fica muito difícil conseguir trabalhos com maior valor agregado."</p>
+      <div class="test-footer">
+        <div>
+          <div class="test-name">Alisson Borges</div>
+          <div class="test-role">Motion Designer / 3D</div>
+        </div>
+        <div class="test-result">↑ Mais projetos<br>Contratado XP</div>
+      </div>
+    </div>
+    <div class="test-card">
+      <p class="test-quote">"Projetos que antes levavam várias horas, hoje executo em muito menos tempo graças à IA — e isso fez aumentar meu faturamento."</p>
+      <div class="test-footer">
+        <div>
+          <div class="test-name">Jonathan Rodrigues</div>
+          <div class="test-role">3D Product Visualization</div>
+        </div>
+        <div class="test-result">↑ Faturamento<br>Sem perder qualidade</div>
+      </div>
+    </div>
+    <div class="test-card">
+      <p class="test-quote">"A IA me dá um direcionamento criativo mais acertado pra entregar melhores projetos. Parei de quebrar a cabeça e sou mais assertivo."</p>
+      <div class="test-footer">
+        <div>
+          <div class="test-name">Jhosuã Lima</div>
+          <div class="test-role">3D Artist · Blender</div>
+        </div>
+        <div class="test-result">↑ Fluxo 80% mais rápido<br>F1 à Champions League</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BÔNUS -->
+<section class="sec sec-alt">
+  <div class="sec-eyebrow reveal">Bônus exclusivos</div>
+  <h2 class="sec-title reveal">Mais de R$ 1.188<br>em bônus incluídos.</h2>
+  <div class="bonus-grid reveal">
+    <div class="bonus-card">
+      <div>
+        <div class="bonus-title">Pack de 400+ Assets 3D</div>
+        <p class="bonus-desc">Biblioteca completa de modelos 3D prontos para usar nos seus projetos. Economize horas de modelagem.</p>
+      </div>
+      <div class="bonus-val">R$ 497</div>
+    </div>
+    <div class="bonus-card">
+      <div>
+        <div class="bonus-title">Agente DOUG</div>
+        <p class="bonus-desc">Agente pessoal que cria produtos — nome, conceito, storytelling, direção de arte até imagem final.</p>
+      </div>
+      <div class="bonus-val">R$ 97/mês</div>
+    </div>
+    <div class="bonus-card">
+      <div>
+        <div class="bonus-title">Agente Prompt Maker</div>
+        <p class="bonus-desc">Criador de prompts profissionais para imagens de produto com resultados de alto nível em segundos.</p>
+      </div>
+      <div class="bonus-val">R$ 97/mês</div>
+    </div>
+    <div class="bonus-card">
+      <div>
+        <div class="bonus-title">Agente Rafa</div>
+        <p class="bonus-desc">Criador de storyboard profissional para produção de vídeos com IA integrada.</p>
+      </div>
+      <div class="bonus-val">R$ 97/mês</div>
+    </div>
+    <div class="bonus-card">
+      <div>
+        <div class="bonus-title">Addon Multi Câmera</div>
+        <p class="bonus-desc">Addon exclusivo criado especificamente para o fluxo IAPRO.BLEND no Blender.</p>
+      </div>
+      <div class="bonus-val">R$ 97</div>
+    </div>
+    <div class="bonus-card">
+      <div>
+        <div class="bonus-title">Comunidade + Dashboard PRO</div>
+        <p class="bonus-desc">Acesso à comunidade privada de alunos e dashboard Notion para acompanhar seus projetos.</p>
+      </div>
+      <div class="bonus-val">R$ 344</div>
+    </div>
+  </div>
+</section>
+
+<!-- PREÇO -->
+<section class="sec" id="preco">
+  <div class="price-wrap reveal">
+    <div class="price-tag">75% OFF — Oferta especial</div>
+    <p class="price-de">De R$ 997</p>
+    <div class="price-main">12x <sup>R$</sup>39<span style="font-size:50%">,72</span></div>
+    <p class="price-or">ou à vista por</p>
+    <div class="price-pix">R$ 397 no PIX</div>
+    <ul class="price-list">
+      <li>Acesso vitalício a todos os conteúdos</li>
+      <li>+20h de conteúdo direto ao ponto</li>
+      <li>Todos os bônus incluídos</li>
+      <li>Comunidade exclusiva de alunos</li>
+      <li>Certificado de conclusão</li>
+      <li>Garantia de 7 dias — 100% do dinheiro de volta</li>
+    </ul>
+    <a href="https://pay.onprofit.com.br/I4hfK5lD?off=NzLncA" class="btn-cta-big">Garantir meu acesso agora</a>
+    <p class="price-secure">🔒 Pagamento 100% seguro · Garantia de 7 dias</p>
+  </div>
+</section>
+
+<!-- INSTRUTOR -->
+<section class="sec sec-alt">
+  <div class="sec-eyebrow reveal">Seu instrutor</div>
+  <div class="inst-grid reveal">
+    <div>
+      <div class="inst-eyebrow">Designer 3D & Especialista em IA</div>
+      <div class="inst-name">DOUGLAS<br>HELMER</div>
+      <p class="inst-bio">Especialista em design de produtos 3D com mais de uma década de experiência. Pioneiro na integração de IA com workflows 3D no Brasil. Já treinou milhares de designers e ajudou centenas a transformar suas carreiras, reduzindo tempo de produção em até 10x.</p>
+      <a href="https://pay.onprofit.com.br/I4hfK5lD?off=NzLncA" class="btn-solid">Quero aprender com Douglas</a>
+    </div>
+    <div>
+      <p class="inst-quote">"Minha missão é democratizar o acesso às ferramentas que transformam ideias em produtos de sucesso."</p>
+      <div class="inst-stats">
+        <div class="inst-stat">
+          <div class="inst-stat-n">10+</div>
+          <div class="inst-stat-l">Anos em design 3D</div>
+        </div>
+        <div class="inst-stat">
+          <div class="inst-stat-n">1.500+</div>
+          <div class="inst-stat-l">Alunos formados</div>
+        </div>
+        <div class="inst-stat">
+          <div class="inst-stat-n">150+</div>
+          <div class="inst-stat-l">Projetos para marcas</div>
+        </div>
+        <div class="inst-stat">
+          <div class="inst-stat-n">95%</div>
+          <div class="inst-stat-l">Taxa de satisfação</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec">
+  <div class="sec-eyebrow reveal" style="justify-content:center;">Tire suas dúvidas</div>
+  <h2 class="sec-title reveal" style="text-align:center;margin:0 auto 48px;">Perguntas<br>frequentes.</h2>
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Preciso saber modelagem ou design?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Não precisa saber nada. Abordaremos todos os conceitos e técnicas no curso para você desenvolver as habilidades do zero.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Tem algum pré-requisito?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Somente ter um computador. O resto será ensinado no curso, passo a passo.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Quais softwares serão utilizados?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Blender 3D (gratuito), Nano Banana, Google Veo e Claude. Ensinaremos a usar todas as ferramentas dentro do curso.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Por quanto tempo terei acesso?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Acesso vitalício a todos os conteúdos e atualizações. Assista quantas vezes quiser, no seu ritmo.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Quais são as formas de pagamento?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">PIX, 1 cartão, 2 cartões e PayPal. Parcelamento em até 12x no cartão de crédito.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        E se eu não gostar?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Garantia de 7 dias. Basta solicitar o reembolso na plataforma — devolvemos 100% do valor, sem perguntas.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Tem certificado de conclusão?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Sim. Ao concluir, você recebe um certificado digital verificável para adicionar ao LinkedIn e portfólio.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        O curso é online ou presencial?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">100% online. Assista de onde estiver, no horário que preferir. As aulas ficam gravadas na plataforma.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="sec-eyebrow">Pronto para começar?</div>
+  <h2 class="final-title">Seu produto merece<br><span class="hl">IAPRO.BLEND</span></h2>
+  <p class="final-sub">Junte-se a designers que já criam produtos premium em tempo recorde com 3D + IA.</p>
+  <a href="https://pay.onprofit.com.br/I4hfK5lD?off=NzLncA" class="btn-final">Garantir meu acesso agora</a>
+</section>
+
+<footer>
+  <div class="logo" style="font-size:18px;">
+    <span class="ia">IA</span><span class="pro">PRO</span><span class="dot">.</span><span class="blend">BLEND</span>
+  </div>
+  <div class="footer-copy">© 2025 Douglas Helmer — Todos os direitos reservados</div>
+</footer>
+
+<script>
+// ─── NAV SCROLL ───
+const nav = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > window.innerHeight * 0.8);
+});
+
+// ─── WEBGL SHADER HERO ───
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  const gl = canvas.getContext('webgl2');
+  if (!gl) return;
+
+  const vertSrc = `#version 300 es
+precision highp float;
+in vec4 position;
+void main(){ gl_Position = position; }`;
+
+  const fragSrc = `#version 300 es
+precision highp float;
+out vec4 O;
+uniform vec2 resolution;
+uniform float time;
+uniform vec2 touch;
+#define FC gl_FragCoord.xy
+#define T time
+#define R resolution
+#define MN min(R.x,R.y)
+
+float rnd(vec2 p){
+  p=fract(p*vec2(12.9898,78.233));
+  p+=dot(p,p+34.56);
+  return fract(p.x*p.y);
+}
+float noise(in vec2 p){
+  vec2 i=floor(p),f=fract(p),u=f*f*(3.-2.*f);
+  float a=rnd(i),b=rnd(i+vec2(1,0)),c=rnd(i+vec2(0,1)),d=rnd(i+1.);
+  return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);
+}
+float fbm(vec2 p){
+  float t=.0,a=1.;mat2 m=mat2(1.,-.5,.2,1.2);
+  for(int i=0;i<5;i++){t+=a*noise(p);p*=2.*m;a*=.5;}
+  return t;
+}
+float clouds(vec2 p){
+  float d=1.,t=.0;
+  for(float i=.0;i<3.;i++){
+    float a=d*fbm(i*10.+p.x*.2+.2*(1.+i)*p.y+d+i*i+p);
+    t=mix(t,d,a);d=a;p*=2./(i+1.);
+  }
+  return t;
+}
+void main(void){
+  vec2 uv=(FC-.5*R)/MN, st=uv*vec2(2,1);
+  vec3 col=vec3(0);
+  float bg=clouds(vec2(st.x+T*.5,-st.y));
+  uv*=1.-.3*(sin(T*.2)*.5+.5);
+  for(float i=1.;i<12.;i++){
+    uv+=.1*cos(i*vec2(.1+.01*i,.8)+i*i+T*.5+.1*uv.x);
+    vec2 p=uv;
+    float d=length(p);
+    col+=.00125/d*(cos(sin(i)*vec3(1,2,3))+1.);
+    float b=noise(i+p+bg*1.731);
+    col+=.002*b/length(max(p,vec2(b*p.x*.02,p.y)));
+    col=mix(col,vec3(bg*.25,bg*.137,bg*.05),d);
+  }
+  O=vec4(col,1);
+}`;
+
+  function compileShader(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src); gl.compileShader(s);
+    return s;
+  }
+
+  const vs = compileShader(gl.VERTEX_SHADER, vertSrc);
+  const fs = compileShader(gl.FRAGMENT_SHADER, fragSrc);
+  const prog = gl.createProgram();
+  gl.attachShader(prog, vs); gl.attachShader(prog, fs);
+  gl.linkProgram(prog); gl.useProgram(prog);
+
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,1,-1,-1,1,1,1,-1]), gl.STATIC_DRAW);
+  const pos = gl.getAttribLocation(prog, 'position');
+  gl.enableVertexAttribArray(pos);
+  gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+
+  const uRes   = gl.getUniformLocation(prog, 'resolution');
+  const uTime  = gl.getUniformLocation(prog, 'time');
+  const uTouch = gl.getUniformLocation(prog, 'touch');
+
+  let touch = [0, 0];
+  canvas.addEventListener('pointermove', e => {
+    touch = [e.clientX, canvas.clientHeight - e.clientY];
+  });
+
+  function resize() {
+    const dpr = Math.max(1, window.devicePixelRatio * 0.75);
+    canvas.width  = canvas.clientWidth  * dpr;
+    canvas.height = canvas.clientHeight * dpr;
+    gl.viewport(0, 0, canvas.width, canvas.height);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function loop(now) {
+    gl.clearColor(0,0,0,1); gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.useProgram(prog);
+    gl.uniform2f(uRes, canvas.width, canvas.height);
+    gl.uniform1f(uTime, now * 1e-3);
+    gl.uniform2f(uTouch, ...touch);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+
+// ─── REVEAL ───
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.07 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// ─── FAQ ───
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => {
+    i.classList.remove('open');
+    i.querySelector('.faq-icon').textContent = '+';
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    btn.querySelector('.faq-icon').textContent = '−';
+  }
+}
+</script>
+</body>
+</html>
