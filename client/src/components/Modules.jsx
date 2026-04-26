@@ -9,14 +9,14 @@ const MODS = [
     badge: '→ Etapa 1',
   },
   {
-    img: '/images/DroToGdSZcZsGneYv9FaDkk9E2I.webp',
+    img: '/images/HikBCU6skVoY2KNgjojuKIXeH4.webp',
     eyebrow: 'Etapa 2 do fluxo: Modelagem 3D',
     title: 'Blender PRO',
     desc: 'Modelagem do produto, aplicação de rótulos vetorizados e criação do Produto 3D Mestre — base consistente para toda campanha.',
     badge: '→ Etapa 2',
   },
   {
-    img: '/images/HikBCU6skVoY2KNgjojuKIXeH4.webp',
+    img: '/images/DroToGdSZcZsGneYv9FaDkk9E2I.webp',
     eyebrow: 'Exclusivo do fluxo IAPRO.BLEND',
     title: 'A Ponte 3D–IA',
     desc: 'O módulo exclusivo: como usar o render do Blender como base controlada para a IA amplificar com fotorrealismo absoluto.',
