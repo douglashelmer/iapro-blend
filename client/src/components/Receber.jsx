@@ -44,6 +44,14 @@ const BONUS = [
     price: 'R$ 397',
     color: '#4A0A0A',
   },
+  {
+    img: '/images/bonus-modelos-3d.jpg',
+    badge: 'Bônus 03',
+    title: '+400 Modelos 3D Prontos',
+    desc: 'Uma coleção com mais de 400 modelos de frascos, válvulas e embalagens para produtos prontos para utilizar nos seus projetos. Todos já contam com mapa UV aberto para aplicação das texturas de maneira profissional.',
+    price: 'R$ 397',
+    color: '#CC4400',
+  },
 ]
 
 function CourseCard({ item }) {

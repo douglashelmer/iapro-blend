@@ -764,8 +764,7 @@ h1 .h-blend { color: transparent; -webkit-text-stroke: 2px rgba(255,255,255,0.2)
   margin-bottom: 20px;
 }
 .rcb-bonus {
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
-  max-width: 900px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
 }
 .rcb-card {
   border-radius: 16px; overflow: hidden;
