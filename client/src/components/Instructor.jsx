@@ -13,14 +13,14 @@ export default function Instructor() {
         <div>
           <div className="inst-eyebrow">Designer 3D & Especialista em IA</div>
           <div className="inst-name">DOUGLAS<br />HELMER</div>
-          <p className="inst-bio">Especialista em design de produtos 3D com mais de uma década de experiência. Pioneiro na integração de IA com workflows 3D no Brasil. Já treinou milhares de designers e ajudou centenas a transformar suas carreiras, reduzindo tempo de produção em até 10x.</p>
+          <p className="inst-bio">Especialista em design de produtos 3D com mais de 20 anos de experiência. Pioneiro na integração de IA com workflows 3D no Brasil. Já treinou milhares de designers e ajudou centenas a transformar suas carreiras, reduzindo tempo de produção em até 10x.</p>
           <a href={CTA} className="btn-solid">Quero aprender com Douglas</a>
         </div>
         <div>
           <p className="inst-quote">"Minha missão é democratizar o acesso às ferramentas que transformam ideias em produtos de sucesso."</p>
           <div className="inst-stats">
             {[
-              { n: '10+',    l: 'Anos em design 3D' },
+              { n: '20+',    l: 'Anos em design 3D' },
               { n: '1.500+', l: 'Alunos formados' },
               { n: '150+',   l: 'Projetos para marcas' },
               { n: '95%',    l: 'Taxa de satisfação' },

@@ -1,10 +1,10 @@
 import { useReveal } from '../hooks/useReveal'
 
 const CARDS = [
-  { cat: 'Cosméticos',  tempoB: '3 dias', tempoA: '15 min', custoB: 'R$ 2.500', custoA: 'R$ 175',  eco: '↓ 75% de economia' },
-  { cat: 'Bebidas',     tempoB: '2 dias', tempoA: '12 min', custoB: 'R$ 1.500', custoA: 'R$ 178',  eco: '↓ 75% de economia' },
-  { cat: 'Suplementos', tempoB: '3 dias', tempoA: '13 min', custoB: 'R$ 3.000', custoA: 'R$ 137',  eco: '↓ 75% de economia' },
-  { cat: 'Perfumes',    tempoB: '4 dias', tempoA: '23 min', custoB: 'R$ 3.500', custoA: 'R$ 210',  eco: '↓ 75% de economia' },
+  { cat: 'Cosméticos',  tempoB: '3 dias', tempoA: '15 min', custoB: 'R$ 2.500', custoA: 'R$ 0', eco: '100% de economia' },
+  { cat: 'Bebidas',     tempoB: '2 dias', tempoA: '12 min', custoB: 'R$ 1.500', custoA: 'R$ 0', eco: '100% de economia' },
+  { cat: 'Suplementos', tempoB: '3 dias', tempoA: '13 min', custoB: 'R$ 3.000', custoA: 'R$ 0', eco: '100% de economia' },
+  { cat: 'Perfumes',    tempoB: '4 dias', tempoA: '23 min', custoB: 'R$ 3.500', custoA: 'R$ 0', eco: '100% de economia' },
 ]
 
 export default function BeforeAfter() {

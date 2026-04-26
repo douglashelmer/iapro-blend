@@ -1,14 +1,20 @@
 import Nav from './components/Nav'
 import Hero from './components/Hero'
+import Fidelidade from './components/Fidelidade'
 import Fluxo from './components/Fluxo'
 import Compare from './components/Compare'
-import Modules from './components/Modules'
 import BeforeAfter from './components/BeforeAfter'
+import Medos from './components/Medos'
+import Modules from './components/Modules'
 import Benefits from './components/Benefits'
-import Testimonials from './components/Testimonials'
+import Monetizacao from './components/Monetizacao'
+import ResultadosReais from './components/ResultadosReais'
+import OQueLeva from './components/OQueLeva'
 import Bonus from './components/Bonus'
-import Price from './components/Price'
+import Testimonials from './components/Testimonials'
 import Instructor from './components/Instructor'
+import Price from './components/Price'
+import Guarantee from './components/Guarantee'
 import FAQ from './components/FAQ'
 import FinalCTA from './components/FinalCTA'
 import Footer from './components/Footer'
@@ -18,15 +24,21 @@ export default function App() {
     <>
       <Nav />
       <Hero />
+      <Fidelidade />
       <Fluxo />
       <Compare />
-      <Modules />
       <BeforeAfter />
+      <Medos />
+      <Modules />
       <Benefits />
-      <Testimonials />
+      <Monetizacao />
+      <ResultadosReais />
+      <OQueLeva />
       <Bonus />
-      <Price />
+      <Testimonials />
       <Instructor />
+      <Price />
+      <Guarantee />
       <FAQ />
       <FinalCTA />
       <Footer />

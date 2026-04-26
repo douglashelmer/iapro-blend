@@ -4,10 +4,10 @@ import { useReveal } from '../hooks/useReveal'
 const ITEMS = [
   { q: 'Preciso saber modelagem ou design?', a: 'Não precisa saber nada. Abordaremos todos os conceitos e técnicas no curso para você desenvolver as habilidades do zero.' },
   { q: 'Tem algum pré-requisito?', a: 'Somente ter um computador. O resto será ensinado no curso, passo a passo.' },
-  { q: 'Quais softwares serão utilizados?', a: 'Blender 3D (gratuito), Nano Banana, Google Veo e Claude. Ensinaremos a usar todas as ferramentas dentro do curso.' },
+  { q: 'Quais softwares serão utilizados?', a: 'Blender 3D (gratuito), Nano Banana, Claude Code, Photoshop, Illustrator, DaVinci Resolve e After Effects. Ensinaremos a usar todas as ferramentas dentro do curso.' },
   { q: 'Por quanto tempo terei acesso?', a: 'Acesso vitalício a todos os conteúdos e atualizações. Assista quantas vezes quiser, no seu ritmo.' },
   { q: 'Quais são as formas de pagamento?', a: 'PIX, 1 cartão, 2 cartões e PayPal. Parcelamento em até 12x no cartão de crédito.' },
-  { q: 'E se eu não gostar?', a: 'Garantia de 7 dias. Basta solicitar o reembolso na plataforma — devolvemos 100% do valor, sem perguntas.' },
+  { q: 'E se eu não gostar?', a: 'Garantia de 30 dias. Basta solicitar o reembolso na plataforma — devolvemos 100% do valor, sem perguntas.' },
   { q: 'Tem certificado de conclusão?', a: 'Sim. Ao concluir, você recebe um certificado digital verificável para adicionar ao LinkedIn e portfólio.' },
   { q: 'O curso é online ou presencial?', a: '100% online. Assista de onde estiver, no horário que preferir. As aulas ficam gravadas na plataforma.' },
 ]
