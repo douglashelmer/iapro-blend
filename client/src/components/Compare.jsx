@@ -1,31 +1,50 @@
 import { useReveal } from '../hooks/useReveal'
 
+const CARDS = [
+  {
+    icon: '🎯',
+    chip: 'Para quem é',
+    title: 'Designers 3D',
+    desc: 'Você quer entregar projetos de qualidade premium em tempo recorde e parar de perder horas em renders manuais.',
+  },
+  {
+    icon: '📊',
+    chip: 'Para quem é',
+    title: 'Profissionais de Marketing',
+    desc: 'Você precisa de imagens de produto de alta qualidade sem depender de fotógrafo ou estúdio para cada campanha.',
+  },
+  {
+    icon: '🚀',
+    chip: 'Para quem é',
+    title: 'Empreendedores',
+    desc: 'Você vende produtos e quer imagens que vendem — sem gastar R$ 2.500 em um estúdio fotográfico toda vez.',
+    winner: true,
+  },
+  {
+    icon: '💡',
+    chip: 'Para quem é',
+    title: 'Criativos Visionários',
+    desc: 'Você entende que quem domina 3D + IA agora vai dominar o mercado criativo nos próximos anos.',
+  },
+]
+
 export default function Compare() {
   const eyebrowRef = useReveal()
   const titleRef = useReveal()
   const gridRef = useReveal()
 
   return (
-    <section className="sec">
-      <div className="sec-eyebrow reveal" ref={eyebrowRef}>Por que 3D + IA?</div>
-      <h2 className="sec-title reveal" ref={titleRef}>O mercado está<br />mudando agora.</h2>
+    <section className="sec sec-alt">
+      <div className="sec-eyebrow reveal" ref={eyebrowRef}>Para quem é o IAPRO.BLEND</div>
+      <h2 className="sec-title reveal" ref={titleRef}>Isso foi feito<br />pra você se…</h2>
       <div className="compare-grid reveal" ref={gridRef}>
-        <div className="compare-card">
-          <div className="compare-chip">Só IA</div>
-          <h3>Resultados inconsistentes</h3>
-          <p>Falta de controle preciso, sem manipulação 3D real. Você fica refém da aleatoriedade e não consegue repetir resultados.</p>
-        </div>
-        <div className="compare-card">
-          <div className="compare-chip">Só 3D</div>
-          <h3>Processo lento demais</h3>
-          <p>Dias de trabalho manual, variações limitadas. A velocidade do mercado exige mais do que o 3D sozinho consegue entregar.</p>
-        </div>
-        <div className="compare-card winner">
-          <div className="winner-badge">✓ Melhor</div>
-          <div className="compare-chip">3D + IA</div>
-          <h3>Velocidade com precisão</h3>
-          <p>A velocidade da IA com o controle do 3D. Resultados profissionais em horas, não semanas. O único caminho que escala.</p>
-        </div>
+        {CARDS.map(c => (
+          <div className={`compare-card${c.winner ? ' winner' : ''}`} key={c.title}>
+            <div className="compare-icon">{c.icon}</div>
+            <h3>{c.title}</h3>
+            <p>{c.desc}</p>
+          </div>
+        ))}
       </div>
     </section>
   )
