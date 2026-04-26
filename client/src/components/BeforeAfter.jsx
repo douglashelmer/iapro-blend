@@ -27,50 +27,50 @@ export default function BeforeAfter() {
       {/* Big comparison cards */}
       <div className="avd-compare-cards reveal" ref={cardsRef}>
         <div className="avd-old-card">
-          <div className="avd-card-label">Método Antigo</div>
-          <div className="avd-big-cost">R$ 3.000</div>
-          <div className="avd-big-label">custo médio por projeto</div>
+          <div className="avd-card-label">3D Tradicional</div>
+          <div className="avd-big-cost">3–4 dias</div>
+          <div className="avd-big-label">por projeto de packshot</div>
           <div className="avd-card-divider" />
           <div className="avd-detail-row">
-            <span className="avd-detail-icon">⏱</span>
-            <span><strong>3–4 dias</strong> de trabalho por projeto</span>
+            <span className="avd-detail-icon">🖥</span>
+            <span>Máquinas de R$ 15k+ para render em tempo aceitável</span>
           </div>
           <div className="avd-detail-row">
-            <span className="avd-detail-icon">💸</span>
-            <span>Fotógrafo + estúdio + edição + retrabalho</span>
+            <span className="avd-detail-icon">🏗</span>
+            <span>Horas montando cenas complexas e iluminação no Blender</span>
+          </div>
+          <div className="avd-detail-row">
+            <span className="avd-detail-icon">⏳</span>
+            <span>Render que demora horas — e trava a máquina enquanto roda</span>
           </div>
           <div className="avd-detail-row">
             <span className="avd-detail-icon">🔁</span>
-            <span>Revisões infinitas, prazos perdidos</span>
-          </div>
-          <div className="avd-detail-row">
-            <span className="avd-detail-icon">😓</span>
-            <span>Depende de terceiros para cada entrega</span>
+            <span>Retrabalho constante a cada ajuste de cenário ou luz</span>
           </div>
         </div>
 
         <div className="avd-vs">VS</div>
 
         <div className="avd-new-card">
-          <div className="avd-card-label">Com IAPRO.BLEND</div>
-          <div className="avd-big-cost orange">R$ 0</div>
-          <div className="avd-big-label">custo por projeto</div>
+          <div className="avd-card-label">Fluxo 3D + IA</div>
+          <div className="avd-big-cost orange">13 min</div>
+          <div className="avd-big-label">do produto pronto à imagem final</div>
           <div className="avd-card-divider" />
           <div className="avd-detail-row">
+            <span className="avd-detail-icon">💻</span>
+            <span>Roda em qualquer notebook intermediário — sem investimento em hardware</span>
+          </div>
+          <div className="avd-detail-row">
             <span className="avd-detail-icon">⚡</span>
-            <span><strong>13 minutos</strong> do conceito à entrega</span>
-          </div>
-          <div className="avd-detail-row">
-            <span className="avd-detail-icon">✅</span>
-            <span>Blender + Nano Banana + Claude — 100% gratuito</span>
-          </div>
-          <div className="avd-detail-row">
-            <span className="avd-detail-icon">🎯</span>
-            <span>99% de fidelidade ao produto real</span>
+            <span>Sem montar cena complexa — a IA gera o cenário a partir do produto 3D</span>
           </div>
           <div className="avd-detail-row">
             <span className="avd-detail-icon">🚀</span>
-            <span>Você controla tudo, sozinho, de casa</span>
+            <span>Render com IA em segundos, com qualidade fotorrealista</span>
+          </div>
+          <div className="avd-detail-row">
+            <span className="avd-detail-icon">🎯</span>
+            <span>Variações ilimitadas de cenário sem reabrir o Blender</span>
           </div>
         </div>
       </div>
