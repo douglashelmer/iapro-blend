@@ -653,7 +653,7 @@ nav.scrolled { background: rgba(17,17,17,0.95); }
 }
 .test-video {
   position: absolute; inset: 0; width: 100%; height: 100%;
-  border: none; display: block;
+  border: none; display: block; pointer-events: auto;
 }
 .test-body { padding: 24px 24px; flex: 1; display: flex; flex-direction: column; gap: 16px; }
 .test-quote { font-size: 14px; line-height: 1.7; color: var(--text2); font-style: italic; flex: 1; }
@@ -912,8 +912,8 @@ footer {
 }
 
 /* ═══════════════════ REVEAL ═══════════════════ */
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; pointer-events: none; }
+.reveal.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
 /* ═══════════════════ RESPONSIVE ═══════════════════ */
 @media (max-width: 1024px) {

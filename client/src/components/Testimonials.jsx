@@ -39,11 +39,9 @@ export default function Testimonials() {
             <div className="test-video-wrap">
               <iframe
                 className="test-video"
-                src={`https://www.youtube.com/embed/${t.videoId}?rel=0&modestbranding=1`}
+                src={`https://www.youtube.com/embed/${t.videoId}?rel=0&modestbranding=1&fs=0`}
                 title={t.name}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                loading="lazy"
               />
             </div>
             <div className="test-body">
