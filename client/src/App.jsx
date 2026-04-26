@@ -1,5 +1,6 @@
 import Nav from './components/Nav'
 import Hero from './components/Hero'
+import Receber from './components/Receber'
 import Fidelidade from './components/Fidelidade'
 import Fluxo from './components/Fluxo'
 import Compare from './components/Compare'
@@ -23,6 +24,7 @@ export default function App() {
     <>
       <Nav />
       <Hero />
+      <Receber />
       <Fidelidade />
       <Fluxo />
       <Compare />
