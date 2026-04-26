@@ -647,9 +647,13 @@ nav.scrolled { background: rgba(17,17,17,0.95); }
   transition: border-color .25s;
 }
 .test-card:hover { border-color: var(--border2); }
-.test-thumb {
-  width: 100%; height: 180px; object-fit: cover;
-  display: block; filter: brightness(.8); border-bottom: 1px solid var(--border);
+.test-video-wrap {
+  position: relative; width: 100%; padding-top: 56.25%;
+  border-bottom: 1px solid var(--border);
+}
+.test-video {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  border: none; display: block;
 }
 .test-body { padding: 24px 24px; flex: 1; display: flex; flex-direction: column; gap: 16px; }
 .test-quote { font-size: 14px; line-height: 1.7; color: var(--text2); font-style: italic; flex: 1; }
