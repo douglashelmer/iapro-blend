@@ -101,28 +101,46 @@ export default function Hero() {
       <div className="hero-canvas-wrap">
         <canvas id="hero-canvas" ref={canvasRef} aria-hidden="true" />
         <div className="hero-overlay">
+
+          {/* Logo */}
+          <div className="hero-logo" aria-label="Formação IAPRO.BLEND">
+            <span className="hero-logo-formacao">FORMAÇÃO</span>
+            <div className="hero-logo-text">
+              <div className="hero-logo-line1">
+                <span className="h-ia">IA</span><span className="h-pro">PRO</span><span className="h-dot">.</span>
+              </div>
+              <div className="hero-logo-blend">BLEND</div>
+            </div>
+          </div>
+
+          {/* Badge */}
           <div className="hero-badge">
-            <span className="hero-badge-dot" aria-hidden="true" />
-            O futuro da criação já começou
+            <span className="hero-badge-icon" aria-hidden="true">🪐</span>
+            O Futuro da criação já começou
           </div>
-          <h1>
-            <span className="h-ia">IA</span><span className="h-pro">PRO</span><span className="h-dot">.</span><br />
-            <span className="h-blend">BLEND</span>
+
+          {/* Headline */}
+          <h1 className="hero-title">
+            <span className="orange">3D + NANO BANANA + CLAUDE CODE:</span> O NOVO FLUXO PARA CRIAR{' '}
+            <span className="orange">PROJETOS 3D DE 15K</span> EM MINUTOS SEM GASTAR 1 REAL
           </h1>
-          <p className="hero-tagline">3D + Nano Banana + Claude Code</p>
-          <p className="hero-sub">O novo fluxo para criar projetos 3D de R$&nbsp;15k em minutos — sem gastar 1 real.</p>
-          <p className="hero-sub2">Do zero ao profissional usando ferramentas 100% gratuitas.</p>
+
+          {/* Sub */}
+          <p className="hero-sub">DO ZERO AO PROFISSIONAL – USANDO FERRAMENTAS 100% GRATUITAS</p>
+
+          {/* CTA */}
           <div className="hero-btns">
-            <a href="#preco" className="btn-solid">Garantir minha vaga</a>
-            <a href="#fluxo" className="btn-ghost">Ver o fluxo</a>
+            <a href="#preco" className="hero-cta-btn">GARANTIR MINHA VAGA AGORA <span className="hero-cta-icon">✦</span></a>
           </div>
+
         </div>
+
+        {/* Stats */}
         <div className="hero-stats" role="list" aria-label="Métricas do curso">
           {[
-            { num: '90%',    label: 'Menos tempo' },
-            { num: '10x',    label: 'Mais produtivo' },
-            { num: '100%',   label: 'Consistente' },
-            { num: '1.500+', label: 'Alunos formados' },
+            { num: '90%',  label: 'Menos Tempo' },
+            { num: '10X',  label: 'Mais Produtivo' },
+            { num: '100%', label: 'Consistente' },
           ].map(s => (
             <div className="hero-stat" key={s.label} role="listitem">
               <div className="hero-stat-num">{s.num}</div>
