@@ -9,7 +9,6 @@ import Modules from './components/Modules'
 import Benefits from './components/Benefits'
 import Monetizacao from './components/Monetizacao'
 import ResultadosReais from './components/ResultadosReais'
-import OQueLeva from './components/OQueLeva'
 import Bonus from './components/Bonus'
 import Testimonials from './components/Testimonials'
 import Instructor from './components/Instructor'
@@ -33,7 +32,6 @@ export default function App() {
       <Benefits />
       <Monetizacao />
       <ResultadosReais />
-      <OQueLeva />
       <Bonus />
       <Testimonials />
       <Instructor />
