@@ -3,6 +3,7 @@ import Hero from './components/Hero'
 import Receber from './components/Receber'
 import Fidelidade from './components/Fidelidade'
 import Fluxo from './components/Fluxo'
+import WorkflowDemo from './components/WorkflowDemo'
 import Compare from './components/Compare'
 import BeforeAfter from './components/BeforeAfter'
 import Medos from './components/Medos'
@@ -27,6 +28,7 @@ export default function App() {
       <Receber />
       <Fidelidade />
       <Fluxo />
+      <WorkflowDemo />
       <Compare />
       <BeforeAfter />
       <Medos />
