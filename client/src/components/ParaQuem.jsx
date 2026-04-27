@@ -5,7 +5,7 @@ const CARDS = [
     icon: '🎯',
     title: 'Designers 3D',
     desc: 'Você quer entregar projetos de qualidade premium em tempo recorde e parar de perder horas em renders manuais.',
-    highlight: false,
+    highlight: true,
   },
   {
     icon: '📊',
@@ -17,7 +17,7 @@ const CARDS = [
     icon: '🚀',
     title: 'Empreendedores',
     desc: 'Você vende produtos e quer imagens que vendem — sem gastar R$ 2.500 em um estúdio fotográfico toda vez.',
-    highlight: true,
+    highlight: false,
   },
   {
     icon: '💡',
