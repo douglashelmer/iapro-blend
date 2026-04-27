@@ -7,6 +7,7 @@ const RESULTADOS = [
     desc: 'Financeiramente e na satisfação de trabalho',
     name: 'Tiago Ramos — Aluno',
     quote: 'Por isso que todo conteúdo que vc lançar eu to dentro.',
+    img: '/images/corte2.webp',
   },
   {
     platform: 'Discord',
@@ -14,6 +15,7 @@ const RESULTADOS = [
     desc: 'Cliente fechado com o NexIA',
     name: 'Aluno — via Discord',
     quote: 'Teu conteúdo é o melhor da internet, não tem ninguém com algo tão relevante. Desde quando lançou o primeiro curso de blender eu comprei.',
+    img: '/images/corte3.webp',
   },
   {
     platform: 'WhatsApp',
@@ -21,6 +23,7 @@ const RESULTADOS = [
     desc: 'Projeto de packshots 3D',
     name: 'Rafa — Aluna',
     quote: 'Douglas, peguei um projeto de 4mil de packshots 3D. Tô bem feliz pq sei que vai abrir portas. 🙏',
+    img: '/images/corte1.webp',
   },
 ]
 
@@ -69,6 +72,9 @@ export default function ResultadosReais() {
             <div className="resultado-desc">{r.desc}</div>
             <div className="resultado-meta">{r.name}</div>
             <p className="resultado-quote">"{r.quote}"</p>
+            <div className="resultado-img-wrap">
+              <img src={r.img} alt="" className="resultado-img" loading="lazy" />
+            </div>
           </div>
         ))}
       </div>

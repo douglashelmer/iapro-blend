@@ -577,6 +577,11 @@ nav.scrolled { background: rgba(17,17,17,0.95); }
   font-size: 13px; line-height: 1.65; color: var(--text2);
   font-style: italic; padding-top: 12px; border-top: 1px solid var(--border);
 }
+.resultado-img-wrap {
+  margin-top: 14px; border-radius: 8px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.resultado-img { width: 100%; display: block; }
 
 /* ═══════════════════ MODULES (O caminho completo) ═══════════════════ */
 .modules-list {
