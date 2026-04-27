@@ -238,8 +238,8 @@ nav.scrolled { background: rgba(17,17,17,0.95); }
   animation: shimmer linear infinite var(--duration), shimmer calc(var(--duration) / 0.4) linear reverse paused;
   animation-composition: add;
 }
-.hero-cta-btn span { z-index: 1; position: relative; }
-.hero-cta-btn span::before {
+.hero-cta-btn > span { z-index: 1; position: relative; }
+.hero-cta-btn > span::before {
   content: ''; pointer-events: none; position: absolute;
   inset-inline-start: 50%; inset-block-start: 50%;
   translate: -50% -50%;
@@ -259,7 +259,7 @@ nav.scrolled { background: rgba(17,17,17,0.95); }
 .hero-cta-btn:is(:hover, :focus-visible)::after {
   animation-play-state: running;
 }
-.hero-cta-btn:is(:hover, :focus-visible) span::before { opacity: 1; }
+.hero-cta-btn:is(:hover, :focus-visible) > span::before { opacity: 1; }
 .hero-cta-btn:active { translate: 0 1px; }
 @keyframes gradient-angle { to { --gradient-angle: 360deg; } }
 @keyframes shimmer { to { rotate: 360deg; } }
