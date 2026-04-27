@@ -917,11 +917,11 @@ footer {
 
 /* ═══════════════════ GALERIA MASONRY ═══════════════════ */
 .galeria-masonry {
-  columns: 4; column-gap: 12px; margin-top: 56px;
+  columns: 5; column-gap: 10px; margin-top: 56px;
 }
 .galeria-item {
-  break-inside: avoid; margin-bottom: 12px;
-  border-radius: 10px; overflow: hidden;
+  break-inside: avoid; margin-bottom: 10px;
+  border-radius: 8px; overflow: hidden;
   border: 1px solid rgba(255,255,255,0.07);
 }
 .galeria-img {
