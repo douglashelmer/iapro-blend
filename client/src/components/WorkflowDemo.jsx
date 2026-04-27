@@ -4,10 +4,10 @@ import { useReveal } from '../hooks/useReveal'
 const CONFIG = {
   blenderImg: '/images/print-blender.webp', // Painel Blender (viewport)
   outputs: [
-    '/images/result-image-1.webp', // Variação 1 (canto superior esquerdo)
-    '/images/result-image-2.webp', // Variação 2 (canto superior direito)
-    '/images/result-image-3.webp', // Variação 3 (canto inferior esquerdo)
-    '/images/result-image-4.webp', // Variação 4 (canto inferior direito)
+    '/images/roxo1.webp', // Variação 1 (canto superior esquerdo)
+    '/images/roxo2.webp', // Variação 2 (canto superior direito)
+    '/images/roxo3.webp', // Variação 3 (canto inferior esquerdo)
+    '/images/roxo4.webp', // Variação 4 (canto inferior direito)
   ],
 }
 
