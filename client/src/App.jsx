@@ -5,7 +5,6 @@ import ParaQuem from './components/ParaQuem'
 import Fidelidade from './components/Fidelidade'
 import Fluxo from './components/Fluxo'
 import WorkflowDemo from './components/WorkflowDemo'
-import Compare from './components/Compare'
 import BeforeAfter from './components/BeforeAfter'
 import Medos from './components/Medos'
 import Modules from './components/Modules'
@@ -31,7 +30,6 @@ export default function App() {
       <Fidelidade />
       <Fluxo />
       <WorkflowDemo />
-      <Compare />
       <BeforeAfter />
       <Medos />
       <Modules />
