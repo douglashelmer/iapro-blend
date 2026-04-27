@@ -938,12 +938,15 @@ footer {
 
 /* ═══════════════════ COMPARE SLIDES ═══════════════════ */
 .csl-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 450px));
+  gap: 12px;
 }
 
 .cs-slide {
   position: relative; overflow: hidden; border-radius: 10px;
-  aspect-ratio: 3/4; cursor: col-resize; user-select: none;
+  aspect-ratio: 1 / 1;
+  cursor: col-resize; user-select: none;
   border: 1px solid rgba(255,255,255,0.08);
   background: #111;
 }
@@ -1248,7 +1251,7 @@ footer {
   .mod-img { width: 160px; height: 120px; }
 
   .galeria-masonry { columns: 3; }
-  .csl-grid { grid-template-columns: repeat(2, 1fr); }
+  .csl-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
 
   /* WorkflowDemo — tablet: left on top, mid + right side by side */
   .wfd-body { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; }
