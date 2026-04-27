@@ -8,7 +8,7 @@ export function useReveal() {
     el.classList.add('reveal')
     const io = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) { el.classList.add('visible'); io.unobserve(el) } },
-      { threshold: 0.07 }
+      { threshold: 0.07, rootMargin: '0px 0px -40px 0px' }
     )
     io.observe(el)
     return () => io.disconnect()
