@@ -60,7 +60,7 @@ export default function Hero() {
 
           {/* CTA */}
           <div className="hero-btns">
-            <a href="#preco" className="hero-cta-btn">GARANTIR MINHA VAGA AGORA <span className="hero-cta-icon">✦</span></a>
+            <a href="#preco" className="hero-cta-btn"><span>GARANTIR MINHA VAGA AGORA <span className="hero-cta-icon">✦</span></span></a>
           </div>
 
         </div>

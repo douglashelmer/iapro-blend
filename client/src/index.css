@@ -1,5 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
 
+@property --gradient-angle {
+  syntax: "<angle>"; initial-value: 0deg; inherits: false;
+}
+@property --gradient-angle-offset {
+  syntax: "<angle>"; initial-value: 0deg; inherits: false;
+}
+@property --gradient-percent {
+  syntax: "<percentage>"; initial-value: 5%; inherits: false;
+}
+@property --gradient-shine {
+  syntax: "<color>"; initial-value: white; inherits: false;
+}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -161,21 +174,96 @@ nav.scrolled { background: rgba(17,17,17,0.95); }
   justify-content: center; pointer-events: auto; animation: fadeUp .7s .4s ease both;
 }
 .hero-cta-btn {
+  --shiny-cta-bg: #1a0a00;
+  --shiny-cta-bg-subtle: #2a1200;
+  --shiny-cta-fg: #ffffff;
+  --shiny-cta-highlight: #ff5a00;
+  --shiny-cta-highlight-subtle: #ff8c42;
+  --animation: gradient-angle linear infinite;
+  --duration: 3s;
+  --shadow-size: 2px;
+  --transition: 800ms cubic-bezier(0.25, 1, 0.5, 1);
+
+  isolation: isolate;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
   display: inline-flex; align-items: center; gap: 10px;
-  background: var(--orange-cta); color: white;
-  padding: 18px 40px; border-radius: 6px;
+  padding: 18px 44px;
   font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 2px;
   text-decoration: none; text-transform: uppercase;
-  box-shadow: 0 0 0 0 rgba(255,90,0,.7);
-  animation: ctaPulse 2s ease-in-out infinite;
-  transition: transform .15s; touch-action: manipulation;
+  border: 1px solid transparent;
+  border-radius: 360px;
+  color: var(--shiny-cta-fg);
+  background:
+    linear-gradient(var(--shiny-cta-bg), var(--shiny-cta-bg)) padding-box,
+    conic-gradient(
+      from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+      transparent,
+      var(--shiny-cta-highlight) var(--gradient-percent),
+      var(--gradient-shine) calc(var(--gradient-percent) * 2),
+      var(--shiny-cta-highlight) calc(var(--gradient-percent) * 3),
+      transparent calc(var(--gradient-percent) * 4)
+    ) border-box;
+  box-shadow: inset 0 0 0 1px var(--shiny-cta-bg-subtle);
+  transition: var(--transition);
+  transition-property: --gradient-angle-offset, --gradient-percent, --gradient-shine;
+  animation: var(--animation) var(--duration), var(--animation) calc(var(--duration) / 0.4) reverse paused;
+  animation-composition: add;
+  touch-action: manipulation;
 }
-@keyframes ctaPulse {
-  0%   { box-shadow: 0 0 0 0 rgba(255,90,0,.7); }
-  60%  { box-shadow: 0 0 0 16px rgba(255,90,0,0); }
-  100% { box-shadow: 0 0 0 0 rgba(255,90,0,0); }
+.hero-cta-btn::before,
+.hero-cta-btn::after {
+  content: ''; pointer-events: none; position: absolute;
+  inset-inline-start: 50%; inset-block-start: 50%;
+  translate: -50% -50%; z-index: -1;
 }
-.hero-cta-btn:hover { transform: translateY(-2px); animation-play-state: paused; box-shadow: 0 14px 36px rgba(255,72,0,.45); }
+.hero-cta-btn::before {
+  --size: calc(100% - var(--shadow-size) * 3);
+  --position: 2px;
+  --space: calc(var(--position) * 2);
+  width: var(--size); height: var(--size);
+  background: radial-gradient(circle at var(--position) var(--position), white calc(var(--position) / 4), transparent 0) padding-box;
+  background-size: var(--space) var(--space); background-repeat: space;
+  mask-image: conic-gradient(from calc(var(--gradient-angle) + 45deg), black, transparent 10% 90%, black);
+  border-radius: inherit; opacity: 0.4; z-index: -1;
+  animation: var(--animation) var(--duration), var(--animation) calc(var(--duration) / 0.4) reverse paused;
+  animation-composition: add;
+}
+.hero-cta-btn::after {
+  width: 100%; aspect-ratio: 1;
+  background: linear-gradient(-50deg, transparent, var(--shiny-cta-highlight), transparent);
+  mask-image: radial-gradient(circle at bottom, transparent 40%, black);
+  opacity: 0.6;
+  animation: shimmer linear infinite var(--duration), shimmer calc(var(--duration) / 0.4) linear reverse paused;
+  animation-composition: add;
+}
+.hero-cta-btn span { z-index: 1; position: relative; }
+.hero-cta-btn span::before {
+  content: ''; pointer-events: none; position: absolute;
+  inset-inline-start: 50%; inset-block-start: 50%;
+  translate: -50% -50%;
+  --size: calc(100% + 1rem);
+  width: var(--size); height: var(--size);
+  box-shadow: inset 0 -1ex 2rem 4px var(--shiny-cta-highlight);
+  opacity: 0; transition: opacity var(--transition);
+  animation: calc(var(--duration) * 1.5) breathe linear infinite;
+}
+.hero-cta-btn:is(:hover, :focus-visible) {
+  --gradient-percent: 20%;
+  --gradient-angle-offset: 95deg;
+  --gradient-shine: var(--shiny-cta-highlight-subtle);
+}
+.hero-cta-btn:is(:hover, :focus-visible),
+.hero-cta-btn:is(:hover, :focus-visible)::before,
+.hero-cta-btn:is(:hover, :focus-visible)::after {
+  animation-play-state: running;
+}
+.hero-cta-btn:is(:hover, :focus-visible) span::before { opacity: 1; }
+.hero-cta-btn:active { translate: 0 1px; }
+@keyframes gradient-angle { to { --gradient-angle: 360deg; } }
+@keyframes shimmer { to { rotate: 360deg; } }
+@keyframes breathe { from, to { scale: 1; } 50% { scale: 1.2; } }
 .hero-cta-icon { font-size: 16px; }
 .btn-solid {
   background: var(--orange-cta); color: white; padding: 16px 36px;
