@@ -49,17 +49,23 @@ function Slide({ before, after }) {
       onTouchStart={() => { dragging.current = true }}
       onTouchEnd={() => { dragging.current = false }}
     >
-      {/* After — full width underneath */}
+      {/* Depois — camada de baixo, tamanho total */}
       <img src={after} alt="depois" className="cs-img" draggable={false} />
 
-      {/* Before — clipped on left */}
-      <div className="cs-before-wrap" style={{ width: `${pos}%` }}>
-        <img src={before} alt="antes" className="cs-img cs-before-img" draggable={false} />
-        <div className="cs-label cs-label-before">ANTES</div>
-      </div>
+      {/* Antes — mesma posição e tamanho, recortada com clip-path */}
+      <img
+        src={before}
+        alt="antes"
+        className="cs-img"
+        style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
+        draggable={false}
+      />
+
+      {/* Labels */}
+      <div className="cs-label cs-label-before">ANTES</div>
       <div className="cs-label cs-label-after">DEPOIS</div>
 
-      {/* Divider */}
+      {/* Divisor */}
       <div
         className="cs-divider"
         style={{ left: `${pos}%` }}

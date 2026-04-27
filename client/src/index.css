@@ -956,12 +956,6 @@ footer {
   object-fit: cover; display: block; pointer-events: none;
 }
 
-.cs-before-wrap {
-  position: absolute; inset: 0; overflow: hidden;
-  border-right: 2px solid rgba(255,255,255,0.9);
-}
-.cs-before-img { width: 100vw; max-width: none; }
-
 /* Labels */
 .cs-label {
   position: absolute; bottom: 12px;
