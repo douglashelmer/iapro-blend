@@ -2,7 +2,7 @@ import { useReveal } from '../hooks/useReveal'
 
 // ── Para trocar as imagens, peça ao assistente aqui no chat ──
 const CONFIG = {
-  blenderImg: '/images/HikBCU6skVoY2KNgjojuKIXeH4.webp', // Painel Blender (viewport)
+  blenderImg: '/images/print-blender.webp', // Painel Blender (viewport)
   outputs: [
     '/images/result-image-1.webp', // Variação 1 (canto superior esquerdo)
     '/images/result-image-2.webp', // Variação 2 (canto superior direito)
