@@ -1,6 +1,7 @@
 import Nav from './components/Nav'
 import Hero from './components/Hero'
 import Receber from './components/Receber'
+import ParaQuem from './components/ParaQuem'
 import Fidelidade from './components/Fidelidade'
 import Fluxo from './components/Fluxo'
 import WorkflowDemo from './components/WorkflowDemo'
@@ -26,6 +27,7 @@ export default function App() {
       <Nav />
       <Hero />
       <Receber />
+      <ParaQuem />
       <Fidelidade />
       <Fluxo />
       <WorkflowDemo />
