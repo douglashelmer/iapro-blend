@@ -6,10 +6,23 @@ export default function Hero() {
     <section className="hero">
       <div className="hero-canvas-wrap">
 
-        {/* Vídeo de fundo */}
+        {/* Vídeo de fundo — desktop */}
         <video
           id="hero-canvas"
+          className="hero-video-desk"
           src="/images/video-hero.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-hidden="true"
+        />
+
+        {/* Vídeo de fundo — mobile */}
+        <video
+          id="hero-canvas-mob"
+          className="hero-video-mob"
+          src="/images/banner-logos-rodando.webm"
           autoPlay
           muted
           loop
