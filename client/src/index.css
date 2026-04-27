@@ -915,6 +915,22 @@ footer {
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; pointer-events: none; }
 .reveal.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
+/* ═══════════════════ GALERIA MASONRY ═══════════════════ */
+.galeria-masonry {
+  columns: 4; column-gap: 12px; margin-top: 56px;
+}
+.galeria-item {
+  break-inside: avoid; margin-bottom: 12px;
+  border-radius: 10px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.galeria-img {
+  width: 100%; display: block;
+  transition: transform .3s ease, opacity .3s ease;
+  opacity: .92;
+}
+.galeria-item:hover .galeria-img { transform: scale(1.03); opacity: 1; }
+
 /* ═══════════════════ PARA QUEM ═══════════════════ */
 .pq-title { font-size: clamp(40px, 6vw, 80px); text-align: left; margin-bottom: 48px; }
 
@@ -1175,6 +1191,8 @@ footer {
   .mod-row { grid-template-columns: 160px 1fr; }
   .mod-img { width: 160px; height: 120px; }
 
+  .galeria-masonry { columns: 3; }
+
   /* WorkflowDemo — tablet: left on top, mid + right side by side */
   .wfd-body { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; }
   .wfd-left { grid-column: 1 / -1; min-height: 260px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
@@ -1214,6 +1232,7 @@ footer {
   .mod-row { grid-template-columns: 1fr; }
   .mod-img { width: 100%; height: 160px; }
   .pq-grid { grid-template-columns: 1fr; }
+  .galeria-masonry { columns: 2; }
 
   /* WorkflowDemo — mobile: full vertical stack */
   .wfd-body { grid-template-columns: 1fr; }
