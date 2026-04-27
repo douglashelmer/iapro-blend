@@ -194,9 +194,11 @@ nav.scrolled { background: rgba(17,17,17,0.95); }
   background: var(--orange-cta); color: white; padding: 16px 36px;
   border-radius: 6px; font-size: 14px; font-weight: 700;
   text-decoration: none; letter-spacing: 0.5px; text-transform: uppercase;
-  transition: transform .15s, box-shadow .2s; display: inline-block; touch-action: manipulation;
+  display: inline-block; touch-action: manipulation;
+  animation: ctaPulse 2s ease-in-out infinite;
+  transition: transform .15s, filter .15s;
 }
-.btn-solid:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(255,72,0,.4); }
+.btn-solid:hover { transform: translateY(-2px); filter: brightness(1.1); animation-play-state: paused; }
 .btn-ghost {
   padding: 16px 28px; border-radius: 6px;
   border: 1px solid rgba(255,255,255,0.2); font-size: 14px; font-weight: 500;
@@ -757,9 +759,11 @@ nav.scrolled { background: rgba(17,17,17,0.95); }
   border-radius: 6px; border: none; cursor: pointer;
   font-size: 15px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
   text-decoration: none; display: block; text-align: center;
-  transition: background .2s, transform .15s; margin-bottom: 16px; touch-action: manipulation;
+  margin-bottom: 16px; touch-action: manipulation;
+  animation: ctaPulse 2s ease-in-out infinite;
+  transition: transform .15s, filter .15s;
 }
-.btn-cta-big:hover { background: #e84400; transform: translateY(-2px); }
+.btn-cta-big:hover { filter: brightness(1.1); transform: translateY(-2px); animation-play-state: paused; }
 .price-secure {
   font-family: 'Chakra Petch', sans-serif; font-size: 11px;
   letter-spacing: 1px; color: var(--text3);
@@ -879,9 +883,11 @@ nav.scrolled { background: rgba(17,17,17,0.95); }
   background: var(--orange-cta); color: white; padding: 18px 48px;
   border-radius: 6px; font-size: 15px; font-weight: 700; letter-spacing: 0.5px;
   text-transform: uppercase; text-decoration: none; display: inline-block;
-  transition: transform .15s, box-shadow .2s; position: relative; touch-action: manipulation;
+  position: relative; touch-action: manipulation;
+  animation: ctaPulse 2s ease-in-out infinite;
+  transition: transform .15s, filter .15s;
 }
-.btn-final:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(255,72,0,.35); }
+.btn-final:hover { transform: translateY(-2px); filter: brightness(1.1); animation-play-state: paused; }
 
 /* ═══════════════════ RECEBER (Veja tudo) ═══════════════════ */
 .rcb-sec { background: var(--bg); }
