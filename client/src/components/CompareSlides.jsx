@@ -30,30 +30,50 @@ function Slide({ before, after }) {
     rectCache.current = containerRef.current?.getBoundingClientRect() ?? null
   }, [])
 
+  // Mouse — janela inteira para não perder o drag ao sair do slide
   useEffect(() => {
     const onMove = (e) => { if (dragging.current) update(e.clientX) }
     const onUp   = () => { dragging.current = false; rectCache.current = null }
     window.addEventListener('mousemove', onMove)
-    window.addEventListener('mouseup', onUp)
-    window.addEventListener('resize', () => { rectCache.current = null })
+    window.addEventListener('mouseup',  onUp)
+    window.addEventListener('resize',   () => { rectCache.current = null })
     return () => {
       window.removeEventListener('mousemove', onMove)
-      window.removeEventListener('mouseup', onUp)
+      window.removeEventListener('mouseup',  onUp)
     }
   }, [update])
 
-  const onTouchMove = (e) => {
-    e.preventDefault()
-    update(e.touches[0].clientX)
-  }
+  // Touch — listener não-passivo no container (único jeito de chamar preventDefault)
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+
+    const onTouchMove = (e) => {
+      if (!dragging.current) return
+      e.preventDefault() // funciona porque { passive: false }
+      update(e.touches[0].clientX)
+    }
+    const onTouchEnd = () => {
+      dragging.current = false
+      rectCache.current = null
+    }
+
+    el.addEventListener('touchmove', onTouchMove, { passive: false })
+    el.addEventListener('touchend',  onTouchEnd)
+    el.addEventListener('touchcancel', onTouchEnd)
+    return () => {
+      el.removeEventListener('touchmove', onTouchMove)
+      el.removeEventListener('touchend',  onTouchEnd)
+      el.removeEventListener('touchcancel', onTouchEnd)
+    }
+  }, [update])
 
   return (
     <div
       className="cs-slide"
       ref={containerRef}
-      onTouchMove={onTouchMove}
+      // onTouchStart no container: inicia drag vindo de qualquer ponto do slide
       onTouchStart={() => { cacheRect(); dragging.current = true }}
-      onTouchEnd={() => { dragging.current = false; rectCache.current = null }}
     >
       {/* Depois — camada de baixo, tamanho total */}
       <img src={after} alt="depois" className="cs-img" draggable={false} />
@@ -76,7 +96,11 @@ function Slide({ before, after }) {
         className="cs-divider"
         style={{ left: `${pos}%` }}
         onMouseDown={(e) => { e.preventDefault(); cacheRect(); dragging.current = true }}
-        onTouchStart={(e) => { e.stopPropagation(); dragging.current = true }}
+        onTouchStart={(e) => {
+          // NÃO chama stopPropagation — deixa o container também receber e chamar cacheRect
+          cacheRect()
+          dragging.current = true
+        }}
       >
         <div className="cs-handle">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
