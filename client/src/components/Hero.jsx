@@ -23,7 +23,7 @@ export default function Hero() {
         <img
           id="hero-canvas-mob"
           className="hero-video-mob"
-          src="/images/imagem-mobi-preload.webp"
+          src="/images/imagem-mobi-2.webp"
           aria-hidden="true"
           fetchPriority="high"
           alt=""
