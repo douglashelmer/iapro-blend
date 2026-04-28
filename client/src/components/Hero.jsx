@@ -15,6 +15,7 @@ export default function Hero() {
           muted
           loop
           playsInline
+          preload="metadata"
           aria-hidden="true"
         />
 
@@ -27,6 +28,7 @@ export default function Hero() {
           muted
           loop
           playsInline
+          preload="metadata"
           aria-hidden="true"
         />
 

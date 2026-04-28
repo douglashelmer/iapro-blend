@@ -57,7 +57,7 @@ function Slide({ before, after }) {
         src={before}
         alt="antes"
         className="cs-img"
-        style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
+        style={{ clipPath: `inset(0 ${100 - pos}% 0 0)`, willChange: 'clip-path' }}
         draggable={false}
       />
 

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+/* Fontes carregadas via <link> no index.html para evitar render-blocking */
 
 @property --gradient-angle {
   syntax: "<angle>"; initial-value: 0deg; inherits: false;
@@ -179,26 +179,34 @@ nav.scrolled { background: rgba(17,17,17,0.95); }
   padding: 18px 44px; border-radius: 8px;
   font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 2px;
   text-decoration: none; text-transform: uppercase;
-  animation: ctaPulse 2s ease-in-out infinite;
   transition: transform .15s, filter .15s; touch-action: manipulation;
 }
-.hero-cta-btn:hover { transform: translateY(-2px); filter: brightness(1.1); animation-play-state: paused; }
+.hero-cta-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
 .hero-cta-btn:active { transform: translateY(1px); }
 @keyframes ctaPulse {
-  0%   { box-shadow: 0 0 0 0 rgba(255,90,0,.7); }
-  60%  { box-shadow: 0 0 0 18px rgba(255,90,0,0); }
-  100% { box-shadow: 0 0 0 0 rgba(255,90,0,0); }
+  0%   { transform: scale(1);   opacity: .7; }
+  70%  { transform: scale(1.22); opacity: 0; }
+  100% { transform: scale(1.22); opacity: 0; }
 }
+/* Shared pulse ring — GPU-accelerated (transform+opacity only) */
+.hero-cta-btn, .btn-solid, .btn-cta-big, .btn-final { position: relative; }
+.hero-cta-btn::before, .btn-solid::before, .btn-cta-big::before, .btn-final::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  background: var(--orange-cta); z-index: -1; pointer-events: none;
+  animation: ctaPulse 2s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+.hero-cta-btn:hover::before, .btn-solid:hover::before,
+.btn-cta-big:hover::before, .btn-final:hover::before { animation-play-state: paused; }
 .hero-cta-icon { font-size: 16px; }
 .btn-solid {
   background: var(--orange-cta); color: white; padding: 16px 36px;
   border-radius: 6px; font-size: 14px; font-weight: 700;
   text-decoration: none; letter-spacing: 0.5px; text-transform: uppercase;
   display: inline-block; touch-action: manipulation;
-  animation: ctaPulse 2s ease-in-out infinite;
   transition: transform .15s, filter .15s;
 }
-.btn-solid:hover { transform: translateY(-2px); filter: brightness(1.1); animation-play-state: paused; }
+.btn-solid:hover { transform: translateY(-2px); filter: brightness(1.1); }
 .btn-ghost {
   padding: 16px 28px; border-radius: 6px;
   border: 1px solid rgba(255,255,255,0.2); font-size: 14px; font-weight: 500;
@@ -242,7 +250,7 @@ nav.scrolled { background: rgba(17,17,17,0.95); }
 .carousel-wrap::after  { right: 0; background: linear-gradient(-90deg, var(--bg), transparent); }
 .carousel-row { overflow: hidden; }
 .carousel-row + .carousel-row { border-top: 1px solid var(--border); }
-.c-track { display: flex; gap: 0; width: max-content; animation: cScroll 45s linear infinite; }
+.c-track { display: flex; gap: 0; width: max-content; animation: cScroll 45s linear infinite; will-change: transform; }
 .c-track.rev { animation: cScrollRev 45s linear infinite; }
 .c-track:hover, .c-track.rev:hover { animation-play-state: paused; }
 .c-img {
@@ -256,7 +264,7 @@ nav.scrolled { background: rgba(17,17,17,0.95); }
 
 /* ═══════════════════ TICKER ═══════════════════ */
 .ticker { background: var(--orange); overflow: hidden; padding: 12px 0; display: flex; }
-.t-track { display: flex; gap: 40px; white-space: nowrap; flex-shrink: 0; animation: tScroll 24s linear infinite; }
+.t-track { display: flex; gap: 40px; white-space: nowrap; flex-shrink: 0; animation: tScroll 24s linear infinite; will-change: transform; }
 .t-item {
   font-family: 'Chakra Petch', sans-serif; font-size: 11px; letter-spacing: 3px;
   text-transform: uppercase; color: rgba(255,255,255,.8);
@@ -760,10 +768,9 @@ nav.scrolled { background: rgba(17,17,17,0.95); }
   font-size: 15px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
   text-decoration: none; display: block; text-align: center;
   margin-bottom: 16px; touch-action: manipulation;
-  animation: ctaPulse 2s ease-in-out infinite;
   transition: transform .15s, filter .15s;
 }
-.btn-cta-big:hover { filter: brightness(1.1); transform: translateY(-2px); animation-play-state: paused; }
+.btn-cta-big:hover { filter: brightness(1.1); transform: translateY(-2px); }
 .price-secure {
   font-family: 'Chakra Petch', sans-serif; font-size: 11px;
   letter-spacing: 1px; color: var(--text3);
@@ -884,7 +891,6 @@ nav.scrolled { background: rgba(17,17,17,0.95); }
   border-radius: 6px; font-size: 15px; font-weight: 700; letter-spacing: 0.5px;
   text-transform: uppercase; text-decoration: none; display: inline-block;
   position: relative; touch-action: manipulation;
-  animation: ctaPulse 2s ease-in-out infinite;
   transition: transform .15s, filter .15s;
 }
 .btn-final:hover { transform: translateY(-2px); filter: brightness(1.1); animation-play-state: paused; }
@@ -947,8 +953,8 @@ footer {
 }
 
 /* ═══════════════════ REVEAL ═══════════════════ */
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; pointer-events: none; }
-.reveal.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; pointer-events: none; will-change: opacity, transform; }
+.reveal.visible { opacity: 1; transform: translateY(0); pointer-events: auto; will-change: auto; }
 
 /* ═══════════════════ GALERIA MASONRY ═══════════════════ */
 .galeria-masonry {
