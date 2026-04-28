@@ -1,21 +1,32 @@
+import { useRef, useEffect } from 'react'
 import Carousel from './Carousel'
 import Ticker from './Ticker'
 
 export default function Hero() {
+  const videoRef = useRef(null)
+
+  useEffect(() => {
+    // Só carrega o vídeo em desktop — evita download de 7MB no mobile
+    if (window.innerWidth > 768 && videoRef.current) {
+      videoRef.current.src = '/images/video-hero.mp4'
+      videoRef.current.load()
+    }
+  }, [])
+
   return (
     <section className="hero">
       <div className="hero-canvas-wrap">
 
-        {/* Vídeo de fundo — desktop */}
+        {/* Vídeo de fundo — desktop (src definido via JS para não baixar no mobile) */}
         <video
+          ref={videoRef}
           id="hero-canvas"
           className="hero-video-desk"
-          src="/images/video-hero.mp4"
           autoPlay
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="none"
           aria-hidden="true"
         />
 
