@@ -694,6 +694,23 @@ nav.scrolled { background: rgba(17,17,17,0.95); }
   position: absolute; inset: 0; width: 100%; height: 100%;
   border: none; display: block; pointer-events: auto;
 }
+.test-facade {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  border: none; background: #000; cursor: pointer; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.test-facade-thumb {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; opacity: .85; transition: opacity .2s;
+}
+.test-facade:hover .test-facade-thumb { opacity: 1; }
+.test-facade-play {
+  position: relative; z-index: 1;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,.5));
+  transition: transform .2s;
+}
+.test-facade:hover .test-facade-play { transform: scale(1.1); }
 .test-body { padding: 24px 24px; flex: 1; display: flex; flex-direction: column; gap: 16px; }
 .test-quote { font-size: 14px; line-height: 1.7; color: var(--text2); font-style: italic; flex: 1; }
 .test-footer { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }

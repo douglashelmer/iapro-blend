@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useReveal } from '../hooks/useReveal'
 
 const ITEMS = [
@@ -24,6 +25,38 @@ const ITEMS = [
   },
 ]
 
+function VideoFacade({ videoId, title }) {
+  const [active, setActive] = useState(false)
+
+  if (active) {
+    return (
+      <iframe
+        className="test-video"
+        src={`https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&fs=0&autoplay=1`}
+        title={title}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      />
+    )
+  }
+
+  return (
+    <button className="test-facade" onClick={() => setActive(true)} aria-label={`Reproduzir vídeo de ${title}`}>
+      <img
+        src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
+        alt={title}
+        className="test-facade-thumb"
+        loading="lazy"
+      />
+      <div className="test-facade-play">
+        <svg viewBox="0 0 68 48" width="68" height="48">
+          <path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.7c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.7c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24s0-11.5-1.5-16.3z" fill="#ff0000"/>
+          <path d="M45 24L27 14v20" fill="white"/>
+        </svg>
+      </div>
+    </button>
+  )
+}
+
 export default function Testimonials() {
   const eyebrowRef = useReveal()
   const titleRef = useReveal()
@@ -37,12 +70,7 @@ export default function Testimonials() {
         {ITEMS.map(t => (
           <div className="test-card" key={t.name}>
             <div className="test-video-wrap">
-              <iframe
-                className="test-video"
-                src={`https://www.youtube.com/embed/${t.videoId}?rel=0&modestbranding=1&fs=0`}
-                title={t.name}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              />
+              <VideoFacade videoId={t.videoId} title={t.name} />
             </div>
             <div className="test-body">
               <p className="test-quote">{t.quote}</p>
