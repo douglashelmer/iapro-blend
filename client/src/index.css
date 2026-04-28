@@ -957,20 +957,33 @@ footer {
 .reveal.visible { opacity: 1; transform: translateY(0); pointer-events: auto; will-change: auto; }
 
 /* ═══════════════════ GALERIA MASONRY ═══════════════════ */
-.galeria-masonry {
-  columns: 5; column-gap: 10px; margin-top: 56px;
+.galeria-carousel {
+  margin-top: 56px; overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%);
 }
-.galeria-item {
-  break-inside: avoid; margin-bottom: 10px;
-  border-radius: 8px; overflow: hidden;
+.galeria-track {
+  display: flex; gap: 10px; width: max-content;
+  animation: galeriaScroll 40s linear infinite;
+  will-change: transform;
+}
+.galeria-carousel:hover .galeria-track { animation-play-state: paused; }
+.galeria-slide {
+  border-radius: 8px; overflow: hidden; flex-shrink: 0;
   border: 1px solid rgba(255,255,255,0.07);
+  height: 220px;
 }
 .galeria-img {
-  width: 100%; display: block;
-  transition: transform .3s ease, opacity .3s ease;
+  height: 100%; width: auto; display: block;
+  object-fit: cover;
+  transition: opacity .3s ease;
   opacity: .92;
 }
-.galeria-item:hover .galeria-img { transform: scale(1.03); opacity: 1; }
+.galeria-slide:hover .galeria-img { opacity: 1; }
+@keyframes galeriaScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
 
 /* ═══════════════════ COMPARE SLIDES ═══════════════════ */
 .csl-grid {
@@ -1279,8 +1292,6 @@ footer {
   .inst-photo { max-width: 400px; }
   .mod-row { grid-template-columns: 160px 1fr; }
   .mod-img { width: 160px; height: 120px; }
-
-  .galeria-masonry { columns: 3; }
   .csl-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
 
   /* WorkflowDemo — tablet: left on top, mid + right side by side */
@@ -1322,7 +1333,6 @@ footer {
   .mod-row { grid-template-columns: 1fr; }
   .mod-img { width: 100%; height: 160px; }
   .pq-grid { grid-template-columns: 1fr; }
-  .galeria-masonry { columns: 2; }
   .csl-grid { grid-template-columns: 1fr; }
 
   /* WorkflowDemo — mobile: full vertical stack */

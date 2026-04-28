@@ -79,18 +79,20 @@ export default function ResultadosReais() {
         ))}
       </div>
 
-      {/* ── Galeria masonry ── */}
-      <div className="galeria-masonry reveal" ref={galeriaRef}>
-        {GALERIA.map(img => (
-          <div className="galeria-item" key={img}>
-            <img
-              src={`/images/galeria/${img}`}
-              alt=""
-              loading="lazy"
-              className="galeria-img"
-            />
-          </div>
-        ))}
+      {/* ── Galeria carrossel ── */}
+      <div className="galeria-carousel reveal" ref={galeriaRef}>
+        <div className="galeria-track">
+          {[...GALERIA, ...GALERIA].map((img, i) => (
+            <div className="galeria-slide" key={i}>
+              <img
+                src={`/images/galeria/${img}`}
+                alt=""
+                loading="lazy"
+                className="galeria-img"
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )
