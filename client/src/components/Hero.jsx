@@ -31,17 +31,6 @@ export default function Hero() {
 
         <div className="hero-overlay">
 
-          {/* Logo */}
-          <div className="hero-logo" aria-label="Formação IAPRO.BLEND">
-            <span className="hero-logo-formacao">FORMAÇÃO</span>
-            <div className="hero-logo-text">
-              <div className="hero-logo-line1">
-                <span className="h-ia">IA</span><span className="h-pro">PRO</span><span className="h-dot">.</span>
-              </div>
-              <div className="hero-logo-blend">BLEND</div>
-            </div>
-          </div>
-
           {/* Badge */}
           <div className="hero-badge">
             <span className="hero-badge-icon" aria-hidden="true">🪐</span>

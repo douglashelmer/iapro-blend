@@ -78,7 +78,9 @@ nav {
   padding: 0 48px; height: 64px; transition: background .3s;
 }
 nav.scrolled { background: rgba(17,17,17,0.95); }
-.logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px; }
+.logo { font-family: 'Bebas Neue', sans-serif; letter-spacing: 3px; display: flex; flex-direction: column; line-height: 1; }
+.nav-formacao { font-size: 9px; letter-spacing: 4px; color: rgba(255,255,255,0.45); margin-bottom: 1px; }
+.nav-logo-row { font-size: 22px; display: flex; align-items: baseline; }
 .logo .ia    { color: #fff; }
 .logo .pro   { color: var(--orange); }
 .logo .dot   { color: var(--orange); }

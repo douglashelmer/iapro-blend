@@ -14,7 +14,10 @@ export default function Nav() {
       <a href="#main" className="skip-link">Ir para o conteúdo</a>
       <nav className={scrolled ? 'scrolled' : ''}>
         <div className="logo">
-          <span className="ia">IA</span><span className="pro">PRO</span><span className="dot">.</span><span className="blend">BLEND</span>
+          <span className="nav-formacao">FORMAÇÃO</span>
+          <div className="nav-logo-row">
+            <span className="ia">IA</span><span className="pro">PRO</span><span className="dot">.</span><span className="blend">BLEND</span>
+          </div>
         </div>
         <a href="#preco" className="nav-pill">Garantir vaga →</a>
       </nav>
