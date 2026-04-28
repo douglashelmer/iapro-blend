@@ -1,6 +1,6 @@
 import { useReveal } from '../hooks/useReveal'
 
-const CTA = 'https://pay.onprofit.com.br/I4hfK5lD?off=NzLncA'
+const CTA = 'https://pay.onprofit.com.br/CjKXd5Oo?off=bNgTEM'
 
 const ITEMS = [
   'Acesso por 02 anos a todos os conteúdos',

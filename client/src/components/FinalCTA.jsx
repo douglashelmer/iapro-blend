@@ -1,4 +1,4 @@
-const CTA = 'https://pay.onprofit.com.br/I4hfK5lD?off=NzLncA'
+const CTA = 'https://pay.onprofit.com.br/CjKXd5Oo?off=bNgTEM'
 
 export default function FinalCTA() {
   return (
