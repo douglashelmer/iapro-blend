@@ -150,7 +150,6 @@ nav.scrolled { background: rgba(17,17,17,0.95); }
   padding: 10px 20px; font-family: 'Chakra Petch', sans-serif;
   font-size: 11px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
   color: rgba(255,255,255,0.65); margin-bottom: 28px; pointer-events: auto;
-  animation: fadeUp .7s .1s ease both;
 }
 .hero-badge-icon { font-size: 14px; }
 
@@ -159,7 +158,7 @@ nav.scrolled { background: rgba(17,17,17,0.95); }
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(36px, 5.5vw, 80px);
   line-height: 1.0; letter-spacing: 1px;
-  margin-bottom: 20px; animation: fadeUp .7s .2s ease both;
+  margin-bottom: 20px;
   text-wrap: balance; max-width: 900px;
   color: #ffffff;
 }
@@ -169,11 +168,11 @@ nav.scrolled { background: rgba(17,17,17,0.95); }
   font-family: 'Chakra Petch', sans-serif;
   font-size: clamp(11px, 1.2vw, 14px); font-weight: 600; letter-spacing: 2.5px;
   text-transform: uppercase; color: rgba(255,255,255,.55);
-  margin-bottom: 36px; animation: fadeUp .7s .3s ease both;
+  margin-bottom: 36px;
 }
 .hero-btns {
   display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
-  justify-content: center; pointer-events: auto; animation: fadeUp .7s .4s ease both;
+  justify-content: center; pointer-events: auto;
 }
 .hero-cta-btn {
   display: inline-flex; align-items: center; gap: 10px;
