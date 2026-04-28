@@ -3,14 +3,14 @@ import { useReveal } from '../hooks/useReveal'
 
 // ── Substitua os pares antes/depois aqui ──
 const SLIDES = [
-  { before: '/images/01antes.webp',             after: '/images/01depois.webp' },
-  { before: '/images/02antes.webp',             after: '/images/02depois.webp' },
-  { before: '/images/carousel-product-5.webp',  after: '/images/roxo3.webp' },
-  { before: '/images/04antes.webp',             after: '/images/roxo4.webp' },
-  { before: '/images/carousel-product-9.webp',  after: '/images/result-image-1.webp' },
-  { before: '/images/carousel-product-11.webp', after: '/images/result-image-2.webp' },
-  { before: '/images/carousel-product-13.webp', after: '/images/result-image-3.webp' },
-  { before: '/images/carousel-product-15.webp', after: '/images/result-image-4.webp' },
+  { before: '/images/galeria2/01.webp', after: '/images/galeria2/02.webp' },
+  { before: '/images/galeria2/03.webp', after: '/images/galeria2/04.webp' },
+  { before: '/images/galeria2/05.webp', after: '/images/galeria2/06.webp' },
+  { before: '/images/galeria2/07.webp', after: '/images/galeria2/08.webp' },
+  { before: '/images/galeria2/09.webp', after: '/images/galeria2/10.webp' },
+  { before: '/images/galeria2/11.webp', after: '/images/galeria2/12.webp' },
+  { before: '/images/galeria2/13.webp', after: '/images/galeria2/14.webp' },
+  { before: '/images/galeria2/15.webp', after: '/images/galeria2/16.webp' },
 ]
 
 function Slide({ before, after }) {
