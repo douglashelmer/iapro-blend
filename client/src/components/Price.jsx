@@ -3,8 +3,8 @@ import { useReveal } from '../hooks/useReveal'
 const CTA = 'https://pay.onprofit.com.br/I4hfK5lD?off=NzLncA'
 
 const ITEMS = [
-  'Acesso vitalício a todos os conteúdos',
-  '+20h de conteúdo direto ao ponto',
+  'Acesso por 02 anos a todos os conteúdos',
+  '+100h de conteúdo direto ao ponto',
   'Todos os bônus incluídos (R$ 1.929+ em valor)',
   'Comunidade exclusiva de alunos',
   'Certificado de conclusão',
@@ -21,7 +21,7 @@ export default function Price() {
         <p className="price-de">De R$ 2.997</p>
         <div className="price-main">12x <sup>R$</sup>69<span style={{ fontSize: '50%' }}>,73</span></div>
         <p className="price-or">ou à vista por</p>
-        <div className="price-pix">R$ 697 no PIX</div>
+        <div className="price-pix">R$ 697</div>
         <ul className="price-list">
           {ITEMS.map(i => <li key={i}>{i}</li>)}
         </ul>
