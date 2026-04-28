@@ -73,7 +73,7 @@ export default function ResultadosReais() {
             <div className="resultado-meta">{r.name}</div>
             <p className="resultado-quote">"{r.quote}"</p>
             <div className="resultado-img-wrap">
-              <img src={r.img} alt="" className="resultado-img" loading="lazy" />
+              <img src={r.img} alt="" className="resultado-img" loading="lazy" width="300" height="200" />
             </div>
           </div>
         ))}
@@ -89,6 +89,8 @@ export default function ResultadosReais() {
                 alt=""
                 loading="lazy"
                 className="galeria-img"
+                width="165"
+                height="220"
               />
             </div>
           ))}

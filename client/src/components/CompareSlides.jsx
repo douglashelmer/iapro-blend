@@ -17,19 +17,25 @@ function Slide({ before, after }) {
   const [pos, setPos] = useState(50)
   const containerRef = useRef(null)
   const dragging = useRef(false)
+  const rectCache = useRef(null)
 
   const update = useCallback((clientX) => {
-    const rect = containerRef.current?.getBoundingClientRect()
+    const rect = rectCache.current
     if (!rect) return
     const x = Math.max(2, Math.min(98, ((clientX - rect.left) / rect.width) * 100))
     setPos(x)
   }, [])
 
+  const cacheRect = useCallback(() => {
+    rectCache.current = containerRef.current?.getBoundingClientRect() ?? null
+  }, [])
+
   useEffect(() => {
     const onMove = (e) => { if (dragging.current) update(e.clientX) }
-    const onUp   = () => { dragging.current = false }
+    const onUp   = () => { dragging.current = false; rectCache.current = null }
     window.addEventListener('mousemove', onMove)
     window.addEventListener('mouseup', onUp)
+    window.addEventListener('resize', () => { rectCache.current = null })
     return () => {
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mouseup', onUp)
@@ -46,8 +52,8 @@ function Slide({ before, after }) {
       className="cs-slide"
       ref={containerRef}
       onTouchMove={onTouchMove}
-      onTouchStart={() => { dragging.current = true }}
-      onTouchEnd={() => { dragging.current = false }}
+      onTouchStart={() => { cacheRect(); dragging.current = true }}
+      onTouchEnd={() => { dragging.current = false; rectCache.current = null }}
     >
       {/* Depois — camada de baixo, tamanho total */}
       <img src={after} alt="depois" className="cs-img" draggable={false} />
@@ -69,7 +75,7 @@ function Slide({ before, after }) {
       <div
         className="cs-divider"
         style={{ left: `${pos}%` }}
-        onMouseDown={(e) => { e.preventDefault(); dragging.current = true }}
+        onMouseDown={(e) => { e.preventDefault(); cacheRect(); dragging.current = true }}
         onTouchStart={(e) => { e.stopPropagation(); dragging.current = true }}
       >
         <div className="cs-handle">
