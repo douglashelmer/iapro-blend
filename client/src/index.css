@@ -744,41 +744,127 @@ nav.scrolled { background: rgba(17,17,17,0.95); }
 }
 
 /* ═══════════════════ PREÇO ═══════════════════ */
-.price-wrap { max-width: 640px; margin: 0 auto; text-align: center; }
-.price-tag {
-  display: inline-block; margin-bottom: 24px;
+.price-sec { position: relative; overflow: hidden; }
+.price-sec::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(120,40,0,0.18) 0%, transparent 70%);
+}
+.price-sec-title { text-align: center; margin-bottom: 8px; }
+.price-sec-sub {
+  text-align: center; font-size: 13px; letter-spacing: 2px;
+  color: var(--text3); text-transform: uppercase; margin-bottom: 56px;
+}
+
+/* Colunas */
+.price-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px; align-items: center;
+  max-width: 900px; margin: 0 auto;
+}
+@media (max-width: 720px) {
+  .price-cols { grid-template-columns: 1fr; gap: 24px; }
+}
+
+/* ── Widget comparação ── */
+.price-compare {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px; padding: 32px 28px;
+}
+.pc-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 28px; }
+.pc-head-icon {
+  width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0;
   background: rgba(255,102,0,0.15); color: var(--orange);
-  font-family: 'Chakra Petch', sans-serif; font-size: 11px;
-  letter-spacing: 3px; text-transform: uppercase;
-  padding: 7px 18px; border-radius: 4px;
-  border: 1px solid rgba(255,102,0,0.3);
+  display: flex; align-items: center; justify-content: center;
 }
-.price-de {
-  font-size: 15px; color: var(--text3);
-  text-decoration: line-through; margin-bottom: 4px; font-variant-numeric: tabular-nums;
+.pc-head-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 20px;
+  letter-spacing: 2px; color: var(--white); line-height: 1.1;
 }
-.price-main {
+.pc-head-sub { font-size: 11px; color: var(--text3); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
+.pc-bars { display: flex; flex-direction: column; gap: 6px; }
+.pc-bar-row { display: flex; flex-direction: column; gap: 6px; }
+.pc-bar-meta { display: flex; justify-content: space-between; align-items: center; }
+.pc-bar-label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); }
+.pc-bar-hours { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 1px; }
+.pc-bar-hours--red    { color: #e05050; }
+.pc-bar-hours--orange { color: var(--orange); }
+.pc-bar-track {
+  height: 8px; border-radius: 4px;
+  background: rgba(255,255,255,0.07); overflow: hidden;
+}
+.pc-bar { height: 100%; border-radius: 4px; min-width: 6px; }
+.pc-bar--red    { background: linear-gradient(90deg, #c03030, #e05050); }
+.pc-bar--orange { background: linear-gradient(90deg, var(--orange), #ff8c42); }
+.pc-lightning {
+  color: var(--orange); text-align: center; font-size: 18px;
+  margin: 4px 0;
+}
+.pc-footer {
+  margin-top: 20px; padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  font-size: 12px; color: var(--text3); text-align: center; letter-spacing: 0.5px;
+}
+.pc-footer strong { color: var(--orange); }
+
+/* ── Card de preço ── */
+.price-card {
+  position: relative;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,102,0,0.25);
+  border-radius: 16px; padding: 32px 28px 28px;
+}
+.pcard-badge {
+  position: absolute; top: -1px; right: -1px;
+  background: var(--orange-cta); color: white;
+  font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 2px;
+  padding: 6px 16px; border-radius: 0 16px 0 10px;
+}
+.pcard-formacao {
+  font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
+  color: var(--text3); margin-bottom: 4px;
+}
+.pcard-logo {
+  font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 2px;
+  line-height: 1; margin-bottom: 24px;
+}
+.pcard-ia    { color: var(--white); }
+.pcard-pro   { color: var(--orange); }
+.pcard-dot   { color: var(--orange); }
+.pcard-blend { color: rgba(255,255,255,0.35); }
+
+.pcard-de {
+  font-size: 13px; color: var(--text3);
+  text-decoration: line-through; margin-bottom: 2px;
+}
+.pcard-por { font-size: 12px; color: var(--text3); letter-spacing: 0.5px; margin-bottom: 4px; text-transform: uppercase; }
+.pcard-price {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(72px, 9vw, 108px); line-height: .9;
-  margin-bottom: 8px; font-variant-numeric: tabular-nums; color: var(--white);
+  font-size: clamp(56px, 8vw, 80px); line-height: .9;
+  color: var(--orange); margin-bottom: 4px; font-variant-numeric: tabular-nums;
 }
-.price-main sup { font-size: 32%; vertical-align: top; margin-top: 14px; display: inline-block; }
-.price-or { font-size: 14px; color: var(--text3); margin-bottom: 8px; }
-.price-pix {
-  font-family: 'Bebas Neue', sans-serif; font-size: 36px;
-  color: var(--orange); margin-bottom: 40px; font-variant-numeric: tabular-nums;
+.pcard-price sup { font-size: 34%; vertical-align: top; margin-top: 10px; display: inline-block; }
+.pcard-cents { font-size: 50%; }
+.pcard-vista {
+  font-size: 13px; color: var(--text2); text-transform: uppercase;
+  letter-spacing: 1px; margin-bottom: 24px;
 }
-.price-list {
-  list-style: none; text-align: left; display: flex; flex-direction: column;
-  gap: 12px; margin-bottom: 32px;
-  border: 1px solid var(--border); border-radius: 12px;
-  padding: 24px 28px; background: var(--bg3);
+
+.pcard-list {
+  list-style: none; display: flex; flex-direction: column;
+  gap: 10px; margin-bottom: 24px;
 }
-.price-list li {
-  font-size: 14px; color: var(--text2);
+.pcard-list li {
+  font-size: 13px; color: var(--text2);
   display: flex; align-items: center; gap: 10px;
 }
-.price-list li::before { content: '✓'; color: var(--orange); font-weight: 700; flex-shrink: 0; }
+.pcard-check {
+  width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+  background: rgba(255,102,0,0.15); color: var(--orange);
+  display: flex; align-items: center; justify-content: center;
+}
+
 .btn-cta-big {
   width: 100%; padding: 18px;
   background: var(--orange-cta); color: white;
@@ -789,9 +875,10 @@ nav.scrolled { background: rgba(17,17,17,0.95); }
   transition: transform .15s, filter .15s;
 }
 .btn-cta-big:hover { filter: brightness(1.1); transform: translateY(-2px); }
-.price-secure {
+
+.pcard-secure {
   font-family: 'Chakra Petch', sans-serif; font-size: 11px;
-  letter-spacing: 1px; color: var(--text3);
+  letter-spacing: 1px; color: var(--text3); text-align: center;
 }
 
 /* ═══════════════════ GARANTIA ═══════════════════ */
