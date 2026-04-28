@@ -40,9 +40,9 @@ export default function App() {
       <ResultadosReais />
       <Bonus />
       <Testimonials />
-      <Instructor />
       <Price />
       <Guarantee />
+      <Instructor />
       <FAQ />
       <FinalCTA />
       <Footer />
