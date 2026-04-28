@@ -19,17 +19,14 @@ export default function Hero() {
           aria-hidden="true"
         />
 
-        {/* Vídeo de fundo — mobile */}
-        <video
+        {/* Imagem de fundo — mobile */}
+        <img
           id="hero-canvas-mob"
           className="hero-video-mob"
-          src="/images/banner-logos-rodando.webm"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
+          src="/images/imagem-mobi-preload.webp"
           aria-hidden="true"
+          fetchPriority="high"
+          alt=""
         />
 
         <div className="hero-overlay">
