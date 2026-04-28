@@ -6,6 +6,11 @@ export default function Hero() {
   const videoRef = useRef(null)
 
   useEffect(() => {
+    // Remove o placeholder estático do HTML assim que o React monta
+    // (foi adicionado em index.html para pintar a imagem antes do React executar — melhora LCP)
+    const lcp = document.getElementById('hero-lcp-static')
+    if (lcp) lcp.remove()
+
     // Só carrega o vídeo em desktop — evita download de 7MB no mobile
     if (window.innerWidth > 768 && videoRef.current) {
       videoRef.current.src = '/images/video-hero.mp4'
