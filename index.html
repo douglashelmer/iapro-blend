@@ -4,733 +4,753 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IAPRO.BLEND — Douglas Helmer</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"
+  href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&family=Chakra+Petch:wght@400;600;700&display=swap">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&family=Chakra+Petch:wght@400;600;700&display=swap"></noscript>
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --cream: #F5F1EA;
-  --cream2: #EDE9E1;
-  --cream3: #E4DFD5;
-  --ink: #111111;
-  --ink2: #3A3A3A;
-  --ink3: #888880;
-  --orange: #E8480F;
-  --orange-light: #FF6B35;
-  --white: #FAFAF7;
-  --border: rgba(17,17,17,0.1);
-}
-
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--cream);
-  color: var(--ink);
-  font-family: 'DM Sans', sans-serif;
-  overflow-x: hidden;
-}
-
-/* ─── NAV ─── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 900;
-  background: rgba(0,0,0,0.3);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 48px; height: 64px;
-  transition: background .3s;
-}
-nav.scrolled {
-  background: rgba(245,241,234,0.96);
-  border-bottom-color: var(--border);
-}
-
-.logo {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 22px; letter-spacing: 3px;
-}
-.logo .ia   { color: #fff; }
-.logo .pro  { color: var(--orange); }
-.logo .dot  { color: var(--orange); }
-.logo .blend{ color: rgba(255,255,255,0.3); }
-nav.scrolled .logo .ia    { color: var(--ink); }
-nav.scrolled .logo .blend { color: rgba(17,17,17,0.28); }
-
-.nav-pill {
-  display: flex; align-items: center; gap: 8px;
-  background: var(--orange); color: white;
-  padding: 10px 22px; border-radius: 100px;
-  font-size: 13px; font-weight: 600;
-  text-decoration: none; letter-spacing: 0.3px;
-  transition: background .2s, transform .15s;
-}
-.nav-pill:hover { background: #c93d0a; transform: translateY(-1px); }
-
-/* ─── HERO SHADER ─── */
-.hero {
-  position: relative;
-  overflow: hidden;
-  display: flex; flex-direction: column;
-}
-
-.hero-canvas-wrap {
-  position: relative;
-  width: 100%; height: 100vh;
-  overflow: hidden;
-}
-
-#hero-canvas {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  display: block; touch-action: none;
-  background: black;
-}
-
-/* dark gradient overlay so text is always readable */
-.hero-canvas-wrap::after {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.45) 0%,
-    rgba(0,0,0,0.2) 40%,
-    rgba(0,0,0,0.55) 100%
-  );
-  pointer-events: none;
-}
-
-.hero-overlay {
-  position: absolute; inset: 0; z-index: 10;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: 80px 48px 40px;
-  text-align: center;
-  pointer-events: none;
-}
-
-.hero-badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 100px;
-  padding: 8px 18px 8px 10px;
-  font-size: 12px; font-weight: 500;
-  color: rgba(255,255,255,0.85);
-  margin-bottom: 32px;
-  pointer-events: auto;
-  animation: fadeUp .7s .1s ease both;
-}
-.hero-badge-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--orange); flex-shrink: 0;
-  position: relative;
-}
-.hero-badge-dot::after {
-  content: '';
-  position: absolute; inset: -3px; border-radius: 50%;
-  border: 1px solid var(--orange); opacity: .5;
-  animation: pulse 1.6s ease-out infinite;
-}
-
-h1 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(80px, 11vw, 160px);
-  line-height: .85; letter-spacing: 2px;
-  margin-bottom: 24px;
-  animation: fadeUp .7s .25s ease both;
-}
-h1 .h-ia  { color: #ffffff; }
-h1 .h-pro { color: var(--orange); }
-h1 .h-dot { color: var(--orange); }
-h1 .h-blend {
-  color: transparent;
-  -webkit-text-stroke: 2px rgba(255,255,255,0.25);
-  display: block;
-}
-
-.hero-sub {
-  font-size: 20px; line-height: 1.6;
-  color: rgba(255,255,255,.8);
-  max-width: 520px; margin-bottom: 10px;
-  animation: fadeUp .7s .4s ease both;
-}
-.hero-sub2 {
-  font-size: 14px; line-height: 1.7;
-  color: rgba(255,255,255,.45);
-  max-width: 460px; margin-bottom: 40px;
-  animation: fadeUp .7s .5s ease both;
-}
-
-.hero-btns {
-  display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
-  justify-content: center;
-  pointer-events: auto;
-  animation: fadeUp .7s .6s ease both;
-}
-
-.btn-solid {
-  background: var(--orange); color: white;
-  padding: 14px 32px; border-radius: 100px;
-  font-size: 14px; font-weight: 700;
-  text-decoration: none; letter-spacing: 0.3px;
-  transition: transform .15s, box-shadow .2s;
-  display: inline-block;
-}
-.btn-solid:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(232,72,15,.4); }
-
-.btn-ghost {
-  padding: 14px 24px; border-radius: 100px;
-  border: 1px solid rgba(255,255,255,0.25);
-  font-size: 14px; font-weight: 500;
-  color: rgba(255,255,255,.75); text-decoration: none;
-  backdrop-filter: blur(8px);
-  background: rgba(255,255,255,0.08);
-  transition: border-color .2s, background .2s;
-}
-.btn-ghost:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.14); }
-
-/* stats row inside hero */
-.hero-stats {
-  position: absolute; bottom: 0; left: 0; right: 0; z-index: 10;
-  display: grid; grid-template-columns: repeat(4,1fr);
-  border-top: 1px solid rgba(255,255,255,0.1);
-  background: rgba(0,0,0,0.45);
-  backdrop-filter: blur(16px);
-}
-.hero-stat {
-  padding: 20px 28px;
-  border-right: 1px solid rgba(255,255,255,0.08);
-}
-.hero-stat:last-child { border-right: none; }
-.hero-stat-num {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 36px; line-height: 1; color: var(--orange);
-}
-.hero-stat-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: 2px;
-  text-transform: uppercase; color: rgba(255,255,255,.3);
-  margin-top: 2px;
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ─── CAROUSEL ─── */
-.carousel-wrap {
-  border-top: 1px solid var(--border);
-  overflow: hidden; padding: 20px 0;
-  background: var(--cream2);
-  position: relative;
-}
-.carousel-wrap::before,
-.carousel-wrap::after {
-  content: ''; position: absolute; top: 0; bottom: 0; width: 100px;
-  z-index: 2; pointer-events: none;
-}
-.carousel-wrap::before { left: 0; background: linear-gradient(90deg, var(--cream2), transparent); }
-.carousel-wrap::after  { right: 0; background: linear-gradient(-90deg, var(--cream2), transparent); }
-
-.carousel-row { margin-bottom: 10px; }
-.carousel-row:last-child { margin-bottom: 0; }
-
-.c-track {
-  display: flex; gap: 10px; width: max-content;
-  animation: cScroll 38s linear infinite;
-}
-.c-track.rev { animation: cScrollRev 38s linear infinite; }
-.c-track:hover, .c-track.rev:hover { animation-play-state: paused; }
-
-.c-img {
-  width: 240px; height: 160px; border-radius: 12px;
-  object-fit: cover; flex-shrink: 0;
-  filter: saturate(.85);
-  transition: filter .3s, transform .3s, box-shadow .3s;
-}
-.c-img:hover {
-  filter: saturate(1.1);
-  transform: scale(1.04);
-  box-shadow: 0 12px 32px rgba(0,0,0,.12);
-  z-index: 1; position: relative;
-}
-
-@keyframes cScroll    { from { transform: translateX(0); }    to { transform: translateX(-50%); } }
-@keyframes cScrollRev { from { transform: translateX(-50%); } to { transform: translateX(0); } }
-
-/* ─── TICKER ─── */
-.ticker {
-  background: var(--ink);
-  overflow: hidden; padding: 14px 0;
-  display: flex;
-}
-.t-track {
-  display: flex; gap: 40px; white-space: nowrap;
-  flex-shrink: 0;
-  animation: tScroll 24s linear infinite;
-}
-.t-item {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px; letter-spacing: 3px;
-  text-transform: uppercase;
-  color: rgba(245,241,234,.35);
-  display: flex; align-items: center; gap: 12px;
-}
-.t-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--orange); flex-shrink: 0; }
-@keyframes tScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-/* ─── SECTION COMMONS ─── */
-.sec { padding: 96px 48px; }
-.sec-alt { background: var(--cream2); }
-.sec-dark { background: var(--ink); color: var(--cream); }
-
-.sec-eyebrow {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--ink3); margin-bottom: 20px;
-  display: flex; align-items: center; gap: 12px;
-}
-.sec-dark .sec-eyebrow { color: rgba(245,241,234,.35); }
-.sec-eyebrow::before { content: ''; width: 24px; height: 1px; background: currentColor; }
-
-.sec-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(44px, 5.5vw, 72px);
-  line-height: .92; margin-bottom: 56px;
-  max-width: 700px;
-}
-
-/* ─── FLUXO ─── */
-.steps {
-  display: grid; grid-template-columns: repeat(4,1fr); gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: 20px; overflow: hidden;
-}
-
-.step-card {
-  background: var(--white); padding: 36px 28px;
-  position: relative; overflow: hidden;
-  transition: background .25s;
-}
-.step-card:hover { background: var(--cream); }
-
-.step-n {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px; letter-spacing: 2px;
-  color: var(--orange); margin-bottom: 24px;
-}
-
-.step-icon { font-size: 28px; margin-bottom: 16px; display: block; }
-
-.step-card h3 {
-  font-size: 17px; font-weight: 700;
-  margin-bottom: 10px; line-height: 1.2;
-}
-.step-card p { font-size: 13px; line-height: 1.7; color: var(--ink3); }
-
-.step-tag {
-  display: inline-block; margin-top: 20px;
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: 1px;
-  padding: 4px 10px; border-radius: 100px;
-  background: var(--cream2); color: var(--ink3);
-}
-
-/* ─── COMPARE ─── */
-.compare-grid {
-  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;
-}
-
-.compare-card {
-  border: 1px solid var(--border);
-  border-radius: 20px; padding: 36px 32px;
-  background: var(--white);
-  position: relative; overflow: hidden;
-  transition: transform .25s, box-shadow .25s;
-}
-.compare-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,.07); }
-
-.compare-card.winner {
-  background: var(--ink); color: var(--cream);
-  border-color: transparent;
-}
-
-.compare-chip {
-  display: inline-block; margin-bottom: 20px;
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-  padding: 4px 10px; border-radius: 100px;
-  background: var(--cream2); color: var(--ink3);
-}
-.compare-card.winner .compare-chip {
-  background: rgba(245,241,234,.12); color: rgba(245,241,234,.5);
-}
-
-.compare-card h3 {
-  font-size: 20px; font-weight: 700; margin-bottom: 12px;
-}
-.compare-card p { font-size: 14px; line-height: 1.7; color: var(--ink3); }
-.compare-card.winner p { color: rgba(245,241,234,.55); }
-
-.winner-badge {
-  position: absolute; top: 20px; right: 20px;
-  background: var(--orange); color: white;
-  font-size: 11px; font-weight: 700;
-  padding: 4px 10px; border-radius: 100px;
-  letter-spacing: 1px;
-}
-
-/* ─── MÓDULOS ─── */
-.modules-list {
-  display: flex; flex-direction: column; gap: 1px;
-  border: 1px solid var(--border); border-radius: 20px; overflow: hidden;
-}
-
-.mod-row {
-  background: var(--white);
-  display: grid; grid-template-columns: 56px 1fr auto;
-  align-items: center; gap: 24px;
-  padding: 24px 32px;
-  transition: background .2s;
-  cursor: default;
-}
-.mod-row:hover { background: var(--cream); }
-
-.mod-num {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 32px; color: rgba(17,17,17,.12);
-  line-height: 1;
-}
-
-.mod-title { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
-.mod-desc { font-size: 13px; color: var(--ink3); line-height: 1.5; }
-
-.mod-badge {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
-  padding: 5px 12px; border-radius: 100px;
-  border: 1px solid var(--border); color: var(--ink3);
-  white-space: nowrap;
-}
-
-/* ─── ANTES VS DEPOIS ─── */
-.avd-cards { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
-
-.avd-card {
-  border: 1px solid var(--border); border-radius: 20px;
-  padding: 28px 24px; background: var(--white);
-  transition: transform .25s;
-}
-.avd-card:hover { transform: translateY(-4px); }
-
-.avd-cat {
-  font-size: 13px; font-weight: 700; margin-bottom: 20px;
-  text-transform: uppercase; letter-spacing: 1px; color: var(--ink3);
-}
-
-.avd-row-item { margin-bottom: 16px; }
-.avd-row-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
-  color: var(--ink3); margin-bottom: 4px;
-}
-.avd-before { font-size: 14px; color: var(--ink3); text-decoration: line-through; }
-.avd-after  { font-size: 18px; font-weight: 700; color: var(--orange); }
-
-.avd-economy {
-  margin-top: 20px; padding-top: 16px;
-  border-top: 1px solid var(--border);
-  font-size: 12px; font-weight: 600; color: #1A9B56;
-  font-family: 'DM Mono', monospace;
-}
-
-/* ─── BENEFÍCIOS ─── */
-.benefits-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
-
-.benefit-card {
-  border: 1px solid var(--border); border-radius: 20px;
-  padding: 32px 28px; background: var(--white);
-  transition: transform .25s, box-shadow .25s;
-}
-.benefit-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,.07); }
-
-.benefit-num {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 48px; line-height: 1;
-  color: var(--orange); margin-bottom: 8px;
-}
-.benefit-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
-.benefit-card p { font-size: 13px; line-height: 1.65; color: var(--ink3); }
-
-/* ─── DEPOIMENTOS ─── */
-.test-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
-
-.test-card {
-  border: 1px solid var(--border); border-radius: 20px;
-  padding: 32px 28px; background: var(--white);
-  display: flex; flex-direction: column; justify-content: space-between;
-  gap: 20px;
-  transition: transform .25s;
-}
-.test-card:hover { transform: translateY(-4px); }
-
-.test-quote {
-  font-size: 15px; line-height: 1.7;
-  color: var(--ink2); font-style: italic;
-  flex: 1;
-}
-
-.test-footer { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
-
-.test-name { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
-.test-role {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: 1px; color: var(--orange);
-  text-transform: uppercase;
-}
-
-.test-result {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: 1px;
-  color: #1A9B56; text-transform: uppercase;
-  text-align: right; line-height: 1.5;
-}
-
-/* ─── BÔNUS ─── */
-.bonus-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
-
-.bonus-card {
-  border: 1px solid var(--border); border-radius: 20px;
-  padding: 28px; background: var(--white);
-  display: flex; flex-direction: column; justify-content: space-between; gap: 16px;
-  transition: transform .25s;
-}
-.bonus-card:hover { transform: translateY(-3px); }
-
-.bonus-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
-.bonus-desc { font-size: 13px; line-height: 1.65; color: var(--ink3); }
-.bonus-val {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 24px; color: var(--orange);
-}
-
-/* ─── PREÇO ─── */
-.price-wrap {
-  max-width: 520px; margin: 0 auto; text-align: center;
-}
-
-.price-tag {
-  display: inline-block; margin-bottom: 24px;
-  background: var(--orange); color: white;
-  font-family: 'DM Mono', monospace;
-  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-  padding: 7px 18px; border-radius: 100px;
-}
-
-.price-de {
-  font-size: 14px; color: var(--ink3);
-  text-decoration: line-through; margin-bottom: 4px;
-}
-.price-main {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(64px, 8vw, 96px); line-height: .9;
-  margin-bottom: 8px;
-}
-.price-main sup { font-size: 32%; vertical-align: top; margin-top: 14px; display: inline-block; }
-.price-or { font-size: 14px; color: var(--ink3); margin-bottom: 6px; }
-.price-pix {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 32px; color: var(--orange); margin-bottom: 36px;
-}
-
-.price-list {
-  list-style: none; text-align: left;
-  display: flex; flex-direction: column; gap: 12px;
-  margin-bottom: 36px;
-  border: 1px solid var(--border); border-radius: 16px;
-  padding: 24px 28px; background: var(--white);
-}
-.price-list li {
-  font-size: 14px; color: var(--ink2);
-  display: flex; align-items: center; gap: 12px;
-}
-.price-list li::before {
-  content: '✓';
-  width: 22px; height: 22px; border-radius: 50%;
-  background: #E8F5EE; color: #1A9B56;
-  font-size: 11px; font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-
-.btn-cta-big {
-  width: 100%; padding: 18px;
-  background: var(--ink); color: var(--cream);
-  border-radius: 100px; border: none; cursor: pointer;
-  font-size: 16px; font-weight: 700; letter-spacing: 0.3px;
-  text-decoration: none; display: block; text-align: center;
-  transition: background .2s, transform .15s;
-  margin-bottom: 16px;
-}
-.btn-cta-big:hover { background: var(--orange); transform: translateY(-2px); }
-
-.price-secure {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px; letter-spacing: 1px; color: var(--ink3);
-}
-
-/* ─── INSTRUTOR ─── */
-.inst-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
-}
-
-.inst-eyebrow {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--orange); margin-bottom: 16px;
-}
-.inst-name {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(56px, 5vw, 80px); line-height: .88;
-  margin-bottom: 24px;
-}
-.inst-bio { font-size: 16px; line-height: 1.75; color: var(--ink2); margin-bottom: 32px; }
-
-.inst-stats {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
-  border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
-}
-.inst-stat {
-  background: var(--white); padding: 20px 24px;
-}
-.inst-stat-n { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--orange); line-height: 1; }
-.inst-stat-l { font-size: 12px; color: var(--ink3); margin-top: 4px; }
-
-.inst-quote {
-  font-size: 18px; line-height: 1.75; font-style: italic;
-  color: var(--ink2); margin-bottom: 32px;
-  padding-left: 20px;
-  border-left: 3px solid var(--orange);
-}
-
-/* ─── FAQ ─── */
-.faq-list {
-  display: flex; flex-direction: column;
-  border: 1px solid var(--border); border-radius: 20px; overflow: hidden;
-  max-width: 760px; margin: 0 auto;
-}
-.faq-item {
-  border-bottom: 1px solid var(--border);
-  background: var(--white);
-}
-.faq-item:last-child { border-bottom: none; }
-
-.faq-q {
-  width: 100%; padding: 22px 28px;
-  background: none; border: none; cursor: pointer;
-  display: flex; justify-content: space-between; align-items: center;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 15px; font-weight: 600; color: var(--ink);
-  text-align: left; gap: 16px;
-  transition: background .2s;
-}
-.faq-q:hover { background: var(--cream); }
-
-.faq-icon {
-  width: 28px; height: 28px; border-radius: 50%;
-  border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 16px; color: var(--ink3); flex-shrink: 0;
-  transition: background .2s, color .2s;
-}
-.faq-item.open .faq-icon { background: var(--ink); color: var(--cream); }
-
-.faq-a {
-  display: none; padding: 0 28px 22px;
-  font-size: 14px; line-height: 1.75; color: var(--ink3);
-}
-.faq-item.open .faq-a { display: block; }
-
-/* ─── FINAL CTA ─── */
-.final-cta {
-  padding: 120px 48px;
-  background: var(--ink);
-  color: var(--cream);
-  text-align: center;
-  position: relative; overflow: hidden;
-}
-.final-cta::before {
-  content: 'IAPRO';
-  position: absolute;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(200px, 28vw, 400px);
-  color: rgba(255,255,255,.03);
-  top: 50%; left: 50%; transform: translate(-50%,-50%);
-  white-space: nowrap; pointer-events: none; letter-spacing: 20px;
-}
-
-.final-cta .sec-eyebrow { color: rgba(245,241,234,.3); justify-content: center; }
-.final-cta .sec-eyebrow::before { background: rgba(245,241,234,.2); }
-
-.final-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(56px, 7vw, 96px);
-  line-height: .9; margin-bottom: 24px; position: relative;
-}
-.final-title .hl { color: var(--orange); }
-
-.final-sub {
-  font-size: 16px; line-height: 1.7; color: rgba(245,241,234,.45);
-  max-width: 420px; margin: 0 auto 40px; position: relative;
-}
-
-.btn-final {
-  background: var(--orange); color: white;
-  padding: 18px 48px; border-radius: 100px;
-  font-size: 16px; font-weight: 700;
-  text-decoration: none; display: inline-block;
-  transition: transform .15s, box-shadow .2s;
-  position: relative;
-}
-.btn-final:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(232,72,15,.35); }
-
-/* ─── FOOTER ─── */
-footer {
-  background: var(--ink); border-top: 1px solid rgba(245,241,234,.08);
-  padding: 28px 48px;
-  display: flex; justify-content: space-between; align-items: center;
-  color: rgba(245,241,234,.25);
-}
-.footer-copy { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1px; }
-
-/* ─── REVEAL ─── */
-.reveal {
-  opacity: 0; transform: translateY(32px);
-  transition: opacity .7s ease, transform .7s ease;
-}
-.reveal.visible { opacity: 1; transform: translateY(0); }
-
-/* ─── ANIMATIONS ─── */
-@keyframes pulse {
-  0%   { transform: scale(1); opacity: .5; }
-  100% { transform: scale(2); opacity: 0; }
-}
-
-/* ─── RESPONSIVE ─── */
-@media (max-width: 960px) {
-  nav { padding: 0 24px; }
-  .hero-top { grid-template-columns: 1fr; padding: 48px 24px 32px; }
-  .hero-right { display: none; }
-  .sec { padding: 72px 24px; }
-  .steps, .compare-grid, .avd-cards, .benefits-grid { grid-template-columns: 1fr; }
-  .test-grid, .bonus-grid { grid-template-columns: 1fr; }
-  .inst-grid { grid-template-columns: 1fr; }
-  .modules-list .mod-row { grid-template-columns: 40px 1fr; }
-  .mod-badge { display: none; }
-  footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0B0B0B;
+  --bg2:#111111;
+  --bg3:#1A1A1A;
+  --card:#141414;
+  --orange:#FF4600;
+  --orange2:#FF6320;
+  --white:#FFFFFF;
+  --muted:rgba(255,255,255,0.45);
+  --muted2:rgba(255,255,255,0.2);
+  --border:rgba(255,255,255,0.08);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;height:64px;
+  background:rgba(11,11,11,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.logo-wrap{display:flex;flex-direction:column;gap:1px}
+.logo-sup{font-size:8px;letter-spacing:4px;color:var(--muted);text-transform:uppercase;font-family:'DM Mono',monospace}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;line-height:1}
+.logo .ia{color:#fff}
+.logo .pro{color:var(--orange)}
+.logo .dot{color:var(--orange)}
+.logo .blend{color:rgba(255,255,255,0.25)}
+.nav-cta{
+  display:flex;align-items:center;gap:8px;
+  background:var(--orange);color:#fff;
+  padding:10px 22px;border-radius:100px;
+  font-size:13px;font-weight:700;letter-spacing:0.3px;
+  text-decoration:none;transition:background .2s,transform .15s;
+  white-space:nowrap;
+}
+.nav-cta:hover{background:#cc3800;transform:translateY(-1px)}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.hero-video-wrap{position:relative;width:100%;height:100vh;overflow:hidden;flex-shrink:0}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.55}
+.hero-mobile-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+.hero-overlay-grad{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(11,11,11,0.3) 0%,rgba(11,11,11,0.1) 40%,rgba(11,11,11,0.7) 100%);
+}
+.hero-content{
+  position:absolute;inset:0;z-index:10;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:80px 48px 120px;text-align:center;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:100px;padding:8px 18px;
+  font-size:12px;font-weight:500;color:rgba(255,255,255,0.8);
+  margin-bottom:32px;letter-spacing:1px;text-transform:uppercase;
+  animation:fadeUp .6s .1s ease both;
+}
+.hero-badge-icon{font-size:14px}
+.hero-h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(52px,8vw,110px);
+  line-height:.88;letter-spacing:1px;
+  margin-bottom:24px;
+  animation:fadeUp .6s .2s ease both;
+  max-width:900px;
+}
+.hero-h1 .w{color:#fff}
+.hero-h1 .o{color:var(--orange)}
+.hero-sub{
+  font-size:14px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:36px;
+  animation:fadeUp .6s .35s ease both;
+  font-family:'DM Mono',monospace;
+}
+.hero-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--orange);color:#fff;
+  padding:16px 36px;border-radius:8px;
+  font-size:15px;font-weight:700;letter-spacing:0.5px;
+  text-decoration:none;
+  animation:fadeUp .6s .45s ease both;
+  transition:background .2s,transform .15s,box-shadow .2s;
+}
+.hero-cta:hover{background:#cc3800;transform:translateY(-2px);box-shadow:0 12px 40px rgba(255,70,0,0.4)}
+.hero-stats{
+  position:absolute;bottom:0;left:0;right:0;z-index:10;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border-top:1px solid var(--border);
+  background:rgba(11,11,11,0.7);backdrop-filter:blur(20px);
+}
+.hero-stat{padding:20px 36px;border-right:1px solid var(--border)}
+.hero-stat:last-child{border-right:none}
+.hero-stat-num{font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--orange);line-height:1}
+.hero-stat-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:4px;font-family:'DM Mono',monospace}
+
+/* GALLERY SLIDERS */
+.gallery-sliders{overflow:hidden;background:var(--bg);display:flex;flex-direction:column;gap:4px;padding:4px 0}
+.gallery-row{overflow:hidden}
+.gallery-track{
+  display:flex;gap:4px;width:max-content;
+  animation:gSlide 36s linear infinite;
+}
+.gallery-track.rev{animation:gSlideRev 36s linear infinite}
+.gallery-track:hover,.gallery-track.rev:hover{animation-play-state:paused}
+.gallery-track img{
+  width:400px;height:268px;object-fit:cover;flex-shrink:0;
+  display:block;filter:saturate(0.85);
+  transition:filter .3s,transform .3s;
+}
+.gallery-track img:hover{filter:saturate(1.2);transform:scale(1.04);z-index:1;position:relative}
+@keyframes gSlide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes gSlideRev{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+
+/* TICKER */
+.ticker{
+  background:var(--orange);
+  overflow:hidden;padding:12px 0;
+  display:flex;
+}
+.ticker-track{
+  display:flex;gap:0;white-space:nowrap;
+  flex-shrink:0;
+  animation:tickerScroll 28s linear infinite;
+}
+.ticker-item{
+  font-family:'DM Mono',monospace;
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;
+  color:rgba(255,255,255,0.9);
+  padding:0 24px;
+  display:flex;align-items:center;gap:16px;
+}
+.ticker-item::after{content:'•';opacity:0.6}
+@keyframes tickerScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SECTIONS */
+.sec{padding:96px 64px}
+.sec-sm{padding:64px 64px}
+.eyebrow{
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--orange);margin-bottom:20px;
+  font-family:'DM Mono',monospace;
+}
+.sec-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(48px,6vw,80px);
+  line-height:.88;margin-bottom:56px;
+}
+.sec-title .o{color:var(--orange)}
+
+/* WHAT YOU GET */
+.get-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:0}
+.get-card{border-radius:16px;overflow:hidden;background:var(--card)}
+.get-card-img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.get-card-body{padding:20px 22px 22px}
+.get-card-tag{
+  display:inline-block;
+  font-size:9px;letter-spacing:2px;text-transform:uppercase;
+  font-family:'DM Mono',monospace;
+  padding:4px 10px;border-radius:100px;
+  margin-bottom:12px;
+}
+.get-card-tag.purple{background:#6B21A8;color:#DDD6FE}
+.get-card-tag.olive{background:#3D4A1E;color:#BEF264}
+.get-card-tag.teal{background:#0F4C5C;color:#67E8F9}
+.get-card-tag.blue{background:#1E3A5F;color:#93C5FD}
+.get-card-tag.dark{background:#2D2420;color:#FDA4AF}
+.get-card-tag.orng{background:#7C2D12;color:#FED7AA}
+.get-card-h{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:22px;letter-spacing:1px;margin-bottom:8px;
+  color:var(--white);
+}
+.get-card-p{font-size:13px;line-height:1.65;color:var(--muted);margin-bottom:14px}
+.get-card-price{font-size:13px;color:var(--muted2);text-decoration:line-through;font-family:'DM Mono',monospace}
+
+/* COLOR BANDS */
+.band-purple{background:#4C1D95}
+.band-olive{background:#1A2A06}
+.band-teal{background:#064E3B}
+.band-blue{background:#0C1B33}
+.band-dark{background:#1C0F0C}
+.band-orange{background:#7C2D12}
+
+/* FOR WHOM */
+.whom-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(56px,7vw,96px);
+  line-height:.85;margin-bottom:48px;
+  max-width:600px;
+}
+.whom-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.whom-card{
+  border-radius:16px;padding:28px 24px;
+  background:var(--card);border:1px solid var(--border);
+  transition:transform .25s;
+}
+.whom-card:hover{transform:translateY(-4px)}
+.whom-card.active{background:var(--orange);border-color:var(--orange)}
+.whom-icon{font-size:28px;margin-bottom:16px;display:block}
+.whom-card h3{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px;margin-bottom:10px}
+.whom-card p{font-size:13px;line-height:1.65;color:var(--muted)}
+.whom-card.active p{color:rgba(255,255,255,0.8)}
+
+/* FIDELITY */
+.fidelity-big{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(48px,7vw,90px);
+  line-height:.88;margin-bottom:48px;
+  max-width:700px;
+}
+.fidelity-stats{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border:1px solid var(--border);border-radius:16px;overflow:hidden;
+  margin-bottom:32px;
+}
+.fidelity-stat{
+  padding:28px 24px;border-right:1px solid var(--border);
+  text-align:center;background:var(--card);
+}
+.fidelity-stat:last-child{border-right:none}
+.fidelity-num{font-family:'Bebas Neue',sans-serif;font-size:56px;color:var(--orange);line-height:1}
+.fidelity-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:6px;font-family:'DM Mono',monospace}
+.fidelity-desc{font-size:15px;line-height:1.7;color:var(--muted);max-width:640px;margin:0 auto;text-align:center}
+
+/* FLOW EXPLANATION */
+.flow-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.flow-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(40px,5vw,64px);
+  line-height:.88;margin-bottom:24px;
+}
+.flow-title .o{color:var(--orange)}
+.flow-body{font-size:15px;line-height:1.75;color:var(--muted);margin-bottom:28px}
+.flow-list{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:0}
+.flow-list li{
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:14px;color:rgba(255,255,255,0.75);
+}
+.flow-list li::before{
+  content:'✓';color:var(--orange);font-weight:700;
+  flex-shrink:0;margin-top:2px;
+}
+.flow-table{
+  border:1px solid var(--border);border-radius:16px;overflow:hidden;
+}
+.flow-table-title{
+  font-size:10px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--muted);padding:16px 20px 12px;
+  font-family:'DM Mono',monospace;
+  border-bottom:1px solid var(--border);background:var(--card);
+}
+.flow-row{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-bottom:1px solid var(--border);
+}
+.flow-row:last-child{border-bottom:none}
+.flow-cell{padding:14px 20px;font-size:13px;background:var(--card)}
+.flow-cell.label{color:var(--muted);border-right:1px solid var(--border);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px}
+.flow-cell.val{color:rgba(255,255,255,0.9);font-weight:600}
+.flow-cell.val.orange{color:var(--orange)}
+
+/* FLOW STEPS */
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.step-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:32px 28px;
+  transition:border-color .25s;
+}
+.step-card:hover{border-color:rgba(255,70,0,0.3)}
+.step-num{
+  font-family:'DM Mono',monospace;font-size:11px;
+  letter-spacing:2px;color:var(--orange);margin-bottom:20px;
+}
+.step-icon{font-size:32px;margin-bottom:16px;display:block}
+.step-h{font-size:18px;font-weight:700;margin-bottom:10px}
+.step-p{font-size:13px;line-height:1.7;color:var(--muted);margin-bottom:16px}
+.step-tag{
+  display:inline-block;
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;
+  padding:5px 12px;border-radius:100px;
+  background:rgba(255,255,255,0.06);color:var(--muted);
+}
+
+/* BEFORE/AFTER GRID */
+.avd-section-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(48px,5.5vw,72px);
+  line-height:.88;margin-bottom:48px;
+}
+.avd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.avd-pair{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:3/4;cursor:ew-resize;user-select:none}
+.avd-pair img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.avd-after-img{clip-path:inset(0 0 0 50%)}
+.avd-handle{
+  position:absolute;top:0;bottom:0;left:50%;
+  width:2px;background:rgba(255,255,255,0.8);
+  transform:translateX(-50%);
+  display:flex;align-items:center;justify-content:center;
+}
+.avd-handle::before{
+  content:'';
+  width:36px;height:36px;border-radius:50%;
+  background:var(--white);
+  display:flex;align-items:center;justify-content:center;
+  position:absolute;
+  box-shadow:0 2px 12px rgba(0,0,0,0.4);
+}
+.avd-label{
+  position:absolute;bottom:10px;
+  font-size:9px;letter-spacing:2px;font-family:'DM Mono',monospace;
+  padding:4px 8px;border-radius:4px;
+  background:rgba(0,0,0,0.7);color:rgba(255,255,255,0.8);
+  text-transform:uppercase;
+}
+.avd-label.antes{left:10px}
+.avd-label.depois{right:10px}
+
+/* REAL COMPARISON */
+.cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:48px}
+.cmp-card{border-radius:16px;padding:36px 32px}
+.cmp-card.old{background:#1A0A08;border:1px solid #3D1510}
+.cmp-card.new{background:#1A1408;border:1px solid #3D3510}
+.cmp-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:16px;display:block}
+.cmp-time{font-family:'Bebas Neue',sans-serif;font-size:64px;line-height:1;margin-bottom:8px}
+.cmp-card.old .cmp-time{color:#E05C4A}
+.cmp-card.new .cmp-time{color:var(--orange)}
+.cmp-desc{font-size:12px;color:var(--muted);margin-bottom:24px;letter-spacing:1px;font-family:'DM Mono',monospace}
+.cmp-list{list-style:none;display:flex;flex-direction:column;gap:12px}
+.cmp-list li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:rgba(255,255,255,0.65)}
+.cmp-list li .ico{font-size:14px;flex-shrink:0}
+
+/* 5 FEARS */
+.fears-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(48px,6vw,80px);
+  line-height:.88;margin-bottom:48px;
+}
+.fears-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.fear-card{
+  background:#FF4600;border:1px solid rgba(255,255,255,0.1);
+  border-radius:16px;padding:28px 22px;
+}
+.fear-num{font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.6);font-family:'DM Mono',monospace;margin-bottom:14px}
+.fear-q{font-size:15px;font-weight:700;margin-bottom:16px;line-height:1.3;color:#fff}
+.fear-section{font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.55);text-transform:uppercase;font-family:'DM Mono',monospace;margin-bottom:6px}
+.fear-text{font-size:12px;line-height:1.65;color:rgba(255,255,255,0.8)}
+
+/* MODULES */
+.mod-list{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.mod-row{
+  border-radius:20px;overflow:hidden;
+  display:flex;flex-direction:column;
+  border:1px solid rgba(255,255,255,0.06);
+  transition:transform .2s,box-shadow .2s;
+}
+.mod-row:hover{transform:translateY(-3px);box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+.mod-row:last-child{grid-column:1/-1}
+.mod-img-wrap{width:100%;aspect-ratio:16/9;overflow:hidden;flex-shrink:0}
+.mod-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.mod-row:hover .mod-img{transform:scale(1.04)}
+.mod-body{padding:28px 32px;flex:1;display:flex;flex-direction:column;gap:12px}
+.mod-eyebrow{
+  display:inline-block;
+  font-size:9px;letter-spacing:2px;color:rgba(255,255,255,0.7);font-family:'DM Mono',monospace;
+  text-transform:uppercase;padding:4px 10px;border-radius:100px;border:1px solid rgba(255,255,255,0.15);
+  width:fit-content;
+}
+.mod-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,2.5vw,40px);letter-spacing:1px;line-height:1;margin:0}
+.mod-p{font-size:14px;line-height:1.65;color:rgba(255,255,255,0.65);margin:0;flex:1}
+.mod-link{
+  display:inline-block;width:fit-content;
+  font-size:10px;letter-spacing:2px;font-family:'DM Mono',monospace;
+  color:rgba(255,255,255,0.85);text-decoration:none;
+  border:1px solid rgba(255,255,255,0.2);
+  padding:8px 18px;border-radius:100px;
+  transition:background .2s,border-color .2s;
+}
+.mod-link:hover{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.35)}
+
+/* RESULTS */
+.results-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,6vw,80px);line-height:.88;margin-bottom:48px}
+.results-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.result-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:28px 24px;
+}
+.result-num{font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--orange);line-height:1;margin-bottom:10px}
+.result-h{font-size:16px;font-weight:700;margin-bottom:8px}
+.result-p{font-size:13px;line-height:1.65;color:var(--muted)}
+
+/* INCOME */
+.income-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,5.5vw,72px);line-height:.88;margin-bottom:48px}
+.income-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px}
+.income-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:28px 24px;
+  transition:transform .25s;
+}
+.income-card:hover{transform:translateY(-4px)}
+.income-card.highlight{background:var(--orange);border-color:var(--orange)}
+.income-num{font-size:10px;letter-spacing:2px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:12px}
+.income-card.highlight .income-num{color:rgba(255,255,255,0.7)}
+.income-range{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--orange);line-height:1;margin-bottom:8px}
+.income-card.highlight .income-range{color:#fff}
+.income-h{font-size:15px;font-weight:700;margin-bottom:10px}
+.income-p{font-size:12px;line-height:1.65;color:var(--muted)}
+.income-card.highlight .income-p{color:rgba(255,255,255,0.8)}
+.income-sub{text-align:center;font-size:13px;color:var(--muted);font-style:italic;padding:0 32px}
+
+/* TESTIMONIALS 1 */
+.social-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:48px}
+.social-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:24px;
+  display:flex;flex-direction:column;
+}
+.social-platform{
+  display:flex;align-items:center;gap:8px;
+  font-size:10px;letter-spacing:2px;font-family:'DM Mono',monospace;
+  color:rgba(74,222,128,0.9);margin-bottom:20px;
+}
+.social-platform span{color:#4ADE80}
+.social-amount{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,3.5vw,52px);color:var(--orange);line-height:1;margin-bottom:4px}
+.social-result{font-size:13px;font-weight:700;color:var(--white);margin-bottom:4px}
+.social-meta{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:12px}
+.social-quote{font-size:13px;line-height:1.7;color:rgba(255,255,255,0.65);margin-bottom:16px;font-style:italic;flex:1}
+.social-screenshot{
+  width:100%;border-radius:10px;overflow:hidden;margin-top:auto;
+  border:1px solid rgba(255,255,255,0.06);
+  aspect-ratio:9/16;
+}
+.social-screenshot img{width:100%;display:block;object-fit:cover;aspect-ratio:9/16}
+
+/* GALLERY SCROLL */
+.gallery-scroll-wrap{overflow:hidden;margin:0 -64px}
+.gallery-scroll-track{
+  display:flex;gap:8px;width:max-content;
+  animation:galleryScroll 40s linear infinite;
+}
+.gallery-scroll-track:hover{animation-play-state:paused}
+.gallery-scroll-track img{width:140px;height:200px;object-fit:cover;border-radius:8px;flex-shrink:0}
+@keyframes galleryScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* BONUSES */
+.bonus-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.bonus-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:24px;
+  display:flex;flex-direction:column;justify-content:space-between;gap:16px;
+}
+.bonus-h{font-size:15px;font-weight:700;margin-bottom:6px}
+.bonus-p{font-size:12px;line-height:1.65;color:var(--muted)}
+.bonus-price{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--orange)}
+
+/* VIDEO TESTIMONIALS */
+.vtest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.vtest-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;overflow:hidden;
+}
+.vtest-thumb{position:relative;aspect-ratio:16/9;overflow:hidden;cursor:pointer}
+.vtest-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.vtest-play{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,0.3);
+}
+.vtest-play-btn{
+  width:56px;height:40px;background:#FF0000;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+}
+.vtest-play-btn::after{
+  content:'';
+  border-left:18px solid white;
+  border-top:11px solid transparent;
+  border-bottom:11px solid transparent;
+  margin-left:4px;
+}
+.vtest-body{padding:20px 22px 22px}
+.vtest-quote{font-size:13px;line-height:1.7;color:var(--muted);margin-bottom:16px;font-style:italic}
+.vtest-footer{display:flex;justify-content:space-between;align-items:flex-end}
+.vtest-name{font-size:14px;font-weight:700}
+.vtest-role{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace}
+.vtest-result{font-size:10px;color:#4ADE80;font-family:'DM Mono',monospace;text-align:right;line-height:1.5}
+
+/* PRICING */
+.price-section{position:relative;overflow:hidden;background:var(--bg2);padding:96px 64px}
+.price-section::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(120,40,0,0.18) 0%,transparent 70%)}
+.price-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,5vw,64px);line-height:.88;margin-bottom:8px;text-align:center}
+.price-sub{font-size:13px;color:var(--muted);letter-spacing:2px;font-family:'DM Mono',monospace;margin-bottom:56px;text-transform:uppercase;text-align:center}
+.price-layout{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;max-width:900px;margin:0 auto}
+.price-compare{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:32px 28px;display:flex;flex-direction:column;gap:6px}
+.pc-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:28px}
+.pc-head-icon{width:36px;height:36px;border-radius:8px;flex-shrink:0;background:rgba(255,102,0,0.15);color:var(--orange);display:flex;align-items:center;justify-content:center}
+.pc-head-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:#fff;line-height:1.1}
+.pc-head-sub{font-size:11px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-top:2px}
+.pc-bar-row{display:flex;flex-direction:column;gap:6px}
+.pc-bar-meta{display:flex;justify-content:space-between;align-items:center}
+.pc-bar-label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.pc-bar-hours{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px}
+.pc-bar-hours--red{color:#e05050}
+.pc-bar-hours--orange{color:var(--orange)}
+.pc-bar-track{height:8px;border-radius:4px;background:rgba(255,255,255,0.07);overflow:hidden}
+.pc-bar{height:100%;border-radius:4px;min-width:6px}
+.pc-bar--red{background:linear-gradient(90deg,#c03030,#e05050)}
+.pc-bar--orange{background:linear-gradient(90deg,var(--orange),#ff8c42)}
+.pc-lightning{color:var(--orange);text-align:center;font-size:18px;margin:8px 0}
+.pc-footer{margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07);font-size:12px;color:var(--muted);text-align:center;letter-spacing:.5px}
+.pc-footer strong{color:var(--orange)}
+.price-card{
+  position:relative;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,102,0,0.25);
+  border-radius:16px;padding:32px 28px 28px;
+}
+.pcard-badge{
+  position:absolute;top:-1px;right:-1px;
+  background:var(--orange);color:#fff;
+  font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:2px;
+  padding:6px 16px;border-radius:0 16px 0 10px;
+}
+.pcard-formacao{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.pcard-logo{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:2px;line-height:1;margin-bottom:24px}
+.pcard-ia{color:#fff}
+.pcard-pro{color:var(--orange)}
+.pcard-dot{color:var(--orange)}
+.pcard-blend{color:rgba(255,255,255,0.35)}
+.pcard-de{font-size:13px;color:var(--muted);text-decoration:line-through;margin-bottom:2px}
+.pcard-por{font-size:12px;color:var(--muted);letter-spacing:.5px;margin-bottom:4px;text-transform:uppercase}
+.pcard-price{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,8vw,80px);line-height:.9;color:var(--orange);margin-bottom:4px}
+.pcard-price sup{font-size:34%;vertical-align:top;margin-top:10px;display:inline-block}
+.pcard-cents{font-size:50%}
+.pcard-vista{font-size:13px;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:1px;margin-bottom:24px}
+.pcard-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.pcard-list li{font-size:13px;color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:10px}
+.pcard-check{width:20px;height:20px;border-radius:50%;flex-shrink:0;background:rgba(255,102,0,0.15);color:var(--orange);display:flex;align-items:center;justify-content:center}
+.pcard-check--green{background:rgba(74,222,128,0.15);color:#4ADE80}
+.pcard-item-price{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-decoration:line-through;margin-left:4px}
+/* COUNTDOWN */
+.countdown-wrap{margin-bottom:20px;text-align:center}
+.countdown-label{font-size:11px;letter-spacing:1px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:10px}
+.countdown-digits{display:flex;justify-content:center;gap:8px;margin-bottom:12px}
+.cd-block{display:flex;flex-direction:column;align-items:center;gap:4px}
+.cd-num{font-family:'Bebas Neue',sans-serif;font-size:36px;line-height:1;color:#fff;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:4px 12px;min-width:56px;text-align:center}
+.cd-sep{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--muted);padding-top:2px}
+.cd-unit{font-size:8px;letter-spacing:2px;color:var(--muted);font-family:'DM Mono',monospace;text-transform:uppercase}
+.countdown-bar-wrap{height:4px;border-radius:2px;background:rgba(255,255,255,0.08);overflow:hidden;margin-bottom:4px}
+.countdown-bar{height:100%;border-radius:2px;transition:width 1s linear, background-color 1s linear}
+.countdown-bar-labels{display:flex;justify-content:space-between;font-size:9px;letter-spacing:1px;font-family:'DM Mono',monospace;color:var(--muted)}
+.btn-cta-big{width:100%;padding:18px;background:var(--orange);color:#fff;border-radius:6px;border:none;cursor:pointer;font-size:15px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;text-decoration:none;display:block;text-align:center;margin-bottom:16px;transition:transform .15s,filter .15s}
+.btn-cta-big:hover{filter:brightness(1.1);transform:translateY(-2px)}
+.pcard-secure{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;color:var(--muted);text-align:center}
+/* legacy aliases (kept for safety) */
+.price-btn{display:block;width:100%;padding:16px;background:var(--orange);color:#fff;border-radius:8px;border:none;cursor:pointer;font-size:15px;font-weight:700;text-decoration:none;text-align:center;transition:background .2s,transform .15s;margin-bottom:12px}
+.price-btn:hover{background:#cc3800;transform:translateY(-1px)}
+.price-secure{font-size:11px;color:var(--muted);text-align:center;font-family:'DM Mono',monospace}
+
+/* GUARANTEE */
+.guarantee-wrap{
+  max-width:600px;margin:0 auto;text-align:center;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:24px;padding:56px 48px;
+}
+.guarantee-num{font-family:'Bebas Neue',sans-serif;font-size:96px;color:var(--orange);line-height:1;margin-bottom:0}
+.guarantee-label{font-size:10px;letter-spacing:3px;color:var(--muted);font-family:'DM Mono',monospace;text-transform:uppercase;margin-bottom:20px}
+.guarantee-title{font-family:'Bebas Neue',sans-serif;font-size:48px;line-height:.9;margin-bottom:20px}
+.guarantee-body{font-size:14px;line-height:1.75;color:var(--muted);margin-bottom:32px}
+.guarantee-btn{
+  display:inline-flex;align-items:center;
+  background:var(--orange);color:#fff;
+  padding:14px 32px;border-radius:8px;
+  font-size:14px;font-weight:700;letter-spacing:0.5px;
+  text-decoration:none;transition:background .2s,transform .15s;
+}
+.guarantee-btn:hover{background:#cc3800;transform:translateY(-1px)}
+
+/* INSTRUCTOR */
+.inst-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.inst-eyebrow{font-size:10px;letter-spacing:3px;color:var(--orange);font-family:'DM Mono',monospace;text-transform:uppercase;margin-bottom:16px}
+.inst-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,6vw,80px);line-height:.85;margin-bottom:24px}
+.inst-bio{font-size:15px;line-height:1.75;color:var(--muted);margin-bottom:20px}
+.inst-quote{
+  font-size:16px;line-height:1.7;color:var(--muted);
+  font-style:italic;margin-bottom:32px;
+  padding-left:20px;border-left:3px solid var(--orange);
+}
+.inst-cta{
+  display:inline-flex;align-items:center;
+  background:var(--orange);color:#fff;
+  padding:14px 28px;border-radius:8px;
+  font-size:14px;font-weight:700;letter-spacing:0.3px;
+  text-decoration:none;transition:background .2s,transform .15s;
+  margin-bottom:40px;
+}
+.inst-cta:hover{background:#cc3800;transform:translateY(-1px)}
+.inst-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.inst-stat{background:var(--card);padding:20px 24px}
+.inst-stat-n{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--orange);line-height:1}
+.inst-stat-l{font-size:12px;color:var(--muted);margin-top:4px}
+.inst-photo{width:100%;border-radius:20px;object-fit:cover;display:block;aspect-ratio:4/3}
+
+/* FAQ */
+.faq-list{max-width:760px;margin:0 auto;border:1px solid var(--border);border-radius:20px;overflow:hidden}
+.faq-item{border-bottom:1px solid var(--border);background:var(--card)}
+.faq-item:last-child{border-bottom:none}
+.faq-q{
+  width:100%;padding:22px 28px;
+  background:none;border:none;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:'DM Sans',sans-serif;
+  font-size:15px;font-weight:600;color:#fff;
+  text-align:left;gap:16px;transition:background .2s;
+}
+.faq-q:hover{background:rgba(255,255,255,0.04)}
+.faq-icon{
+  width:28px;height:28px;border-radius:50%;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;color:var(--muted);flex-shrink:0;
+  transition:background .2s,color .2s;
+}
+.faq-item.open .faq-icon{background:var(--orange);color:#fff;border-color:var(--orange)}
+.faq-a{display:none;padding:0 28px 22px;font-size:14px;line-height:1.75;color:var(--muted)}
+.faq-item.open .faq-a{display:block}
+
+/* FINAL CTA */
+.final-cta{
+  text-align:center;padding:120px 64px;
+  background:var(--bg2);position:relative;overflow:hidden;
+}
+.final-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(40px,5.5vw,72px);
+  line-height:.88;margin-bottom:16px;
+}
+.final-title .o{color:var(--orange)}
+.final-sub{font-size:15px;color:var(--muted);max-width:480px;margin:0 auto 36px}
+.final-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--orange);color:#fff;
+  padding:16px 40px;border-radius:8px;
+  font-size:15px;font-weight:700;letter-spacing:0.3px;
+  text-decoration:none;transition:background .2s,transform .15s,box-shadow .2s;
+}
+.final-btn:hover{background:#cc3800;transform:translateY(-2px);box-shadow:0 12px 40px rgba(255,70,0,0.35)}
+
+/* FOOTER */
+footer{
+  background:var(--bg);border-top:1px solid var(--border);
+  padding:28px 64px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.footer-copy{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1px}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%{transform:scale(1);opacity:.5}100%{transform:scale(2.2);opacity:0}}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  nav{padding:0 24px}
+  .sec,.sec-sm{padding:72px 24px}
+  .price-section{padding:72px 24px}
+  .final-cta{padding:80px 24px}
+  footer{padding:24px;flex-direction:column;gap:8px;text-align:center}
+  .gallery-scroll-wrap{margin:0 -24px}
+  .hero-content{padding:80px 24px 120px}
+}
+@media(max-width:768px){
+  .hero-video{display:none}
+  .hero-mobile-img{display:block}
+  .get-grid,.whom-grid,.fidelity-stats,.steps-grid,.avd-grid,.fears-grid,.results-grid,.income-grid,.bonus-grid,.vtest-grid,.social-cards{grid-template-columns:1fr}
+  .cmp-grid,.flow-grid,.inst-grid,.price-layout{grid-template-columns:1fr}
+  .mod-list{grid-template-columns:1fr}
+  .mod-row:last-child{grid-column:auto}
+  .hero-stats{grid-template-columns:1fr 1fr 1fr}
+  .hero-stat{padding:14px 16px}
+  .gallery-grid{grid-template-columns:repeat(4,1fr)}
+}
+
+/* WORKFLOW DEMO */
+.wfd-window{border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.1);box-shadow:0 32px 80px rgba(0,0,0,0.7);background:#141414}
+.wfd-titlebar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:#1e1e1e;border-bottom:1px solid rgba(255,255,255,0.07)}
+.wfd-dots{display:flex;gap:6px}
+.wfd-dot{width:12px;height:12px;border-radius:50%;display:block}
+.wfd-wintitle{font-family:'Chakra Petch',monospace;font-size:11px;letter-spacing:1px;color:rgba(255,255,255,0.4)}
+.wfd-titlebar-end{width:60px}
+.wfd-body{display:grid;grid-template-columns:35% 1fr 1fr;min-height:480px}
+.wfd-left{position:relative;overflow:hidden;border-right:1px solid rgba(255,255,255,0.07);background:#0d0d0d}
+.wfd-blender-img{width:100%;height:100%;object-fit:cover;display:block;opacity:.9}
+.wfd-viewport-label{position:absolute;top:10px;left:10px;z-index:2;font-family:'Chakra Petch',monospace;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.35)}
+.wfd-mid{padding:20px 16px;display:flex;flex-direction:column;gap:10px;border-right:1px solid rgba(255,255,255,0.07);background:#111}
+.wfd-right{padding:20px 16px;display:flex;flex-direction:column;gap:12px;background:#0f0f0f}
+.wfd-panel-header{display:flex;align-items:center;gap:8px;font-family:'Chakra Petch',monospace;font-size:11px;font-weight:600;letter-spacing:2px;color:rgba(255,255,255,0.45);margin-bottom:4px}
+.wfd-metric-card{display:flex;align-items:center;justify-content:space-between;background:#1a1a1a;border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:12px 14px;gap:12px}
+.wfd-metric-label{font-family:'Chakra Petch',monospace;font-size:10px;letter-spacing:1.5px;color:rgba(255,255,255,0.5);flex:1;line-height:1.4}
+.wfd-ring{width:44px;height:44px;flex-shrink:0;position:relative;display:flex;align-items:center;justify-content:center}
+.wfd-ring svg{width:44px;height:44px;position:absolute;inset:0}
+.wfd-ring-text{font-family:'Bebas Neue',sans-serif;font-size:12px;color:var(--orange);position:relative;z-index:1}
+.wfd-gerando-card{background:#1a1a1a;border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:14px;flex:1}
+.wfd-gerando-title{font-family:'Chakra Petch',monospace;font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.5);margin-bottom:8px}
+.wfd-gerando-sub{font-family:'Chakra Petch',monospace;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.25);line-height:1.6}
+.wfd-output-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1}
+.wfd-output-img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:6px;border:1px solid rgba(255,255,255,0.08)}
+.wfd-bottombar{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;background:#1a1a1a;border-top:1px solid rgba(255,255,255,0.07)}
+.wfd-render-ok{font-family:'Chakra Petch',monospace;font-size:11px;letter-spacing:2px;color:#28C840;font-weight:700}
+.wfd-render-time{font-family:'Bebas Neue',sans-serif;font-size:16px;color:rgba(255,255,255,0.35);letter-spacing:2px}
+@media(max-width:1024px){
+  .wfd-body{grid-template-columns:1fr 1fr;grid-template-rows:auto auto}
+  .wfd-left{grid-column:1/-1;min-height:260px;border-right:none;border-bottom:1px solid rgba(255,255,255,0.07)}
+  .wfd-mid{border-right:1px solid rgba(255,255,255,0.07)}
+}
+@media(max-width:960px){
+  .wfd-wintitle{font-size:10px}
+  .wfd-panel-header{font-size:10px;letter-spacing:1px}
+  .wfd-metric-label{font-size:9px;letter-spacing:1px}
+  .wfd-ring,.wfd-ring svg{width:36px;height:36px}
+}
+@media(max-width:600px){
+  .wfd-body{grid-template-columns:1fr}
+  .wfd-left{grid-column:1;min-height:220px;border-bottom:1px solid rgba(255,255,255,0.07)}
+  .wfd-mid{border-right:none;border-bottom:1px solid rgba(255,255,255,0.07);padding:16px 12px}
+  .wfd-right{padding:16px 12px}
+  .wfd-metric-card,.wfd-gerando-card{padding:10px 12px}
+  .wfd-dots{gap:5px}
+  .wfd-dot{width:10px;height:10px}
+  .wfd-wintitle{font-size:9px}
+  .wfd-bottombar{padding:8px 14px}
+  .wfd-render-ok{font-size:10px;letter-spacing:1px}
 }
 </style>
 </head>
@@ -738,449 +758,927 @@ footer {
 
 <!-- NAV -->
 <nav>
-  <div class="logo">
-    <span class="ia">IA</span><span class="pro">PRO</span><span class="dot">.</span><span class="blend">BLEND</span>
+  <div class="logo-wrap">
+    <span class="logo-sup">Formação</span>
+    <div class="logo">
+      <span class="ia">IA</span><span class="pro">PRO</span><span class="dot">.</span><span class="blend">BLEND</span>
+    </div>
   </div>
-  <a href="#preco" class="nav-pill">Garantir vaga →</a>
+  <a href="#preco" class="nav-cta">Garantir vaga →</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-canvas-wrap">
-    <canvas id="hero-canvas"></canvas>
-
-    <!-- overlay content -->
-    <div class="hero-overlay">
+  <div class="hero-video-wrap">
+    <video class="hero-video" autoplay muted loop playsinline preload="none" poster="./client/public/images/imagem-mobi-preload.webp">
+      <source src="./client/public/images/video-hero.mp4" type="video/mp4">
+    </video>
+    <img class="hero-mobile-img" src="./client/public/images/imagem-mobi-2.webp" alt="">
+    <div class="hero-overlay-grad"></div>
+    <div class="hero-content">
       <div class="hero-badge">
-        <span class="hero-badge-dot"></span>
-        O futuro da criação já começou
+        <span class="hero-badge-icon">🪐</span>
+        O Futuro da criação já começou
       </div>
-      <h1>
-        <span class="h-ia">IA</span><span class="h-pro">PRO</span><span class="h-dot">.</span><br>
-        <span class="h-blend">BLEND</span>
+      <h1 class="hero-h1">
+        <span class="w">3D + Nano Banana + Claude Code: </span><span class="o">O novo fluxo para criar projetos 3D de 15K</span><span class="w"> em minutos sem gastar 1 real</span>
       </h1>
-      <p class="hero-sub">Crie imagens incríveis de qualquer produto em menos de 5 minutos.</p>
-      <p class="hero-sub2">Um processo à prova de falhas, onde você tem controle total de cada etapa e não fica refém de inconsistências da IA pura.</p>
-      <div class="hero-btns">
-        <a href="#preco" class="btn-solid">Garantir minha vaga</a>
-        <a href="#fluxo" class="btn-ghost">Ver o fluxo</a>
-      </div>
+      <p class="hero-sub">Do zero ao profissional – usando ferramentas 100% gratuitas</p>
+      <a href="#preco" class="hero-cta">FAZER INSCRIÇÃO AGORA ✦</a>
     </div>
-
-    <!-- stats bar -->
     <div class="hero-stats">
       <div class="hero-stat">
         <div class="hero-stat-num">90%</div>
-        <div class="hero-stat-label">Menos tempo</div>
+        <div class="hero-stat-label">Menos Tempo</div>
       </div>
       <div class="hero-stat">
-        <div class="hero-stat-num">10x</div>
-        <div class="hero-stat-label">Mais produtivo</div>
+        <div class="hero-stat-num">10X</div>
+        <div class="hero-stat-label">Mais Produtivo</div>
       </div>
       <div class="hero-stat">
         <div class="hero-stat-num">100%</div>
         <div class="hero-stat-label">Consistente</div>
       </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">1.500+</div>
-        <div class="hero-stat-label">Alunos formados</div>
-      </div>
     </div>
   </div>
 
-  <!-- CAROUSEL -->
-  <div class="carousel-wrap">
-    <div class="carousel-row">
-      <div class="c-track">
-        <img class="c-img" src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1567721913486-6585f069b695?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1612817288484-6f916006741a?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=600&h=400&fit=crop" alt="">
+  <!-- GALLERY SLIDERS -->
+  <div class="gallery-sliders">
+    <div class="gallery-row">
+      <div class="gallery-track">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-1.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-2.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-3.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-4.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-5.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-6.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-7.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-8.webp" alt="">
         <!-- dup -->
-        <img class="c-img" src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1567721913486-6585f069b695?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1612817288484-6f916006741a?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=600&h=400&fit=crop" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-1.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-2.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-3.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-4.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-5.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-6.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-7.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-8.webp" alt="">
       </div>
     </div>
-    <div class="carousel-row">
-      <div class="c-track rev">
-        <img class="c-img" src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1541643600914-78b084683702?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1590736969955-71cc94901144?w=600&h=400&fit=crop" alt="">
+    <div class="gallery-row">
+      <div class="gallery-track rev">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-9.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-10.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-11.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-12.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-13.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-14.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-15.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-16.webp" alt="">
         <!-- dup -->
-        <img class="c-img" src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1541643600914-78b084683702?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=600&h=400&fit=crop" alt="">
-        <img class="c-img" src="https://images.unsplash.com/photo-1590736969955-71cc94901144?w=600&h=400&fit=crop" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-9.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-10.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-11.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-12.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-13.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-14.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-15.webp" alt="">
+        <img loading="lazy" decoding="async" src="./client/public/images/carousel-product-16.webp" alt="">
       </div>
     </div>
   </div>
 
   <!-- TICKER -->
   <div class="ticker">
-    <div class="t-track">
-      <span class="t-item"><span class="t-dot"></span>BLENDER 3D</span>
-      <span class="t-item"><span class="t-dot"></span>NANO BANANA</span>
-      <span class="t-item"><span class="t-dot"></span>GOOGLE VEO</span>
-      <span class="t-item"><span class="t-dot"></span>CLAUDE IA</span>
-      <span class="t-item"><span class="t-dot"></span>PRODUCT RENDERING</span>
-      <span class="t-item"><span class="t-dot"></span>AI VIDEO</span>
-      <span class="t-item"><span class="t-dot"></span>PACKSHOTS HIPER-REALISTAS</span>
-      <span class="t-item"><span class="t-dot"></span>3D + INTELIGÊNCIA ARTIFICIAL</span>
-      <span class="t-item"><span class="t-dot"></span>BLENDER 3D</span>
-      <span class="t-item"><span class="t-dot"></span>NANO BANANA</span>
-      <span class="t-item"><span class="t-dot"></span>GOOGLE VEO</span>
-      <span class="t-item"><span class="t-dot"></span>CLAUDE IA</span>
-      <span class="t-item"><span class="t-dot"></span>PRODUCT RENDERING</span>
-      <span class="t-item"><span class="t-dot"></span>AI VIDEO</span>
-      <span class="t-item"><span class="t-dot"></span>PACKSHOTS HIPER-REALISTAS</span>
-      <span class="t-item"><span class="t-dot"></span>3D + INTELIGÊNCIA ARTIFICIAL</span>
+    <div class="ticker-track">
+      <span class="ticker-item">BLENDER 3D</span>
+      <span class="ticker-item">NANO BANANA</span>
+      <span class="ticker-item">GOOGLE VEO</span>
+      <span class="ticker-item">CLAUDE IA</span>
+      <span class="ticker-item">PRODUCT RENDERING</span>
+      <span class="ticker-item">AI VIDEO</span>
+      <span class="ticker-item">PACKSHOTS HIPER-REALISTAS</span>
+      <span class="ticker-item">3D + INTELIGÊNCIA ARTIFICIAL</span>
+      <span class="ticker-item">BLENDER 3D</span>
+      <span class="ticker-item">NANO BANANA</span>
+      <span class="ticker-item">GOOGLE VEO</span>
+      <span class="ticker-item">CLAUDE IA</span>
+      <span class="ticker-item">PRODUCT RENDERING</span>
+      <span class="ticker-item">AI VIDEO</span>
+      <span class="ticker-item">PACKSHOTS HIPER-REALISTAS</span>
+      <span class="ticker-item">3D + INTELIGÊNCIA ARTIFICIAL</span>
     </div>
   </div>
 </section>
 
-<!-- FLUXO -->
-<section class="sec sec-alt" id="fluxo">
-  <div class="sec-eyebrow reveal">O Fluxo 3D + IA</div>
-  <h2 class="sec-title reveal">Nenhum outro<br>curso ensina isso.</h2>
-  <div class="steps reveal">
+<!-- WHAT YOU GET -->
+<section class="sec">
+  <div class="reveal" style="text-align:center;margin-bottom:56px">
+    <p style="font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,4vw,48px);line-height:1;margin-bottom:8px">VEJA TUDO QUE VOCÊ VAI RECEBER</p>
+    <p style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,3.5vw,40px);color:var(--orange)">ADQUIRINDO AINDA HOJE.</p>
+  </div>
+  <div class="get-grid reveal">
+    <div class="get-card">
+      <img class="get-card-img" src="./client/public/images/module-3dpro.webp" alt="Formação 3D PRO">
+      <div class="get-card-body band-purple" style="border-radius:0">
+        <span class="get-card-tag purple">CURSO 01</span>
+        <div class="get-card-h">FORMAÇÃO 3D PRO</div>
+        <p class="get-card-p">Chegou sua vez de Dominar o 3D + e colocar grana no bolso criando Imagens e Vídeos Profissionais. Único curso da área certificado pelo MEC do Brasil.</p>
+        <div class="get-card-price">R$ 1.297</div>
+      </div>
+    </div>
+    <div class="get-card">
+      <img class="get-card-img" src="./client/public/images/module-freela3dpro.webp" alt="Freela 3D PRO">
+      <div class="get-card-body band-olive" style="border-radius:0">
+        <span class="get-card-tag olive">CURSO 02</span>
+        <div class="get-card-h">FREELA 3D PRO</div>
+        <p class="get-card-p">Descubra Como Conquistar Seus Primeiros Clientes em 3D e Dar o Primeiro Passo no Mercado como Freelancer.</p>
+        <div class="get-card-price">R$ 497</div>
+      </div>
+    </div>
+    <div class="get-card">
+      <img class="get-card-img" src="./client/public/images/module-iapro.webp" alt="Formação IA.PRO 1.0">
+      <div class="get-card-body band-teal" style="border-radius:0">
+        <span class="get-card-tag teal">CURSO 03</span>
+        <div class="get-card-h">FORMAÇÃO IA.PRO 1.0</div>
+        <p class="get-card-p">Crie imagens Incríveis de qualquer produto em menos de 5 minutos. Um processo à prova de falhas, onde você tem controle total de cada etapa.</p>
+        <div class="get-card-price">R$ 897</div>
+      </div>
+    </div>
+    <div class="get-card">
+      <img class="get-card-img" src="./client/public/images/bonus-nexia-image.webp" alt="Addon nexIA Image">
+      <div class="get-card-body band-blue" style="border-radius:0">
+        <span class="get-card-tag blue">BÔNUS 01</span>
+        <div class="get-card-h">ADDON NEXIA IMAGE</div>
+        <p class="get-card-p">Renderize qualquer projeto dentro do Blender utilizando o poder da Inteligência Artificial.</p>
+        <div class="get-card-price">R$ 297</div>
+      </div>
+    </div>
+    <div class="get-card">
+      <img class="get-card-img" src="./client/public/images/bonus-nexia-video.webp" alt="Addon nexIA Video Studio">
+      <div class="get-card-body band-dark" style="border-radius:0">
+        <span class="get-card-tag dark">BÔNUS 02</span>
+        <div class="get-card-h">ADDON NEXIA VIDEO STUDIO</div>
+        <p class="get-card-p">Renderizar Vídeos com veo3 diretamente dentro do Blender. Formatos 16:9 e 9:16, com 4, 6 ou 8 segundos. Full HD e HD. Tudo sem sair do programa.</p>
+        <div class="get-card-price">R$ 397</div>
+      </div>
+    </div>
+    <div class="get-card">
+      <img class="get-card-img" src="./client/public/images/bonus-modelos-3d.jpg" alt="+400 Modelos 3D Prontos">
+      <div class="get-card-body band-orange" style="border-radius:0">
+        <span class="get-card-tag orng">BÔNUS 03</span>
+        <div class="get-card-h">+400 MODELOS 3D PRONTOS</div>
+        <p class="get-card-p">Uma coleção com mais de 400 modelos de frascos, válvulas e embalagens para produtos prontos para utilizar nos seus projetos. Todos já contam com mapa UV aberto.</p>
+        <div class="get-card-price">R$ 397</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOR WHOM -->
+<section class="sec" style="background:var(--bg2)">
+  <div class="eyebrow reveal">Para quem é o IAPRO.BLEND</div>
+  <div class="whom-title reveal">ISSO FOI FEITO<br>PRA VOCÊ SE...</div>
+  <div class="whom-grid reveal">
+    <div class="whom-card active">
+      <span class="whom-icon">🎯</span>
+      <h3>DESIGNERS 3D</h3>
+      <p>Você quer entregar projetos de qualidade premium em tempo recorde e parar de perder horas em renders manuais.</p>
+    </div>
+    <div class="whom-card">
+      <span class="whom-icon">📊</span>
+      <h3>PROFISSIONAIS DE MARKETING</h3>
+      <p>Você precisa de imagens de produto de alta qualidade sem depender de fotógrafo ou estúdio para cada campanha.</p>
+    </div>
+    <div class="whom-card">
+      <span class="whom-icon">🚀</span>
+      <h3>EMPREENDEDORES</h3>
+      <p>Você vende produtos e quer imagens que vendem — sem gastar R$ 2.500 em um estúdio fotográfico toda vez.</p>
+    </div>
+    <div class="whom-card">
+      <span class="whom-icon">💡</span>
+      <h3>CRIATIVOS VISIONÁRIOS</h3>
+      <p>Você entende que quem domina 3D + IA agora vai dominar o mercado criativo nos próximos anos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FIDELITY -->
+<section class="sec">
+  <div class="eyebrow reveal">Não é IA "imaginando"</div>
+  <div class="fidelity-big reveal">99% DE FIDELIDADE.<br>É IA + 3D CONTROLADO.</div>
+  <div class="fidelity-stats reveal">
+    <div class="fidelity-stat">
+      <div class="fidelity-num">99%</div>
+      <div class="fidelity-label">Fidelidade de Rótulo</div>
+    </div>
+    <div class="fidelity-stat">
+      <div class="fidelity-num">99%</div>
+      <div class="fidelity-label">Fidelidade de Embalagem</div>
+    </div>
+    <div class="fidelity-stat">
+      <div class="fidelity-num">99%</div>
+      <div class="fidelity-label">Fidelidade de Cor e Textura</div>
+    </div>
+    <div class="fidelity-stat">
+      <div class="fidelity-num">30S</div>
+      <div class="fidelity-label">Render Completo de 1 Cena</div>
+    </div>
+  </div>
+  <p class="fidelity-desc reveal">Rótulo, embalagem, cor e textura exatos — renderizados em segundos. Nenhuma IA sozinha chega perto disso.</p>
+</section>
+
+<!-- FLOW EXPLANATION -->
+<section class="sec" style="background:var(--bg2)">
+  <div class="flow-grid reveal">
+    <div>
+      <div class="eyebrow">As ferramentas que mudam tudo</div>
+      <div class="flow-title">O <span class="o">FLUXO IAPRO.BLEND</span><br>REDUZ SEU TRABALHO<br>DE DIAS PARA MINUTOS</div>
+      <p class="flow-body">O Claude não é um chatbot. No nosso fluxo, ele controla ferramentas, gera arquivos e toma decisões criativas — enquanto você apenas dá as instruções. Sem linha de código. Sem configuração complexa.</p>
+      <ul class="flow-list">
+        <li>Automatiza etapas repetitivas do workflow 3D</li>
+        <li>Gera variações de produto em segundos</li>
+        <li>Aplica texturas e iluminação com precisão profissional</li>
+        <li>Funciona com Blender — que é completamente gratuito</li>
+        <li>Sem experiência prévia necessária</li>
+      </ul>
+    </div>
+    <div>
+      <div class="flow-table">
+        <div class="flow-table-title">ANTES VS DEPOIS</div>
+        <div class="flow-row">
+          <div class="flow-cell label">MÉTODO ANTIGO</div>
+          <div class="flow-cell val">3 dias de trabalho</div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-cell label">COM FLUXO IAPRO.BLEND</div>
+          <div class="flow-cell val orange">13 minutos</div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-cell label">CUSTO ANTES</div>
+          <div class="flow-cell val">R$ 3.000</div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-cell label">CUSTO AGORA</div>
+          <div class="flow-cell val orange">R$ 0</div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-cell label">FERRAMENTAS</div>
+          <div class="flow-cell val orange">Blender + Nano Banana + Claude</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLOW STEPS -->
+<section class="sec">
+  <div class="eyebrow reveal">Nenhum outro curso ensina isso</div>
+  <div class="sec-title reveal">O FLUXO <span class="o">3D + IA</span></div>
+  <div class="steps-grid reveal">
     <div class="step-card">
-      <div class="step-n">ETAPA 01</div>
+      <div class="step-num">1</div>
       <span class="step-icon">🧠</span>
-      <h3>Conceito com IA</h3>
-      <p>Agentes de IA criam o conceito completo do produto — nome, ideia, direcionamento criativo — automaticamente.</p>
+      <div class="step-h">Conceito com IA</div>
+      <p class="step-p">Agentes de IA criam o conceito completo do produto — nome, ideia e direcionamento criativo — automaticamente.</p>
       <span class="step-tag">Claude + IA</span>
     </div>
     <div class="step-card">
-      <div class="step-n">ETAPA 02</div>
+      <div class="step-num">2</div>
       <span class="step-icon">🎨</span>
-      <h3>Desenvolvimento Visual</h3>
-      <p>Criação de embalagens e rótulos com prompts especializados e ferramentas de IA generativa.</p>
+      <div class="step-h">Desenvolvimento Visual</div>
+      <p class="step-p">Criação de embalagens e rótulos com prompts especializados e ferramentas de IA generativa.</p>
       <span class="step-tag">Nano Banana</span>
     </div>
     <div class="step-card">
-      <div class="step-n">ETAPA 03</div>
+      <div class="step-num">3</div>
       <span class="step-icon">⬡</span>
-      <h3>Modelagem 3D</h3>
-      <p>Produto 100% manipulável com precisão absoluta no Blender, garantindo consistência em toda a campanha.</p>
+      <div class="step-h">Modelagem 3D</div>
+      <p class="step-p">Produto 100% manipulável com precisão absoluta no Blender — consistência garantida em toda campanha.</p>
       <span class="step-tag">Blender 3D</span>
     </div>
     <div class="step-card">
-      <div class="step-n">ETAPA 04</div>
+      <div class="step-num">4</div>
       <span class="step-icon">▷</span>
-      <h3>Multiplicação com IA</h3>
-      <p>Packshots, animações e vídeos para campanhas completas gerados em fração do tempo tradicional.</p>
-      <span class="step-tag">Google Veo</span>
+      <div class="step-h">Multiplicação com IA</div>
+      <p class="step-p">Packshots, animações e vídeos para campanhas completas gerados em fração do tempo tradicional.</p>
+      <span class="step-tag">Veo + IA</span>
     </div>
   </div>
 </section>
 
-<!-- POR QUE 3D + IA -->
-<section class="sec">
-  <div class="sec-eyebrow reveal">Por que 3D + IA?</div>
-  <h2 class="sec-title reveal">O mercado está<br>mudando agora.</h2>
-  <div class="compare-grid reveal">
-    <div class="compare-card">
-      <div class="compare-chip">Só IA</div>
-      <h3>Resultados inconsistentes</h3>
-      <p>Falta de controle preciso, sem manipulação 3D real. Você fica refém da aleatoriedade e não consegue repetir resultados.</p>
-    </div>
-    <div class="compare-card">
-      <div class="compare-chip">Só 3D</div>
-      <h3>Processo lento demais</h3>
-      <p>Dias de trabalho manual, variações limitadas. A velocidade do mercado exige mais do que o 3D sozinho consegue entregar.</p>
-    </div>
-    <div class="compare-card winner">
-      <div class="winner-badge">✓ Melhor</div>
-      <div class="compare-chip">3D + IA</div>
-      <h3>Velocidade com precisão</h3>
-      <p>A velocidade da IA com o controle do 3D. Resultados profissionais em horas, não semanas. O único caminho que escala.</p>
-    </div>
-  </div>
-</section>
-
-<!-- MÓDULOS -->
-<section class="sec sec-alt">
-  <div class="sec-eyebrow reveal">O caminho completo</div>
-  <h2 class="sec-title reveal">Módulos que<br>transformam carreiras.</h2>
-  <div class="modules-list reveal">
-    <div class="mod-row">
-      <div class="mod-num">01</div>
-      <div>
-        <div class="mod-title">IA para o Conceito</div>
-        <div class="mod-desc">Aceleração criativa e geração de ativos mestres — rótulos, visuais e direção de arte em horas.</div>
+<!-- WORKFLOW DEMO -->
+<section class="sec" style="background:var(--bg2)">
+  <div class="wfd-window reveal">
+    <div class="wfd-titlebar">
+      <div class="wfd-dots">
+        <span class="wfd-dot" style="background:#FF5F57"></span>
+        <span class="wfd-dot" style="background:#FFBD2E"></span>
+        <span class="wfd-dot" style="background:#28C840"></span>
       </div>
-      <div class="mod-badge">→ Etapa 1</div>
+      <div class="wfd-wintitle">3dpro_workflow_v2.blend</div>
+      <div class="wfd-titlebar-end"></div>
     </div>
-    <div class="mod-row">
-      <div class="mod-num">02</div>
-      <div>
-        <div class="mod-title">Blender PRO</div>
-        <div class="mod-desc">Modelagem do produto, aplicação de rótulos vetorizados e criação do Produto 3D Mestre para toda a campanha.</div>
+    <div class="wfd-body">
+      <div class="wfd-left">
+        <div class="wfd-viewport-label">Blender 4.5.0</div>
+        <img src="./client/public/images/print-blender.webp" alt="Blender 3D" class="wfd-blender-img">
       </div>
-      <div class="mod-badge">→ Etapa 2</div>
-    </div>
-    <div class="mod-row">
-      <div class="mod-num">03</div>
-      <div>
-        <div class="mod-title">A Ponte 3D–IA</div>
-        <div class="mod-desc">O módulo exclusivo: como usar o render do Blender como base para a IA amplificar com fotorrealismo.</div>
-      </div>
-      <div class="mod-badge">→ Exclusivo</div>
-    </div>
-    <div class="mod-row">
-      <div class="mod-num">04</div>
-      <div>
-        <div class="mod-title">10x Mais Resultados</div>
-        <div class="mod-desc">Packshots, cenários e animações em 1/10 do tempo — com o produto 3D consistente como base.</div>
-      </div>
-      <div class="mod-badge">→ Etapa 3</div>
-    </div>
-    <div class="mod-row">
-      <div class="mod-num">05</div>
-      <div>
-        <div class="mod-title">Profissional do Futuro</div>
-        <div class="mod-desc">Finalização, monetização e entrega de campanha. Freela, precificação e posicionamento com o novo workflow.</div>
-      </div>
-      <div class="mod-badge">→ Carreira</div>
-    </div>
-  </div>
-</section>
-
-<!-- ANTES VS DEPOIS -->
-<section class="sec">
-  <div class="sec-eyebrow reveal">Comparação real</div>
-  <h2 class="sec-title reveal">A diferença<br>é inegável.</h2>
-  <div class="avd-cards reveal">
-    <div class="avd-card">
-      <div class="avd-cat">Cosméticos</div>
-      <div class="avd-row-item">
-        <div class="avd-row-label">Tempo</div>
-        <div class="avd-before">3 dias</div>
-        <div class="avd-after">15 min</div>
-      </div>
-      <div class="avd-row-item">
-        <div class="avd-row-label">Custo</div>
-        <div class="avd-before">R$ 2.500</div>
-        <div class="avd-after">R$ 175</div>
-      </div>
-      <div class="avd-economy">↓ 75% de economia</div>
-    </div>
-    <div class="avd-card">
-      <div class="avd-cat">Bebidas</div>
-      <div class="avd-row-item">
-        <div class="avd-row-label">Tempo</div>
-        <div class="avd-before">2 dias</div>
-        <div class="avd-after">12 min</div>
-      </div>
-      <div class="avd-row-item">
-        <div class="avd-row-label">Custo</div>
-        <div class="avd-before">R$ 1.500</div>
-        <div class="avd-after">R$ 178</div>
-      </div>
-      <div class="avd-economy">↓ 75% de economia</div>
-    </div>
-    <div class="avd-card">
-      <div class="avd-cat">Suplementos</div>
-      <div class="avd-row-item">
-        <div class="avd-row-label">Tempo</div>
-        <div class="avd-before">3 dias</div>
-        <div class="avd-after">13 min</div>
-      </div>
-      <div class="avd-row-item">
-        <div class="avd-row-label">Custo</div>
-        <div class="avd-before">R$ 3.000</div>
-        <div class="avd-after">R$ 137</div>
-      </div>
-      <div class="avd-economy">↓ 75% de economia</div>
-    </div>
-    <div class="avd-card">
-      <div class="avd-cat">Perfumes</div>
-      <div class="avd-row-item">
-        <div class="avd-row-label">Tempo</div>
-        <div class="avd-before">4 dias</div>
-        <div class="avd-after">23 min</div>
-      </div>
-      <div class="avd-row-item">
-        <div class="avd-row-label">Custo</div>
-        <div class="avd-before">R$ 3.500</div>
-        <div class="avd-after">R$ 210</div>
-      </div>
-      <div class="avd-economy">↓ 75% de economia</div>
-    </div>
-  </div>
-</section>
-
-<!-- BENEFÍCIOS -->
-<section class="sec sec-alt">
-  <div class="sec-eyebrow reveal">O que você ganha</div>
-  <h2 class="sec-title reveal">Resultados reais,<br>mensuráveis.</h2>
-  <div class="benefits-grid reveal">
-    <div class="benefit-card">
-      <div class="benefit-num">Dias → Horas</div>
-      <h3>Velocidade extrema</h3>
-      <p>Do conceito à campanha completa em 1–2 dias, não em semanas de trabalho manual.</p>
-    </div>
-    <div class="benefit-card">
-      <div class="benefit-num">100%</div>
-      <h3>Controle total</h3>
-      <p>Cada etapa sob seu controle, sem depender da aleatoriedade da IA pura.</p>
-    </div>
-    <div class="benefit-card">
-      <div class="benefit-num">Premium</div>
-      <h3>Qualidade profissional</h3>
-      <p>Resultados que só a união de 3D + IA consegue entregar — impossíveis com uma ferramenta só.</p>
-    </div>
-    <div class="benefit-card">
-      <div class="benefit-num">10x</div>
-      <h3>Multiplicação</h3>
-      <p>Gere dezenas de variações e assets em fração do tempo do processo tradicional.</p>
-    </div>
-  </div>
-</section>
-
-<!-- DEPOIMENTOS -->
-<section class="sec">
-  <div class="sec-eyebrow reveal">Depoimentos reais</div>
-  <h2 class="sec-title reveal">O que os alunos<br>estão dizendo.</h2>
-  <div class="test-grid reveal">
-    <div class="test-card">
-      <p class="test-quote">"Se você não adotar a IA nos seus projetos e na sua direção criativa, fica muito difícil conseguir trabalhos com maior valor agregado."</p>
-      <div class="test-footer">
-        <div>
-          <div class="test-name">Alisson Borges</div>
-          <div class="test-role">Motion Designer / 3D</div>
+      <div class="wfd-mid">
+        <div class="wfd-panel-header"><span>⚡</span> PROCESSAMENTO IA</div>
+        <div class="wfd-metric-card">
+          <span class="wfd-metric-label">FIDELIDADE DO RÓTULO E INFORMAÇÕES</span>
+          <div class="wfd-ring">
+            <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.9155" fill="none" stroke="#2a2a2a" stroke-width="3"/><circle cx="18" cy="18" r="15.9155" fill="none" stroke="var(--orange)" stroke-width="3" stroke-dasharray="99.97 100" stroke-linecap="round" transform="rotate(-90 18 18)"/></svg>
+            <span class="wfd-ring-text">99%</span>
+          </div>
         </div>
-        <div class="test-result">↑ Mais projetos<br>Contratado XP</div>
+        <div class="wfd-metric-card">
+          <span class="wfd-metric-label">FIDELIDADE DA EMBALAGEM E DETALHES</span>
+          <div class="wfd-ring">
+            <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.9155" fill="none" stroke="#2a2a2a" stroke-width="3"/><circle cx="18" cy="18" r="15.9155" fill="none" stroke="var(--orange)" stroke-width="3" stroke-dasharray="99.97 100" stroke-linecap="round" transform="rotate(-90 18 18)"/></svg>
+            <span class="wfd-ring-text">99%</span>
+          </div>
+        </div>
+        <div class="wfd-metric-card">
+          <span class="wfd-metric-label">FIDELIDADE DE CORES E TEXTURAS</span>
+          <div class="wfd-ring">
+            <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.9155" fill="none" stroke="#2a2a2a" stroke-width="3"/><circle cx="18" cy="18" r="15.9155" fill="none" stroke="var(--orange)" stroke-width="3" stroke-dasharray="99.97 100" stroke-linecap="round" transform="rotate(-90 18 18)"/></svg>
+            <span class="wfd-ring-text">99%</span>
+          </div>
+        </div>
+        <div class="wfd-gerando-card">
+          <div class="wfd-gerando-title">GERANDO VARIAÇÕES</div>
+          <div class="wfd-gerando-sub">IA ESTÁ INTERPRETANDO AS INFORMAÇÕES DOS PRODUTOS E GERANDO...</div>
+        </div>
+      </div>
+      <div class="wfd-right">
+        <div class="wfd-panel-header"><span>⊞</span> SAÍDA: VARIAÇÕES ILIMITADAS</div>
+        <div class="wfd-output-grid">
+          <img src="./client/public/images/roxo1.webp" alt="Variação 1" class="wfd-output-img">
+          <img src="./client/public/images/roxo2.webp" alt="Variação 2" class="wfd-output-img">
+          <img src="./client/public/images/roxo3.webp" alt="Variação 3" class="wfd-output-img">
+          <img src="./client/public/images/roxo4.webp" alt="Variação 4" class="wfd-output-img">
+        </div>
       </div>
     </div>
-    <div class="test-card">
-      <p class="test-quote">"Projetos que antes levavam várias horas, hoje executo em muito menos tempo graças à IA — e isso fez aumentar meu faturamento."</p>
-      <div class="test-footer">
-        <div>
-          <div class="test-name">Jonathan Rodrigues</div>
-          <div class="test-role">3D Product Visualization</div>
-        </div>
-        <div class="test-result">↑ Faturamento<br>Sem perder qualidade</div>
+    <div class="wfd-bottombar">
+      <span class="wfd-render-ok">✓ RENDER COMPLETE</span>
+      <span class="wfd-render-time">0.8s</span>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE/AFTER -->
+<section class="sec" style="background:var(--bg2)">
+  <div class="eyebrow reveal">O fluxo em ação</div>
+  <div class="avd-section-title reveal">Do modelo 3D<br>à imagem final.</div>
+  <div class="avd-grid reveal" id="avd-grid">
+    <div class="avd-pair" data-idx="0">
+      <img src="./client/public/images/galeria2/01.webp" alt="Antes" class="avd-before-img">
+      <img src="./client/public/images/galeria2/02.webp" alt="Depois" class="avd-after-img">
+      <div class="avd-handle"></div>
+      <span class="avd-label antes">ANTES</span>
+      <span class="avd-label depois">DEPOIS</span>
+    </div>
+    <div class="avd-pair" data-idx="1">
+      <img src="./client/public/images/galeria2/03.webp" alt="Antes" class="avd-before-img">
+      <img src="./client/public/images/galeria2/04.webp" alt="Depois" class="avd-after-img">
+      <div class="avd-handle"></div>
+      <span class="avd-label antes">ANTES</span>
+      <span class="avd-label depois">DEPOIS</span>
+    </div>
+    <div class="avd-pair" data-idx="2">
+      <img src="./client/public/images/galeria2/05.webp" alt="Antes" class="avd-before-img">
+      <img src="./client/public/images/galeria2/06.webp" alt="Depois" class="avd-after-img">
+      <div class="avd-handle"></div>
+      <span class="avd-label antes">ANTES</span>
+      <span class="avd-label depois">DEPOIS</span>
+    </div>
+    <div class="avd-pair" data-idx="3">
+      <img src="./client/public/images/galeria2/07.webp" alt="Antes" class="avd-before-img">
+      <img src="./client/public/images/galeria2/08.webp" alt="Depois" class="avd-after-img">
+      <div class="avd-handle"></div>
+      <span class="avd-label antes">ANTES</span>
+      <span class="avd-label depois">DEPOIS</span>
+    </div>
+    <div class="avd-pair" data-idx="4">
+      <img src="./client/public/images/galeria2/09.webp" alt="Antes" class="avd-before-img">
+      <img src="./client/public/images/galeria2/10.webp" alt="Depois" class="avd-after-img">
+      <div class="avd-handle"></div>
+      <span class="avd-label antes">ANTES</span>
+      <span class="avd-label depois">DEPOIS</span>
+    </div>
+    <div class="avd-pair" data-idx="5">
+      <img src="./client/public/images/galeria2/11.webp" alt="Antes" class="avd-before-img">
+      <img src="./client/public/images/galeria2/12.webp" alt="Depois" class="avd-after-img">
+      <div class="avd-handle"></div>
+      <span class="avd-label antes">ANTES</span>
+      <span class="avd-label depois">DEPOIS</span>
+    </div>
+    <div class="avd-pair" data-idx="6">
+      <img src="./client/public/images/galeria2/13.webp" alt="Antes" class="avd-before-img">
+      <img src="./client/public/images/galeria2/14.webp" alt="Depois" class="avd-after-img">
+      <div class="avd-handle"></div>
+      <span class="avd-label antes">ANTES</span>
+      <span class="avd-label depois">DEPOIS</span>
+    </div>
+    <div class="avd-pair" data-idx="7">
+      <img src="./client/public/images/galeria2/15.webp" alt="Antes" class="avd-before-img">
+      <img src="./client/public/images/galeria2/16.webp" alt="Depois" class="avd-after-img">
+      <div class="avd-handle"></div>
+      <span class="avd-label antes">ANTES</span>
+      <span class="avd-label depois">DEPOIS</span>
+    </div>
+  </div>
+</section>
+
+<!-- REAL COMPARISON -->
+<section class="sec">
+  <div class="eyebrow reveal">Comparativo real</div>
+  <div class="fears-title reveal">CADA PROJETO NO MÉTODO ANTIGO<br>É DINHEIRO JOGADO FORA.</div>
+  <div class="cmp-grid reveal">
+    <div class="cmp-card old">
+      <span class="cmp-tag">3D TRADICIONAL</span>
+      <div class="cmp-time">3–4 DIAS</div>
+      <div class="cmp-desc">POR PROJETO DE PACKSHOT</div>
+      <ul class="cmp-list">
+        <li><span class="ico">🖥</span>Máquinas de R$ 15k+ para render em tempo aceitável</li>
+        <li><span class="ico">🏗</span>Horas montando cenas complexas e iluminação no Blender</li>
+        <li><span class="ico">⏳</span>Render que demora horas — e trava a máquina enquanto roda</li>
+        <li><span class="ico">🔁</span>Retrabalho constante a cada ajuste de cenário ou luz</li>
+      </ul>
+    </div>
+    <div class="cmp-card new">
+      <span class="cmp-tag">FLUXO 3D + IA</span>
+      <div class="cmp-time">13 MIN</div>
+      <div class="cmp-desc">DO PRODUTO PRONTO À IMAGEM FINAL</div>
+      <ul class="cmp-list">
+        <li><span class="ico">💻</span>Roda em qualquer notebook intermediário — sem investimento em hardware</li>
+        <li><span class="ico">⚡</span>Sem montar cena complexa — a IA gera o cenário a partir do produto 3D</li>
+        <li><span class="ico">🚀</span>Render com IA em segundos, com qualidade fotorrealista</li>
+        <li><span class="ico">🎯</span>Variações ilimitadas de cenário sem reabrir o Blender</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 5 FEARS -->
+<section class="sec" style="background:var(--bg2)">
+  <div class="eyebrow reveal">O que trava quem começa</div>
+  <div class="fears-title reveal">OS 5 MEDOS DE QUEM<br>AINDA NÃO COMEÇOU.</div>
+  <div class="fears-grid reveal">
+    <div class="fear-card">
+      <div class="fear-num">MEDO 01</div>
+      <div class="fear-q">"EU NÃO SOU ARTISTA."</div>
+      <div class="fear-section">A crença</div>
+      <p class="fear-text" style="margin-bottom:12px;font-style:italic;color:var(--muted2)">"Preciso saber desenhar, entender de luz, ter bagagem de belas artes antes de mexer em 3D."</p>
+      <div class="fear-section">A realidade</div>
+      <p class="fear-text">3D comercial hoje é 80% execução técnica e 20% gosto visual. A IA cobre parte da composição — você opera o fluxo, o cliente paga pelo entregável, não pelo talento.</p>
+    </div>
+    <div class="fear-card">
+      <div class="fear-num">MEDO 02</div>
+      <div class="fear-q">"É CARO E COMPLEXO DEMAIS."</div>
+      <div class="fear-section">A crença</div>
+      <p class="fear-text" style="margin-bottom:12px;font-style:italic;color:var(--muted2)">"Preciso de PC top, Cinema 4D, Redshift, licença de mil coisas. Sem isso nem começo."</p>
+      <div class="fear-section">A realidade</div>
+      <p class="fear-text">Blender é gratuito e open source. Nano Banana gera imagens dentro do fluxo. Claude controla as ferramentas pra você. Roda em notebook intermediário.</p>
+    </div>
+    <div class="fear-card">
+      <div class="fear-num">MEDO 03</div>
+      <div class="fear-q">"A IA VAI ME SUBSTITUIR."</div>
+      <div class="fear-section">A crença</div>
+      <p class="fear-text" style="margin-bottom:12px;font-style:italic;color:var(--muted2)">"Se a IA já faz imagem sozinha, o cliente não vai mais precisar de mim."</p>
+      <div class="fear-section">A realidade</div>
+      <p class="fear-text">IA pura não entrega consistência: rótulo muda, forma muda, cor muda. Marca não aceita isso. 3D+IA é o único fluxo que garante 99% de fidelidade — e quem domina cobra por isso.</p>
+    </div>
+    <div class="fear-card">
+      <div class="fear-num">MEDO 04</div>
+      <div class="fear-q">"COMECEI TARDE DEMAIS."</div>
+      <div class="fear-section">A crença</div>
+      <p class="fear-text" style="margin-bottom:12px;font-style:italic;color:var(--muted2)">"Tem gente fazendo 3D desde os 15 anos. Não dá mais pra me encaixar."</p>
+      <div class="fear-section">A realidade</div>
+      <p class="fear-text">A IA zerou a largada. Em 2 dias de workshop você sai com o mesmo fluxo que um artista de 10 anos leva semanas pra montar. Cliente não pergunta sua idade — pergunta prazo.</p>
+    </div>
+    <div class="fear-card">
+      <div class="fear-num">MEDO 05</div>
+      <div class="fear-q">"E SE EU NÃO CONSEGUIR CLIENTE?"</div>
+      <div class="fear-section">A crença</div>
+      <p class="fear-text" style="margin-bottom:12px;font-style:italic;color:var(--muted2)">"Aprendo, monto portfólio, e depois? De onde vem o primeiro trabalho?"</p>
+      <div class="fear-section">A realidade</div>
+      <p class="fear-text">Marcas pequenas no Instagram via DM direto. Agências locais precisam de freelancer fixo. Fiverr / Workana para estrangeiro em USD. Portfólio IA-nativo já te separa dos 95%.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section class="sec">
+  <div class="eyebrow reveal">O caminho completo 3D + IA</div>
+  <div class="sec-title reveal">MÓDULOS ESTRATÉGICOS<br>QUE TRANSFORMAM CARREIRAS.</div>
+  <div class="mod-list reveal">
+    <div class="mod-row">
+      <div class="mod-img-wrap"><img class="mod-img" src="./client/public/images/module-ia-conceito.jpg" alt="IA para o Conceito"></div>
+      <div class="mod-body" style="background:#1C0A00">
+        <div class="mod-eyebrow">Etapa 1 do fluxo: Conceito e Visual</div>
+        <div class="mod-h">IA PARA O CONCEITO</div>
+        <p class="mod-p">Aceleração criativa e geração de ativos mestres — rótulos, visuais e direção de arte em horas com agentes de IA.</p>
+        <a href="#preco" class="mod-link">→ ETAPA 1</a>
       </div>
     </div>
-    <div class="test-card">
-      <p class="test-quote">"A IA me dá um direcionamento criativo mais acertado pra entregar melhores projetos. Parei de quebrar a cabeça e sou mais assertivo."</p>
-      <div class="test-footer">
-        <div>
-          <div class="test-name">Jhosuã Lima</div>
-          <div class="test-role">3D Artist · Blender</div>
-        </div>
-        <div class="test-result">↑ Fluxo 80% mais rápido<br>F1 à Champions League</div>
+    <div class="mod-row">
+      <div class="mod-img-wrap"><img class="mod-img" src="./client/public/images/print-blender.webp" alt="Blender PRO"></div>
+      <div class="mod-body" style="background:#080E1C">
+        <div class="mod-eyebrow">Etapa 2 do fluxo: Modelagem 3D</div>
+        <div class="mod-h">BLENDER PRO</div>
+        <p class="mod-p">Modelagem do produto, aplicação de rótulos vetorizados e criação do Produto 3D Mestre — base consistente para toda campanha.</p>
+        <a href="#preco" class="mod-link">→ ETAPA 2</a>
+      </div>
+    </div>
+    <div class="mod-row">
+      <div class="mod-img-wrap"><img class="mod-img" src="./client/public/images/module-iapro.webp" alt="A Ponte 3D–IA"></div>
+      <div class="mod-body" style="background:#100A1C">
+        <div class="mod-eyebrow">Exclusivo do fluxo IAPRO.BLEND</div>
+        <div class="mod-h">A PONTE 3D–IA</div>
+        <p class="mod-p">O módulo exclusivo: como usar o render do Blender como base controlada para a IA amplificar com fotorrealismo absoluto.</p>
+        <a href="#preco" class="mod-link">→ EXCLUSIVO</a>
+      </div>
+    </div>
+    <div class="mod-row">
+      <div class="mod-img-wrap"><img class="mod-img" src="./client/public/images/module-3dpro-square.webp" alt="10x Mais Resultados"></div>
+      <div class="mod-body" style="background:#0A1810">
+        <div class="mod-eyebrow">Etapa 3 do fluxo: Multiplicação</div>
+        <div class="mod-h">10X MAIS RESULTADOS</div>
+        <p class="mod-p">Packshots, cenários e animações em 1/10 do tempo — com o produto 3D consistente como base imutável.</p>
+        <a href="#preco" class="mod-link">→ ETAPA 3</a>
+      </div>
+    </div>
+    <div class="mod-row">
+      <div class="mod-img-wrap"><img class="mod-img" src="./client/public/images/module-freela3dpro.webp" alt="Profissional do Futuro"></div>
+      <div class="mod-body" style="background:#0A1208">
+        <div class="mod-eyebrow">Resultado final e carreira</div>
+        <div class="mod-h">PROFISSIONAL DO FUTURO</div>
+        <p class="mod-p">Finalização, monetização e entrega de campanha. Freela, precificação e posicionamento com o novo workflow.</p>
+        <a href="#preco" class="mod-link">→ CARREIRA</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- BÔNUS -->
-<section class="sec sec-alt">
-  <div class="sec-eyebrow reveal">Bônus exclusivos</div>
-  <h2 class="sec-title reveal">Mais de R$ 1.188<br>em bônus incluídos.</h2>
+<!-- RESULTS -->
+<section class="sec" style="background:var(--bg2)">
+  <div class="eyebrow reveal">O que você ganha</div>
+  <div class="results-title reveal">RESULTADOS REAIS,<br>MENSURÁVEIS.</div>
+  <div class="results-grid reveal">
+    <div class="result-card">
+      <div class="result-num">DIAS → HORAS</div>
+      <div class="result-h">Velocidade extrema</div>
+      <p class="result-p">Do conceito à campanha completa em 1–2 dias, não em semanas de trabalho manual.</p>
+    </div>
+    <div class="result-card">
+      <div class="result-num">100%</div>
+      <div class="result-h">Controle total</div>
+      <p class="result-p">Cada etapa sob seu controle, sem depender da aleatoriedade da IA pura.</p>
+    </div>
+    <div class="result-card">
+      <div class="result-num">PREMIUM</div>
+      <div class="result-h">Qualidade profissional</div>
+      <p class="result-p">Resultados que só a união de 3D + IA consegue entregar — impossíveis com uma ferramenta só.</p>
+    </div>
+    <div class="result-card">
+      <div class="result-num">10X</div>
+      <div class="result-h">Multiplicação</div>
+      <p class="result-p">Gere dezenas de variações e assets em fração do tempo do processo tradicional.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INCOME PATHS -->
+<section class="sec">
+  <div class="eyebrow reveal">Como ganhar dinheiro</div>
+  <div class="income-title reveal">4 CAMINHOS PARA<br>FATURAR R$ 5K–20K/MÊS.</div>
+  <div class="income-grid reveal">
+    <div class="income-card">
+      <div class="income-num">01</div>
+      <div class="income-range">R$ 500–5K<span style="font-size:50%;color:var(--muted)">/job</span></div>
+      <div class="income-h">Freelance por Projeto</div>
+      <p class="income-p">Entrega única para marca ou agência. Entrada mais rápida. Volume varia todo mês.</p>
+    </div>
+    <div class="income-card highlight">
+      <div class="income-num">02</div>
+      <div class="income-range">R$ 3K–12K<span style="font-size:50%;color:rgba(255,255,255,0.7)">/mês</span></div>
+      <div class="income-h">Contrato Recorrente</div>
+      <p class="income-p">Pacote mensal fixo de X criativos. Receita previsível. É onde freelancer sério chega depois de 3–6 meses.</p>
+    </div>
+    <div class="income-card">
+      <div class="income-num">03</div>
+      <div class="income-range">R$ 4K–20K<span style="font-size:50%;color:var(--muted)">/mês</span></div>
+      <div class="income-h">Parceria com Agência</div>
+      <p class="income-p">Vira o braço 3D de agências de publicidade e branding. Alto volume, pouco comercial.</p>
+    </div>
+    <div class="income-card">
+      <div class="income-num">04</div>
+      <div class="income-range">R$ 8K–25K<span style="font-size:50%;color:var(--muted)">/mês</span></div>
+      <div class="income-h">Estúdio / In-House</div>
+      <p class="income-p">Posição dentro de uma indústria ou estúdio dedicado de uma marca. Deixa de ser freela, vira operação.</p>
+    </div>
+  </div>
+  <p class="income-sub reveal">Designer que domina 3D+IA hoje trabalha de casa — sem estúdio, sem fotógrafo, sem depender de um único cliente.</p>
+</section>
+
+<!-- TESTIMONIALS 1 -->
+<section class="sec" style="background:var(--bg2)">
+  <div class="eyebrow reveal">Quem já está no caminho</div>
+  <div class="sec-title reveal">RESULTADOS REAIS.<br>SEM EXPERIÊNCIA PRÉVIA EM 3D.</div>
+  <div class="social-cards reveal">
+    <div class="social-card">
+      <div class="social-platform"><span>●</span> WHATSAPP</div>
+      <div class="social-amount">"O 3D mudou minha vida"</div>
+      <div class="social-result">Financeiramente e na satisfação de trabalho</div>
+      <div class="social-meta">Tiago Ramos — Aluno</div>
+      <p class="social-quote">"Por isso que todo conteúdo que vc lançar eu to dentro."</p>
+      <div class="social-screenshot"><img src="./client/public/images/corte2.webp" alt="Print WhatsApp Tiago Ramos" loading="lazy"></div>
+    </div>
+    <div class="social-card">
+      <div class="social-platform"><span>●</span> DISCORD</div>
+      <div class="social-amount">R$ 15k</div>
+      <div class="social-result">Cliente fechado com o NexIA</div>
+      <div class="social-meta">Aluno — via Discord</div>
+      <p class="social-quote">"Teu conteúdo é o melhor da internet, não tem ninguém com algo tão relevante. Desde quando lançou o primeiro curso de blender eu comprei."</p>
+      <div class="social-screenshot"><img src="./client/public/images/corte3.webp" alt="Print Discord" loading="lazy"></div>
+    </div>
+    <div class="social-card">
+      <div class="social-platform"><span>●</span> WHATSAPP</div>
+      <div class="social-amount">R$ 4k</div>
+      <div class="social-result">Projeto de packshots 3D</div>
+      <div class="social-meta">Rafa — Aluna</div>
+      <p class="social-quote">"Douglas, peguei um projeto de 4mil de packshots 3D. Tô bem feliz pq sei que vai abrir portas. 🙏"</p>
+      <div class="social-screenshot"><img src="./client/public/images/corte1.webp" alt="Print WhatsApp Rafa" loading="lazy"></div>
+    </div>
+  </div>
+  <!-- Scrolling gallery of testimonial screenshots -->
+  <div class="gallery-scroll-wrap reveal">
+    <div class="gallery-scroll-track">
+      <img src="./client/public/images/galeria/01.avif" alt="">
+      <img src="./client/public/images/galeria/dAeteoPbKMcff5ffQGcGxelBHE.avif" alt="">
+      <img src="./client/public/images/galeria/iInf55MCR07jYUpvNzvn0j1QoM.avif" alt="">
+      <img src="./client/public/images/galeria/ePHhWHU9oLN6RI51ZW1tmHP3Po.avif" alt="">
+      <img src="./client/public/images/galeria/qSTKVkcAhsbblHJ39ZBZrP6zGi0.avif" alt="">
+      <img src="./client/public/images/galeria/4XkjW3OhnXx0G5ycWdGk83cY2I.avif" alt="">
+      <img src="./client/public/images/galeria/kNVEdj7V0zIAbNampZDhIMgXG3A.avif" alt="">
+      <img src="./client/public/images/galeria/vY6dqIt3zGXlnD3uakGSDipsI.avif" alt="">
+      <img src="./client/public/images/galeria/JyERon5fmrOYMiE7QbUOXJHZErE.avif" alt="">
+      <img src="./client/public/images/galeria/Pj95rrhX81H1m6lniPsjh8q11AY.avif" alt="">
+      <img src="./client/public/images/galeria/N2tS39r1FoHN2yb4GhAjK69K4.avif" alt="">
+      <img src="./client/public/images/galeria/PQKQVfpkLtpUzCqQ9ClI841AwBY.avif" alt="">
+      <img src="./client/public/images/galeria/Bp7FzdEUKybdKLqqLQLZKSoQKk.avif" alt="">
+      <img src="./client/public/images/galeria/l5UzfttP0HjYynvaZTjbbgW7uA.avif" alt="">
+      <img src="./client/public/images/galeria/Xqgn2jkS9g1XHD6mJfvBKFdlimk.avif" alt="">
+      <!-- dup for infinite scroll -->
+      <img src="./client/public/images/galeria/01.avif" alt="">
+      <img src="./client/public/images/galeria/dAeteoPbKMcff5ffQGcGxelBHE.avif" alt="">
+      <img src="./client/public/images/galeria/iInf55MCR07jYUpvNzvn0j1QoM.avif" alt="">
+      <img src="./client/public/images/galeria/ePHhWHU9oLN6RI51ZW1tmHP3Po.avif" alt="">
+      <img src="./client/public/images/galeria/qSTKVkcAhsbblHJ39ZBZrP6zGi0.avif" alt="">
+      <img src="./client/public/images/galeria/4XkjW3OhnXx0G5ycWdGk83cY2I.avif" alt="">
+      <img src="./client/public/images/galeria/kNVEdj7V0zIAbNampZDhIMgXG3A.avif" alt="">
+      <img src="./client/public/images/galeria/vY6dqIt3zGXlnD3uakGSDipsI.avif" alt="">
+      <img src="./client/public/images/galeria/JyERon5fmrOYMiE7QbUOXJHZErE.avif" alt="">
+      <img src="./client/public/images/galeria/Pj95rrhX81H1m6lniPsjh8q11AY.avif" alt="">
+      <img src="./client/public/images/galeria/N2tS39r1FoHN2yb4GhAjK69K4.avif" alt="">
+      <img src="./client/public/images/galeria/PQKQVfpkLtpUzCqQ9ClI841AwBY.avif" alt="">
+      <img src="./client/public/images/galeria/Bp7FzdEUKybdKLqqLQLZKSoQKk.avif" alt="">
+      <img src="./client/public/images/galeria/l5UzfttP0HjYynvaZTjbbgW7uA.avif" alt="">
+      <img src="./client/public/images/galeria/Xqgn2jkS9g1XHD6mJfvBKFdlimk.avif" alt="">
+    </div>
+  </div>
+</section>
+
+<!-- BONUSES -->
+<section class="sec">
+  <div class="eyebrow reveal">Bônus exclusivos</div>
+  <div class="sec-title reveal">MAIS DE R$ 1.929<br>EM BÔNUS INCLUÍDOS.</div>
   <div class="bonus-grid reveal">
     <div class="bonus-card">
       <div>
-        <div class="bonus-title">Pack de 400+ Assets 3D</div>
-        <p class="bonus-desc">Biblioteca completa de modelos 3D prontos para usar nos seus projetos. Economize horas de modelagem.</p>
+        <div class="bonus-h">Pack de 400+ Assets 3D</div>
+        <p class="bonus-p">Biblioteca completa de modelos 3D prontos para usar nos seus projetos. Economize horas de modelagem.</p>
       </div>
-      <div class="bonus-val">R$ 497</div>
+      <div class="bonus-price">R$ 497</div>
     </div>
     <div class="bonus-card">
       <div>
-        <div class="bonus-title">Agente DOUG</div>
-        <p class="bonus-desc">Agente pessoal que cria produtos — nome, conceito, storytelling, direção de arte até imagem final.</p>
+        <div class="bonus-h">Agente Auren.exe</div>
+        <p class="bonus-p">Agente de IA treinado no fluxo IAPRO.BLEND — gera conceito, direção de arte e prompts otimizados para cada projeto.</p>
       </div>
-      <div class="bonus-val">R$ 97/mês</div>
+      <div class="bonus-price">R$ 197/MÊS</div>
     </div>
     <div class="bonus-card">
       <div>
-        <div class="bonus-title">Agente Prompt Maker</div>
-        <p class="bonus-desc">Criador de prompts profissionais para imagens de produto com resultados de alto nível em segundos.</p>
+        <div class="bonus-h">nexIA Image</div>
+        <p class="bonus-p">Gerador de imagens de produto com IA nativa integrado ao fluxo 3D — resultados profissionais com um clique.</p>
       </div>
-      <div class="bonus-val">R$ 97/mês</div>
+      <div class="bonus-price">R$ 297</div>
     </div>
     <div class="bonus-card">
       <div>
-        <div class="bonus-title">Agente Rafa</div>
-        <p class="bonus-desc">Criador de storyboard profissional para produção de vídeos com IA integrada.</p>
+        <div class="bonus-h">nexIA Video Studio</div>
+        <p class="bonus-p">Studio de vídeo com IA para animar seus packshots 3D e criar conteúdo de produto em movimento.</p>
       </div>
-      <div class="bonus-val">R$ 97/mês</div>
+      <div class="bonus-price">R$ 397</div>
     </div>
     <div class="bonus-card">
       <div>
-        <div class="bonus-title">Addon Multi Câmera</div>
-        <p class="bonus-desc">Addon exclusivo criado especificamente para o fluxo IAPRO.BLEND no Blender.</p>
+        <div class="bonus-h">Agente Prompt Maker</div>
+        <p class="bonus-p">Criador de prompts profissionais para imagens de produto com resultados de alto nível em segundos.</p>
       </div>
-      <div class="bonus-val">R$ 97</div>
+      <div class="bonus-price">R$ 97/MÊS</div>
     </div>
     <div class="bonus-card">
       <div>
-        <div class="bonus-title">Comunidade + Dashboard PRO</div>
-        <p class="bonus-desc">Acesso à comunidade privada de alunos e dashboard Notion para acompanhar seus projetos.</p>
+        <div class="bonus-h">Dashboard PRO</div>
+        <p class="bonus-p">Dashboard Notion para gerenciar projetos, clientes e entregas como um estúdio profissional.</p>
       </div>
-      <div class="bonus-val">R$ 344</div>
+      <div class="bonus-price">R$ 147</div>
+    </div>
+    <div class="bonus-card">
+      <div>
+        <div class="bonus-h">Comunidade Exclusiva</div>
+        <p class="bonus-p">Acesso à comunidade privada de alunos para trocar projetos, tirar dúvidas e fechar parcerias.</p>
+      </div>
+      <div class="bonus-price">R$ 197/MÊS</div>
+    </div>
+    <div class="bonus-card">
+      <div>
+        <div class="bonus-h">Addon Multi Câmera</div>
+        <p class="bonus-p">Addon exclusivo criado especificamente para o fluxo IAPRO.BLEND no Blender — troca de ângulos em segundos.</p>
+      </div>
+      <div class="bonus-price">R$ 97</div>
     </div>
   </div>
 </section>
 
-<!-- PREÇO -->
-<section class="sec" id="preco">
-  <div class="price-wrap reveal">
-    <div class="price-tag">75% OFF — Oferta especial</div>
-    <p class="price-de">De R$ 997</p>
-    <div class="price-main">12x <sup>R$</sup>39<span style="font-size:50%">,72</span></div>
-    <p class="price-or">ou à vista por</p>
-    <div class="price-pix">R$ 397 no PIX</div>
-    <ul class="price-list">
-      <li>Acesso vitalício a todos os conteúdos</li>
-      <li>+20h de conteúdo direto ao ponto</li>
-      <li>Todos os bônus incluídos</li>
-      <li>Comunidade exclusiva de alunos</li>
-      <li>Certificado de conclusão</li>
-      <li>Garantia de 7 dias — 100% do dinheiro de volta</li>
-    </ul>
-    <a href="https://pay.onprofit.com.br/I4hfK5lD?off=NzLncA" class="btn-cta-big">Garantir meu acesso agora</a>
-    <p class="price-secure">🔒 Pagamento 100% seguro · Garantia de 7 dias</p>
+<!-- VIDEO TESTIMONIALS -->
+<section class="sec" style="background:var(--bg2)">
+  <div class="eyebrow reveal">Transformações reais</div>
+  <div class="sec-title reveal">O QUE OS ALUNOS<br>ESTÃO DIZENDO.</div>
+  <div class="vtest-grid reveal">
+    <div class="vtest-card">
+      <div class="vtest-thumb" data-vid="BB7TMDOewTE">
+        <img src="https://i.ytimg.com/vi/BB7TMDOewTE/hqdefault.jpg" alt="Jonathan Rodrigues">
+        <div class="vtest-play"><div class="vtest-play-btn"></div></div>
+      </div>
+      <div class="vtest-body">
+        <p class="vtest-quote">"Projetos que antes levavam várias horas, hoje executo em muito menos tempo graças à IA — e isso fez aumentar meu faturamento."</p>
+        <div class="vtest-footer">
+          <div>
+            <div class="vtest-name">Jonathan Rodrigues</div>
+            <div class="vtest-role">3D Product Visualization</div>
+          </div>
+          <div class="vtest-result">↑ Faturamento<br>Sem perder qualidade</div>
+        </div>
+      </div>
+    </div>
+    <div class="vtest-card">
+      <div class="vtest-thumb" data-vid="lD2SlP_JQ-o">
+        <img src="https://i.ytimg.com/vi/lD2SlP_JQ-o/hqdefault.jpg" alt="Jhosuã Lima">
+        <div class="vtest-play"><div class="vtest-play-btn"></div></div>
+      </div>
+      <div class="vtest-body">
+        <p class="vtest-quote">"A IA me dá um direcionamento criativo mais acertado pra entregar melhores projetos. Parei de quebrar a cabeça e sou mais assertivo."</p>
+        <div class="vtest-footer">
+          <div>
+            <div class="vtest-name">Jhosuã Lima</div>
+            <div class="vtest-role">3D Artist · Blender</div>
+          </div>
+          <div class="vtest-result">↑ Fluxo 80% mais rápido<br>F1 à Champions League</div>
+        </div>
+      </div>
+    </div>
+    <div class="vtest-card">
+      <div class="vtest-thumb" data-vid="zrRT6gptwwo">
+        <img src="https://i.ytimg.com/vi/zrRT6gptwwo/hqdefault.jpg" alt="Alisson Borges">
+        <div class="vtest-play"><div class="vtest-play-btn"></div></div>
+      </div>
+      <div class="vtest-body">
+        <p class="vtest-quote">"Se você não adotar a IA nos seus projetos e na sua direção criativa, fica muito difícil conseguir trabalhos com maior valor agregado."</p>
+        <div class="vtest-footer">
+          <div>
+            <div class="vtest-name">Alisson Borges</div>
+            <div class="vtest-role">Motion Designer / 3D</div>
+          </div>
+          <div class="vtest-result">↑ Mais projetos<br>Contratado XP</div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- INSTRUTOR -->
-<section class="sec sec-alt">
-  <div class="sec-eyebrow reveal">Seu instrutor</div>
+<!-- PRICING -->
+<section class="price-section" id="preco">
+  <div class="price-title reveal">INVISTA NO FUTURO<br>DA SUA CARREIRA</div>
+  <p class="price-sub reveal">Domine o workflow 3D + IA e multiplique seus resultados em tempo recorde</p>
+  <div class="price-layout reveal">
+
+    <!-- Esquerda: comparação de tempo -->
+    <div class="price-compare">
+      <div class="pc-head">
+        <div class="pc-head-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <div class="pc-head-title">Economia de Tempo</div>
+          <div class="pc-head-sub">Compare os resultados</div>
+        </div>
+      </div>
+      <div class="pc-bar-row">
+        <div class="pc-bar-meta">
+          <span class="pc-bar-label">Fluxo Tradicional</span>
+          <span class="pc-bar-hours pc-bar-hours--red">23H</span>
+        </div>
+        <div class="pc-bar-track"><div class="pc-bar pc-bar--red" style="width:100%"></div></div>
+      </div>
+      <div class="pc-lightning">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+      <div class="pc-bar-row">
+        <div class="pc-bar-meta">
+          <span class="pc-bar-label">Fluxo 3D + IA</span>
+          <span class="pc-bar-hours pc-bar-hours--orange">2H</span>
+        </div>
+        <div class="pc-bar-track"><div class="pc-bar pc-bar--orange" style="width:9%"></div></div>
+      </div>
+      <div class="pc-footer">Entregue projetos <strong>91% mais rápido</strong></div>
+    </div>
+
+    <!-- Direita: card de preço -->
+    <div class="price-card">
+      <div class="pcard-badge">75% OFF</div>
+      <div class="pcard-formacao">Formação</div>
+      <div class="pcard-logo">
+        <span class="pcard-ia">IA</span><span class="pcard-pro">PRO</span><span class="pcard-dot">.</span><span class="pcard-blend">BLEND</span>
+      </div>
+      <p class="pcard-de">De R$ 2.997</p>
+      <p class="pcard-por">Por apenas 12x de</p>
+      <div class="pcard-price"><sup>R$</sup>89<span class="pcard-cents">,74</span></div>
+      <p class="pcard-vista">ou R$897 à vista</p>
+      <ul class="pcard-list">
+        <li><span class="pcard-check pcard-check--green"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Acesso Vitalício</li>
+        <li><span class="pcard-check pcard-check--green"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>+100h de Conteúdo direto ao ponto</li>
+        <li><span class="pcard-check pcard-check--green"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Formação 3D PRO <span class="pcard-item-price">R$ 1.297</span></li>
+        <li><span class="pcard-check pcard-check--green"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Freela 3D PRO <span class="pcard-item-price">R$ 497</span></li>
+        <li><span class="pcard-check pcard-check--green"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Formação IA.PRO <span class="pcard-item-price">R$ 897</span></li>
+        <li><span class="pcard-check pcard-check--green"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Addon nexIA Image <span class="pcard-item-price">R$ 297</span></li>
+        <li><span class="pcard-check pcard-check--green"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Addon nexIA Video Studio <span class="pcard-item-price">R$ 397</span></li>
+        <li><span class="pcard-check pcard-check--green"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>+400 Modelos 3D Prontos <span class="pcard-item-price">R$ 397</span></li>
+        <li><span class="pcard-check pcard-check--green"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><strong>Mais de R$ 1.929 em Bônus</strong></li>
+        <li><span class="pcard-check pcard-check--green"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Certificado de Conclusão</li>
+        <li><span class="pcard-check pcard-check--green"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Garantia de 30 Dias</li>
+      </ul>
+      <div class="countdown-wrap">
+        <div class="countdown-label">Essa condição especial expira em:</div>
+        <div class="countdown-digits">
+          <div class="cd-block"><span class="cd-num" id="cd-h">00</span><span class="cd-unit">Horas</span></div>
+          <div class="cd-sep">:</div>
+          <div class="cd-block"><span class="cd-num" id="cd-m">00</span><span class="cd-unit">Minutos</span></div>
+          <div class="cd-sep">:</div>
+          <div class="cd-block"><span class="cd-num" id="cd-s">00</span><span class="cd-unit">Segundos</span></div>
+        </div>
+        <div class="countdown-bar-wrap">
+          <div class="countdown-bar" id="cd-bar"></div>
+        </div>
+        <div class="countdown-bar-labels"><span>27 Mar</span><span>03 Mai</span></div>
+      </div>
+      <a href="https://pay.onprofit.com.br/CjKXd5Oo?off=1QbArx" class="btn-cta-big">FAZER INSCRIÇÃO AGORA ✦</a>
+      <p class="pcard-secure">🔒 Pagamento 100% seguro</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- GUARANTEE -->
+<section class="sec">
+  <div class="guarantee-wrap reveal">
+    <div class="guarantee-num">30</div>
+    <div class="guarantee-label">Garantia incondicional</div>
+    <div class="guarantee-title">30 DIAS.<br>RISCO ZERO.</div>
+    <p class="guarantee-body">Acesse o curso, assista todas as aulas, execute os projetos. Se em 30 dias você não estiver 100% satisfeito — por qualquer motivo — devolvemos cada centavo sem perguntas. Você não tem nada a perder.</p>
+    <a href="#preco" class="guarantee-btn">FAZER INSCRIÇÃO AGORA</a>
+  </div>
+</section>
+
+<!-- INSTRUCTOR -->
+<section class="sec" style="background:var(--bg2)">
+  <div class="eyebrow reveal">Quem vai te ensinar</div>
   <div class="inst-grid reveal">
     <div>
       <div class="inst-eyebrow">Designer 3D & Especialista em IA</div>
       <div class="inst-name">DOUGLAS<br>HELMER</div>
-      <p class="inst-bio">Especialista em design de produtos 3D com mais de uma década de experiência. Pioneiro na integração de IA com workflows 3D no Brasil. Já treinou milhares de designers e ajudou centenas a transformar suas carreiras, reduzindo tempo de produção em até 10x.</p>
-      <a href="https://pay.onprofit.com.br/I4hfK5lD?off=NzLncA" class="btn-solid">Quero aprender com Douglas</a>
-    </div>
-    <div>
+      <p class="inst-bio">Designer a mais de 20 anos, especialista em design de produtos 3D. Pioneiro na integração de IA com workflows 3D no Brasil. Já treinou milhares de designers e ajudou centenas a transformar suas carreiras, reduzindo tempo de produção em até 10x.</p>
       <p class="inst-quote">"Minha missão é democratizar o acesso às ferramentas que transformam ideias em produtos de sucesso."</p>
+      <a href="#preco" class="inst-cta">Quero aprender com Douglas</a>
       <div class="inst-stats">
         <div class="inst-stat">
-          <div class="inst-stat-n">10+</div>
+          <div class="inst-stat-n">20+</div>
           <div class="inst-stat-l">Anos em design 3D</div>
         </div>
         <div class="inst-stat">
@@ -1197,13 +1695,16 @@ footer {
         </div>
       </div>
     </div>
+    <div>
+      <img class="inst-photo" src="./client/public/images/instructor-douglas.webp" alt="Douglas Helmer">
+    </div>
   </div>
 </section>
 
 <!-- FAQ -->
 <section class="sec">
-  <div class="sec-eyebrow reveal" style="justify-content:center;">Tire suas dúvidas</div>
-  <h2 class="sec-title reveal" style="text-align:center;margin:0 auto 48px;">Perguntas<br>frequentes.</h2>
+  <div class="eyebrow reveal" style="text-align:center;justify-content:center">Tire suas dúvidas</div>
+  <div class="sec-title reveal" style="text-align:center;max-width:500px;margin:0 auto 48px">PERGUNTAS<br>FREQUENTES.</div>
   <div class="faq-list reveal">
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">
@@ -1224,7 +1725,7 @@ footer {
         Quais softwares serão utilizados?
         <span class="faq-icon">+</span>
       </button>
-      <div class="faq-a">Blender 3D (gratuito), Nano Banana, Google Veo e Claude. Ensinaremos a usar todas as ferramentas dentro do curso.</div>
+      <div class="faq-a">Blender 3D (gratuito), Nano Banana, Claude Code, Photoshop, Illustrator, DaVinci Resolve e After Effects. Ensinaremos a usar todas as ferramentas dentro do curso.</div>
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">
@@ -1245,7 +1746,7 @@ footer {
         E se eu não gostar?
         <span class="faq-icon">+</span>
       </button>
-      <div class="faq-a">Garantia de 7 dias. Basta solicitar o reembolso na plataforma — devolvemos 100% do valor, sem perguntas.</div>
+      <div class="faq-a">Garantia de 30 dias. Basta solicitar o reembolso na plataforma — devolvemos 100% do valor, sem perguntas.</div>
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">
@@ -1266,144 +1767,30 @@ footer {
 
 <!-- FINAL CTA -->
 <section class="final-cta">
-  <div class="sec-eyebrow">Pronto para começar?</div>
-  <h2 class="final-title">Seu produto merece<br><span class="hl">IAPRO.BLEND</span></h2>
-  <p class="final-sub">Junte-se a designers que já criam produtos premium em tempo recorde com 3D + IA.</p>
-  <a href="https://pay.onprofit.com.br/I4hfK5lD?off=NzLncA" class="btn-final">Garantir meu acesso agora</a>
+  <div class="eyebrow reveal" style="text-align:center;justify-content:center">Pronto para começar?</div>
+  <div class="final-title reveal">Seu produto merece<br><span class="o">IAPRO.BLEND</span></div>
+  <p class="final-sub reveal">Junte-se a designers que já criam produtos premium em tempo recorde com 3D + IA.</p>
+  <a href="#preco" class="final-btn reveal">FAZER INSCRIÇÃO AGORA</a>
 </section>
 
+<!-- FOOTER -->
 <footer>
-  <div class="logo" style="font-size:18px;">
+  <div class="logo">
     <span class="ia">IA</span><span class="pro">PRO</span><span class="dot">.</span><span class="blend">BLEND</span>
   </div>
   <div class="footer-copy">© 2025 Douglas Helmer — Todos os direitos reservados</div>
 </footer>
 
 <script>
-// ─── NAV SCROLL ───
-const nav = document.querySelector('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > window.innerHeight * 0.8);
-});
-
-// ─── WEBGL SHADER HERO ───
-(function() {
-  const canvas = document.getElementById('hero-canvas');
-  const gl = canvas.getContext('webgl2');
-  if (!gl) return;
-
-  const vertSrc = `#version 300 es
-precision highp float;
-in vec4 position;
-void main(){ gl_Position = position; }`;
-
-  const fragSrc = `#version 300 es
-precision highp float;
-out vec4 O;
-uniform vec2 resolution;
-uniform float time;
-uniform vec2 touch;
-#define FC gl_FragCoord.xy
-#define T time
-#define R resolution
-#define MN min(R.x,R.y)
-
-float rnd(vec2 p){
-  p=fract(p*vec2(12.9898,78.233));
-  p+=dot(p,p+34.56);
-  return fract(p.x*p.y);
-}
-float noise(in vec2 p){
-  vec2 i=floor(p),f=fract(p),u=f*f*(3.-2.*f);
-  float a=rnd(i),b=rnd(i+vec2(1,0)),c=rnd(i+vec2(0,1)),d=rnd(i+1.);
-  return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);
-}
-float fbm(vec2 p){
-  float t=.0,a=1.;mat2 m=mat2(1.,-.5,.2,1.2);
-  for(int i=0;i<5;i++){t+=a*noise(p);p*=2.*m;a*=.5;}
-  return t;
-}
-float clouds(vec2 p){
-  float d=1.,t=.0;
-  for(float i=.0;i<3.;i++){
-    float a=d*fbm(i*10.+p.x*.2+.2*(1.+i)*p.y+d+i*i+p);
-    t=mix(t,d,a);d=a;p*=2./(i+1.);
-  }
-  return t;
-}
-void main(void){
-  vec2 uv=(FC-.5*R)/MN, st=uv*vec2(2,1);
-  vec3 col=vec3(0);
-  float bg=clouds(vec2(st.x+T*.5,-st.y));
-  uv*=1.-.3*(sin(T*.2)*.5+.5);
-  for(float i=1.;i<12.;i++){
-    uv+=.1*cos(i*vec2(.1+.01*i,.8)+i*i+T*.5+.1*uv.x);
-    vec2 p=uv;
-    float d=length(p);
-    col+=.00125/d*(cos(sin(i)*vec3(1,2,3))+1.);
-    float b=noise(i+p+bg*1.731);
-    col+=.002*b/length(max(p,vec2(b*p.x*.02,p.y)));
-    col=mix(col,vec3(bg*.25,bg*.137,bg*.05),d);
-  }
-  O=vec4(col,1);
-}`;
-
-  function compileShader(type, src) {
-    const s = gl.createShader(type);
-    gl.shaderSource(s, src); gl.compileShader(s);
-    return s;
-  }
-
-  const vs = compileShader(gl.VERTEX_SHADER, vertSrc);
-  const fs = compileShader(gl.FRAGMENT_SHADER, fragSrc);
-  const prog = gl.createProgram();
-  gl.attachShader(prog, vs); gl.attachShader(prog, fs);
-  gl.linkProgram(prog); gl.useProgram(prog);
-
-  const buf = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,1,-1,-1,1,1,1,-1]), gl.STATIC_DRAW);
-  const pos = gl.getAttribLocation(prog, 'position');
-  gl.enableVertexAttribArray(pos);
-  gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
-
-  const uRes   = gl.getUniformLocation(prog, 'resolution');
-  const uTime  = gl.getUniformLocation(prog, 'time');
-  const uTouch = gl.getUniformLocation(prog, 'touch');
-
-  let touch = [0, 0];
-  canvas.addEventListener('pointermove', e => {
-    touch = [e.clientX, canvas.clientHeight - e.clientY];
-  });
-
-  function resize() {
-    const dpr = Math.max(1, window.devicePixelRatio * 0.75);
-    canvas.width  = canvas.clientWidth  * dpr;
-    canvas.height = canvas.clientHeight * dpr;
-    gl.viewport(0, 0, canvas.width, canvas.height);
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  function loop(now) {
-    gl.clearColor(0,0,0,1); gl.clear(gl.COLOR_BUFFER_BIT);
-    gl.useProgram(prog);
-    gl.uniform2f(uRes, canvas.width, canvas.height);
-    gl.uniform1f(uTime, now * 1e-3);
-    gl.uniform2f(uTouch, ...touch);
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    requestAnimationFrame(loop);
-  }
-  requestAnimationFrame(loop);
-})();
-
-// ─── REVEAL ───
+// REVEAL
 const io = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
-}, { threshold: 0.07 });
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.06 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-// ─── FAQ ───
+// FAQ
 function toggleFaq(btn) {
   const item = btn.closest('.faq-item');
   const isOpen = item.classList.contains('open');
@@ -1416,6 +1803,84 @@ function toggleFaq(btn) {
     btn.querySelector('.faq-icon').textContent = '−';
   }
 }
+
+// BEFORE/AFTER SLIDERS
+document.querySelectorAll('.avd-pair').forEach(pair => {
+  const afterImg = pair.querySelector('.avd-after-img');
+  const handle = pair.querySelector('.avd-handle');
+  let dragging = false;
+
+  function setPosition(x) {
+    const rect = pair.getBoundingClientRect();
+    let pct = Math.max(0, Math.min(100, ((x - rect.left) / rect.width) * 100));
+    afterImg.style.clipPath = `inset(0 0 0 ${pct}%)`;
+    handle.style.left = pct + '%';
+  }
+
+  pair.addEventListener('mousedown', e => { dragging = true; setPosition(e.clientX); });
+  pair.addEventListener('touchstart', e => { dragging = true; setPosition(e.touches[0].clientX); }, { passive: true });
+  window.addEventListener('mousemove', e => { if (dragging) setPosition(e.clientX); });
+  window.addEventListener('touchmove', e => { if (dragging) setPosition(e.touches[0].clientX); }, { passive: true });
+  window.addEventListener('mouseup', () => dragging = false);
+  window.addEventListener('touchend', () => dragging = false);
+});
+
+// COUNTDOWN
+(function() {
+  const START = new Date('2026-03-27T00:01:00-03:00').getTime();
+  const END   = new Date('2026-05-04T00:00:00-03:00').getTime(); // domingo 03/05 meia-noite = segunda 04/05 00:00 BRT
+  const total = END - START;
+
+  const h = document.getElementById('cd-h');
+  const m = document.getElementById('cd-m');
+  const s = document.getElementById('cd-s');
+  const bar = document.getElementById('cd-bar');
+
+  function pad(n){ return String(Math.max(0,n)).padStart(2,'0'); }
+
+  function tick() {
+    const now = Date.now();
+    const remaining = Math.max(0, END - now);
+    const elapsed = Math.min(total, Date.now() - START);
+    const pct = Math.min(100, (elapsed / total) * 100); // enche da esq → dir
+
+    // verde (início) → vermelho (prazo chegando)
+    const r = Math.round(255 * (pct / 100));
+    const g = Math.round(255 * (1 - pct / 100));
+    const colour = `rgb(${r},${g},0)`;
+
+    bar.style.width = pct + '%';
+    bar.style.background = colour;
+
+    const totalSecs = Math.floor(remaining / 1000);
+    const hh = Math.floor(totalSecs / 3600);
+    const mm = Math.floor((totalSecs % 3600) / 60);
+    const ss = totalSecs % 60;
+
+    h.textContent = pad(hh);
+    m.textContent = pad(mm);
+    s.textContent = pad(ss);
+  }
+
+  tick();
+  setInterval(tick, 1000);
+})();
+
+// VIDEO TESTIMONIALS — YouTube facade
+document.querySelectorAll('.vtest-thumb[data-vid]').forEach(thumb => {
+  thumb.style.cursor = 'pointer';
+  thumb.addEventListener('click', () => {
+    const vid = thumb.dataset.vid;
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube.com/embed/${vid}?autoplay=1&rel=0&modestbranding=1`;
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    iframe.allowFullscreen = true;
+    iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none';
+    thumb.style.position = 'relative';
+    thumb.innerHTML = '';
+    thumb.appendChild(iframe);
+  });
+});
 </script>
 </body>
 </html>
